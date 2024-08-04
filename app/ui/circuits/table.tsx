@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/ui/table';
-import { Circuit } from '@/app/lib/types';
+import type { Circuit } from '@/app/lib/types';
 import { formatAddress } from '@/app/lib/utils';
 import ActionsList from '@/app/ui/circuits/actions-list';
 
@@ -23,7 +23,7 @@ export default function CircuitsTable({ data }: { data: Circuit[] }) {
             const locationZ = formatAddress(entry.location.z);
 
             return (
-              <TableRow>
+              <TableRow key={entry.id}>
                 <TableCell className="text-gray-600">{entry.name}</TableCell>
                 <TableCell className="text-gray-600">{entry.type}</TableCell>
                 <TableCell className="text-gray-600">{entry.capacity}</TableCell>
