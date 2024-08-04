@@ -1,4 +1,4 @@
-import { Card } from '@/app/ui/card';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/app/ui/card';
 import { formatNumberToShorterNotation } from '@/app/lib/utils';
 
 export default function MapLoadsCard() {
@@ -12,10 +12,12 @@ export default function MapLoadsCard() {
   return (
     <div className="col-span-3 row-span-2">
       <Card>
-        <header className="mb-40 space-y-2">
-          <h3 className="text-2xl font-medium uppercase text-gray-900">{formattedCount}</h3>
-          <p className="text-sm capitalize text-gray-600">{placeholderData.label}</p>
-        </header>
+        <CardHeader className="pb-0">
+          <header className="mb-40 space-y-2">
+            <CardTitle className="font-medium uppercase text-gray-900">{formattedCount}</CardTitle>
+            <CardDescription className="capitalize">{placeholderData.label}</CardDescription>
+          </header>
+        </CardHeader>
       </Card>
     </div>
   );
