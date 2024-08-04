@@ -18,8 +18,12 @@ export const formatNumberToShorterNotation = (num: number) => {
   }
 };
 
-export const formatAddress = (address: Address) => {
+export const formatAddress = (address: Address, options?: { format: 'short' | 'full' }) => {
   const { street, city, state, zip } = address;
-  return `${city}, ${state}`;
-  // return `${street}, ${city}, ${state} ${zip}`;
+
+  if (options?.format === 'short') {
+    return `${city}, ${state}`;
+  }
+
+  return `${street}, ${city}, ${state} ${zip}`;
 };
