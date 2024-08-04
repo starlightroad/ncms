@@ -1,20 +1,23 @@
 import Link from 'next/link';
 import { EyeIcon, Trash2Icon } from 'lucide-react';
 import EditDialog from '@/app/ui/circuits/edit-dialog';
+import { getCircuit } from '@/app/data/circuit';
 
 export default function ActionsList({ circuitId }: { circuitId: number }) {
+  const data = getCircuit(circuitId);
+
   return (
     <ul className="flex space-x-3">
       <li>
         <Link
-          href={`/circuits/${circuitId}`}
+          href={`/circuits/${data?.id}`}
           className="block rounded-lg p-1 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
         >
           <EyeIcon className="h-5 w-5" />
         </Link>
       </li>
       <li>
-        <EditDialog />
+        <EditDialog data={data} />
       </li>
       <li>
         <div className="cursor-pointer rounded-lg p-1 text-gray-600 hover:bg-red-100 hover:text-red-600">

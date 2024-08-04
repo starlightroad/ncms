@@ -1,9 +1,11 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/ui/table';
-import type { Circuit } from '@/app/lib/types';
 import { formatAddress } from '@/app/lib/utils';
 import ActionsList from '@/app/ui/circuits/actions-list';
+import { getCircuits } from '@/app/data/circuit';
 
-export default function CircuitsTable({ data }: { data: Circuit[] }) {
+export default function CircuitsTable() {
+  const data = getCircuits();
+
   return (
     <div className="overflow-hidden rounded-xl border">
       <Table className="bg-white">

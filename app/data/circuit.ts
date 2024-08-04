@@ -46,3 +46,8 @@ const placeholderData: Circuit[] = [
 export const getCircuits = () => {
   return placeholderData;
 };
+
+export const getCircuit = (id: number) => {
+  const data = placeholderData.find((data) => data.id === id);
+  return data;
+};
