@@ -14,18 +14,25 @@ import { Trash2Icon } from 'lucide-react';
 import { Button } from '@/app/ui/button';
 import { deleteCircuit } from '@/app/data/circuit';
 
-export default function DeleteDialog({ circuitId }: { circuitId: number }) {
+type Props = {
+  children?: React.ReactNode;
+  circuitId: number;
+};
+
+export default function DeleteDialog({ children, circuitId }: Props) {
   const deleteCircuitWithId = deleteCircuit.bind(null, circuitId);
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant="ghost"
-          className="h-7 px-1 text-gray-600 hover:bg-red-100 hover:text-red-600"
-        >
-          <Trash2Icon className="h-5 w-5" />
-        </Button>
+        {children ?? (
+          <Button
+            variant="ghost"
+            className="h-7 px-1 text-gray-600 hover:bg-red-100 hover:text-red-600"
+          >
+            <Trash2Icon className="h-5 w-5" />
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

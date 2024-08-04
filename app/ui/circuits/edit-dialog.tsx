@@ -15,16 +15,23 @@ import {
   DialogTrigger,
 } from '@/app/ui/dialog';
 
-export default function EditDialog({ data }: { data?: Circuit }) {
+type Props = {
+  children?: React.ReactNode;
+  data?: Circuit;
+};
+
+export default function EditDialog({ children, data }: Props) {
   const locationA = formatAddress(data?.location.a!);
   const locationZ = formatAddress(data?.location.z!);
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="h-7 px-1 text-gray-600">
-          <PencilIcon className="h-5 w-5" />
-        </Button>
+        {children ?? (
+          <Button variant="ghost" className="h-7 px-1 text-gray-600">
+            <PencilIcon className="h-5 w-5" />
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
