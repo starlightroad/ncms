@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { EyeIcon, Trash2Icon } from 'lucide-react';
+import { EyeIcon } from 'lucide-react';
 import EditDialog from '@/app/ui/circuits/edit-dialog';
+import DeleteDialog from '@/app/ui/circuits/delete-dialog';
 import { getCircuit } from '@/app/data/circuit';
 
 export default function ActionsList({ circuitId }: { circuitId: number }) {
@@ -20,9 +21,7 @@ export default function ActionsList({ circuitId }: { circuitId: number }) {
         <EditDialog data={data} />
       </li>
       <li>
-        <div className="cursor-pointer rounded-lg p-1 text-gray-600 hover:bg-red-100 hover:text-red-600">
-          <Trash2Icon className="h-5 w-5" />
-        </div>
+        <DeleteDialog circuitId={data?.id!} />
       </li>
     </ul>
   );

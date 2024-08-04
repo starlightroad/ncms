@@ -51,3 +51,5 @@ export const getCircuit = (id: number) => {
   const data = placeholderData.find((data) => data.id === id);
   return data;
 };
+
+export const deleteCircuit = (id: number) => {};
