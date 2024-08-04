@@ -21,8 +21,8 @@ export default function CircuitsTable() {
         </TableHeader>
         <TableBody>
           {data.map((entry) => {
-            const locationA = formatAddress(entry.location.a);
-            const locationZ = formatAddress(entry.location.z);
+            const locationA = formatAddress(entry.location.a, { format: 'short' });
+            const locationZ = formatAddress(entry.location.z, { format: 'short' });
 
             return (
               <TableRow key={entry.id}>
