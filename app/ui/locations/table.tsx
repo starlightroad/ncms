@@ -10,7 +10,7 @@ export default function LocationsTable() {
       <Table className="bg-white">
         <TableHeader className="bg-gray-50">
           <TableRow>
-            <TableHead className="text-xs uppercase">Address</TableHead>
+            <TableHead className="text-xs uppercase">Street</TableHead>
             <TableHead className="text-xs uppercase">City</TableHead>
             <TableHead className="text-xs uppercase">State</TableHead>
             <TableHead className="text-xs uppercase">ZIP Code</TableHead>
