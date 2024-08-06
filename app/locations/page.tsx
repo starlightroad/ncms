@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import LocationsTable from '@/app/ui/locations/table';
@@ -11,6 +12,10 @@ import {
   DialogTrigger,
 } from '@/app/ui/dialog';
 import AddLocationForm from '@/app/ui/locations/add-form';
+
+export const metadata: Metadata = {
+  title: 'Locations',
+};
 
 export default function Locations() {
   return (
