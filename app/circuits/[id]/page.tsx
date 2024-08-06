@@ -1,12 +1,22 @@
-import { ArrowDownUpIcon, MapIcon } from 'lucide-react';
+import { ArrowDownUpIcon, Edit2Icon, MapIcon, Trash2Icon } from 'lucide-react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
-import { getCircuit } from '@/app/data/circuit';
-import { formatAddress } from '@/app/lib/utils';
 import { Button } from '@/app/ui/button';
-import EditDialog from '@/app/ui/circuits/edit-dialog';
-import DeleteDialog from '@/app/ui/circuits/delete-dialog';
+import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
+import EditCircuitForm from '@/app/ui/circuits/edit-form';
+import DeleteCircuitForm from '@/app/ui/circuits/delete-form';
+import { formatAddress } from '@/app/lib/utils';
+import { getCircuit } from '@/app/data/circuit';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/app/ui/dialog';
 
 export default function Circuit({ params }: { params: { id: string } }) {
   const data = getCircuit(Number(params.id));
@@ -38,21 +48,49 @@ export default function Circuit({ params }: { params: { id: string } }) {
         <div className="flex items-center justify-between">
           <PageHeading>{params.id}</PageHeading>
           <div className="space-x-2">
-            <EditDialog data={data}>
-              <Button type="button" size="sm" variant="outline">
-                Edit
-              </Button>
-            </EditDialog>
-            <DeleteDialog circuitId={data.id}>
-              <Button
-                type="button"
-                size="sm"
-                variant="outline"
-                className="hover:border-red-100 hover:bg-red-100 hover:text-red-600"
-              >
-                Delete
-              </Button>
-            </DeleteDialog>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button type="button" size="sm" variant="outline" className="gap-1">
+                  <Edit2Icon className="h-4 w-4" />
+                  Edit
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Edit Circuit</DialogTitle>
+                </DialogHeader>
+                <EditCircuitForm circuit={data} />
+                <DialogFooter>
+                  <Button type="submit" form="edit-form">
+                    Update
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button type="button" size="sm" variant="outline" className="gap-1">
+                  <Trash2Icon className="h-4 w-4 text-gray-600" />
+                  Delete
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Delete Circuit</DialogTitle>
+                  <DialogDescription>
+                    Are you sure you want to delete this circuit?
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button type="button" variant="outline" size="sm">
+                      Cancel
+                    </Button>
+                  </DialogClose>
+                  <DeleteCircuitForm circuitId={data.id} />
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </PageHeader>

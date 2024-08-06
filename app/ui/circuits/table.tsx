@@ -1,6 +1,6 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/ui/table';
 import { formatAddress } from '@/app/lib/utils';
-import ActionsList from '@/app/ui/circuits/actions-list';
+import TableActionsList from '@/app/ui/circuits/actions-list';
 import { getCircuits } from '@/app/data/circuit';
 
 export default function CircuitsTable() {
@@ -32,7 +32,7 @@ export default function CircuitsTable() {
                 <TableCell className="text-gray-600">{locationA}</TableCell>
                 <TableCell className="text-gray-600">{locationZ}</TableCell>
                 <TableCell>
-                  <ActionsList circuitId={entry.id} />
+                  <TableActionsList circuit={entry} />
                 </TableCell>
               </TableRow>
             );
