@@ -15,3 +15,5 @@ export type Circuit = {
     z: Address;
   };
 };
+
+export type Location = { id: number } & Address;
