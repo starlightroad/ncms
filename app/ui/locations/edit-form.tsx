@@ -7,7 +7,7 @@ export default function EditLocationForm({ location }: { location: Location }) {
     <form id="location-form" action="">
       <div className="space-y-4">
         <fieldset className="space-y-2">
-          <Label htmlFor="vendor">Street</Label>
+          <Label htmlFor="street">Street</Label>
           <Input
             type="text"
             id="street"
@@ -18,7 +18,7 @@ export default function EditLocationForm({ location }: { location: Location }) {
           />
         </fieldset>
         <fieldset className="space-y-2">
-          <Label htmlFor="type">City</Label>
+          <Label htmlFor="city">City</Label>
           <Input
             type="text"
             id="city"
@@ -29,7 +29,7 @@ export default function EditLocationForm({ location }: { location: Location }) {
           />
         </fieldset>
         <fieldset className="space-y-2">
-          <Label htmlFor="capacity">State</Label>
+          <Label htmlFor="state">State</Label>
           <Input
             type="text"
             id="state"
@@ -40,7 +40,7 @@ export default function EditLocationForm({ location }: { location: Location }) {
           />
         </fieldset>
         <fieldset className="space-y-2">
-          <Label htmlFor="alocation">ZIP Code</Label>
+          <Label htmlFor="zip">ZIP Code</Label>
           <Input
             type="text"
             id="zip"
