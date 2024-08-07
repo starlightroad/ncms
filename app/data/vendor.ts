@@ -24,3 +24,5 @@ const placeholderData: Vendor[] = [
 export const getVendors = () => {
   return placeholderData;
 };
+
+export const deleteVendor = (id: number) => {};
