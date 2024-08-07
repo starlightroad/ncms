@@ -25,4 +25,9 @@ export const getVendors = () => {
   return placeholderData;
 };
 
+export const getVendor = (id: number) => {
+  const data = placeholderData.find((data) => data.id === id);
+  return data;
+};
+
 export const deleteVendor = (id: number) => {};
