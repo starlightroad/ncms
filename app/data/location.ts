@@ -11,4 +11,9 @@ export const getLocations = () => {
   return placeholderData;
 };
 
+export const getLocation = (id: number) => {
+  const data = placeholderData.find((data) => data.id === id);
+  return data;
+};
+
 export const deleteLocation = (id: number) => {};
