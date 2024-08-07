@@ -16,4 +16,13 @@ export type Circuit = {
   };
 };
 
+type URLString = string;
+
 export type Location = { id: number } & Address;
+
+export type Vendor = {
+  id: number;
+  name: string;
+  website: URLString;
+  supportLine: string;
+};
