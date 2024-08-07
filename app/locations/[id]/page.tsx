@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Edit2Icon, MapIcon, MapPinIcon, Trash2Icon } from 'lucide-react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
@@ -17,6 +18,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/app/ui/dialog';
+
+type Props = {
+  params: { id: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = params;
+  const location = getLocation(Number(id));
+
+  return {
+    title: !location ? 'Not Found' : formatAddress(location),
+  };
+}
 
 export default function Location({ params }: { params: { id: string } }) {
   const data = getLocation(Number(params.id));
