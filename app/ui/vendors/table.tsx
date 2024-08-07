@@ -23,7 +23,11 @@ export default function VendorsTable() {
               <TableRow key={entry.id}>
                 <TableCell className="text-gray-600">{entry.name}</TableCell>
                 <TableCell>
-                  <Link href={entry.website} className="text-blue-600 hover:text-opacity-85">
+                  <Link
+                    href={entry.website}
+                    target="_blank"
+                    className="text-blue-600 hover:text-opacity-85"
+                  >
                     {entry.website}
                   </Link>
                 </TableCell>
