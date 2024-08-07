@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { ArrowDownUpIcon, Edit2Icon, MapIcon, Trash2Icon } from 'lucide-react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
@@ -17,6 +18,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/app/ui/dialog';
+
+type Props = {
+  params: { id: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = params;
+  const circuit = getCircuit(Number(id));
+
+  return {
+    title: String(circuit?.id) ?? 'Not Found',
+  };
+}
 
 export default function Circuit({ params }: { params: { id: string } }) {
   const data = getCircuit(Number(params.id));
