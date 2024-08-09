@@ -3,13 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import {
-  ArrowDownUpIcon,
-  Building2Icon,
-  LayoutDashboardIcon,
-  MapIcon,
-  MapPinIcon,
-} from 'lucide-react';
+import { ArrowDownUpIcon, Building2Icon, LayoutDashboardIcon, MapPinIcon } from 'lucide-react';
 
 const navItems = [
   {
@@ -35,12 +29,6 @@ const navItems = [
     label: 'Vendors',
     href: '/vendors',
     icon: Building2Icon,
-  },
-  {
-    id: '35a4e565-6f8c-4cf8-9ba6-008d44d29c1f',
-    label: 'Map',
-    href: '/map',
-    icon: MapIcon,
   },
 ];
 
