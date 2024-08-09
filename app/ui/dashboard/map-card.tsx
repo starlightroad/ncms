@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext, useEffect, useRef } from 'react';
-import mapboxgl, { type Map } from 'mapbox-gl';
+import mapboxgl, { FullscreenControl, type Map } from 'mapbox-gl';
 import { MapContext } from '@/app/ui/dashboard/provider';
 
 mapboxgl.accessToken = String(process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN);
@@ -22,6 +22,8 @@ export default function MapCard() {
       center: [lng, lat],
       zoom: zoom,
     });
+
+    mapRef.current.addControl(new FullscreenControl());
 
     mapRef.current.on('moveend', () => {
       const center = mapRef.current?.getCenter();
