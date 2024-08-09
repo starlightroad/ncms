@@ -3,8 +3,7 @@ import PageHeading from '@/app/ui/page-heading';
 import CircuitsCard from '@/app/ui/dashboard/circuits-card';
 import LocationsCard from '@/app/ui/dashboard/locations-card';
 import VendorsCard from '@/app/ui/dashboard/vendors-card';
-import RequestsCard from '@/app/ui/dashboard/requests-card';
-import MapLoadsCard from '@/app/ui/dashboard/map-loads-card';
+import MapCard from '@/app/ui/dashboard/map-card';
 
 export default function Dashboard() {
   return (
@@ -16,8 +15,7 @@ export default function Dashboard() {
         <CircuitsCard />
         <LocationsCard />
         <VendorsCard />
-        <RequestsCard />
-        <MapLoadsCard />
+        <MapCard />
       </div>
     </main>
   );
