@@ -38,14 +38,7 @@ export default function MapCard() {
       const zoomLevel = mapRef.current?.getZoom();
       zoomLevel && updateZoom(zoomLevel);
     });
-
-    return () => {
-      if (mapRef.current) {
-        mapRef.current.remove();
-        mapRef.current = null;
-      }
-    };
-  }, []);
+  }, [lng, lat, zoom, updateCoordinates, updateZoom]);
 
   return (
     <div
