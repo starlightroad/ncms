@@ -8,6 +8,10 @@ export default function AddLocationForm() {
     <form id="location-form" action="">
       <div className="space-y-4">
         <fieldset className="space-y-2">
+          <Label htmlFor="name">Name</Label>
+          <Input type="text" id="name" name="name" placeholder="Acme Palace" className="h-9" />
+        </fieldset>
+        <fieldset className="space-y-2">
           <Label htmlFor="street">Street</Label>
           <Input type="text" id="street" name="street" placeholder="123 Main St" className="h-9" />
         </fieldset>

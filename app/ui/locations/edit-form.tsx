@@ -7,6 +7,17 @@ export default function EditLocationForm({ location }: { location: Location }) {
     <form id="location-form" action="">
       <div className="space-y-4">
         <fieldset className="space-y-2">
+          <Label htmlFor="name">Name</Label>
+          <Input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Acme Palace"
+            className="h-9"
+            defaultValue={location.name}
+          />
+        </fieldset>
+        <fieldset className="space-y-2">
           <Label htmlFor="street">Street</Label>
           <Input
             type="text"

@@ -47,6 +47,10 @@ export default function Location({ params }: { params: { id: string } }) {
 
   const items = [
     {
+      label: 'Name',
+      description: data.name,
+    },
+    {
       label: 'Street',
       description: data.street,
     },

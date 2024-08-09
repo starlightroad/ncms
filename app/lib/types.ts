@@ -18,7 +18,7 @@ export type Circuit = {
 
 type URLString = string;
 
-export type Location = { id: number } & Address;
+export type Location = Address & { id: number; name: string };
 
 export type Vendor = {
   id: number;

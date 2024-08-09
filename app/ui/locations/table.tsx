@@ -10,6 +10,7 @@ export default function LocationsTable() {
       <Table className="bg-white">
         <TableHeader className="bg-gray-50">
           <TableRow>
+            <TableHead className="text-xs uppercase">Name</TableHead>
             <TableHead className="text-xs uppercase">Street</TableHead>
             <TableHead className="text-xs uppercase">City</TableHead>
             <TableHead className="text-xs uppercase">State</TableHead>
@@ -21,6 +22,7 @@ export default function LocationsTable() {
           {data.map((entry) => {
             return (
               <TableRow key={entry.id}>
+                <TableCell className="text-gray-600">{entry.name}</TableCell>
                 <TableCell className="text-gray-600">{entry.street}</TableCell>
                 <TableCell className="text-gray-600">{entry.city}</TableCell>
                 <TableCell className="text-gray-600">{entry.state}</TableCell>
