@@ -1,33 +1,19 @@
-import type { Vendor } from '@/app/lib/types';
+import prisma from '@/prisma/client';
 
-const placeholderData: Vendor[] = [
-  {
-    id: 1,
-    name: 'Crown Castle Fiber',
-    website: 'https://crowncastle.com',
-    supportLine: '888-123-4567',
-  },
-  {
-    id: 2,
-    name: 'Lumen',
-    website: 'https://lumen.com',
-    supportLine: '888-246-8100',
-  },
-  {
-    id: 3,
-    name: 'Zayo',
-    website: 'https://zayo.com',
-    supportLine: '888-369-1215',
-  },
-];
-
-export const getVendors = () => {
-  return placeholderData;
+export const getVendors = async () => {
+  try {
+    const vendors = await prisma.vendor.findMany();
+    return vendors;
+  } catch (error) {
+    throw new Error('Failed to fetch vendors.');
+  }
 };
 
-export const getVendor = (id: number) => {
-  const data = placeholderData.find((data) => data.id === id);
-  return data;
+export const getVendorById = async (id: string) => {
+  try {
+    const vendor = await prisma.vendor.findUnique({ where: { id } });
+    return vendor;
+  } catch (error) {
+    throw new Error('Failed to fetch vendor.');
+  }
 };
-
-export const deleteVendor = (id: number) => {};

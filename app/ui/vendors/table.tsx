@@ -3,8 +3,16 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { getVendors } from '@/app/data/vendor';
 import TableActionsList from '@/app/ui/vendors/actions-list';
 
-export default function VendorsTable() {
-  const data = getVendors();
+export default async function VendorsTable() {
+  const data = await getVendors();
+
+  if (!data.length) {
+    return (
+      <div className="rounded-xl border bg-white p-5">
+        <p className="text-center text-sm text-gray-600">No entries were found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-hidden rounded-xl border">
@@ -31,7 +39,7 @@ export default function VendorsTable() {
                     {entry.website}
                   </Link>
                 </TableCell>
-                <TableCell className="text-gray-600">{entry.supportLine}</TableCell>
+                <TableCell className="text-gray-600">{entry.phone}</TableCell>
                 <TableCell>
                   <TableActionsList vendor={entry} />
                 </TableCell>
