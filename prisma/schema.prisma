@@ -6,3 +6,88 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Company {
+  id   String @id @default(cuid())
+  name String @unique @db.VarChar(100)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user     User[]
+  vendor   Vendor[]
+  location Location[]
+  circuit  Circuit[]
+
+  @@map("company")
+}
+
+model User {
+  id        String @id @default(cuid())
+  companyId String @map("company_id")
+  name      String @db.VarChar(100)
+  email     String @unique @db.VarChar(80)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  company Company @relation(fields: [companyId], references: [id])
+
+  @@map("user")
+}
+
+model Vendor {
+  id        String @id @default(cuid())
+  companyId String @map("company_id")
+  name      String @db.VarChar(100)
+  website   String @db.Text
+  phone     String @db.VarChar(20)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  company Company   @relation(fields: [companyId], references: [id])
+  circuit Circuit[]
+
+  @@map("vendor")
+}
+
+model Location {
+  id        String @id @default(cuid())
+  companyId String @map("company_id")
+  name      String @db.VarChar(100)
+  street    String @db.VarChar(100)
+  city      String @db.VarChar(50)
+  state     String @db.Char(2)
+  zip       String @db.VarChar(10)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  company   Company   @relation(fields: [companyId], references: [id])
+  location1 Circuit[] @relation("location1")
+  location2 Circuit[] @relation("location2")
+
+  @@map("location")
+}
+
+model Circuit {
+  id          String @id @default(cuid())
+  cid         String @db.VarChar(100)
+  companyId   String @map("company_id")
+  vendorId    String @db.VarChar(100)
+  location1Id String @map("location1_id")
+  location2Id String @map("location2_id")
+  type        String @db.VarChar(20)
+  capacity    String @db.VarChar(10)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  company   Company  @relation(fields: [companyId], references: [id])
+  vendor    Vendor   @relation(fields: [vendorId], references: [id])
+  location1 Location @relation("location1", fields: [location1Id], references: [id])
+  location2 Location @relation("location2", fields: [location2Id], references: [id])
+
+  @@map("circuit")
+}
