@@ -1,3 +1,7 @@
+import { z } from 'zod';
+import { Vendor } from '@prisma/client';
+import { US_PHONE_NUMBER_REGEX } from '@/app/lib/constants';
+
 export type Address = {
   street: string;
   city: string;
@@ -16,13 +20,12 @@ export type Circuit = {
   };
 };
 
-type URLString = string;
-
 export type Location = Address & { id: number; name: string };
 
-export type Vendor = {
-  id: number;
-  name: string;
-  website: URLString;
-  supportLine: string;
-};
+export { type Vendor };
+
+export const VendorSchema = z.object({
+  name: z.string().trim().min(1, { message: 'Name is Required.' }),
+  website: z.string().trim().url({ message: 'Invalid URL.' }),
+  phone: z.string().trim().regex(US_PHONE_NUMBER_REGEX, { message: 'Invalid Phone Number.' }),
+});
