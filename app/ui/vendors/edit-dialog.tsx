@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import type { Vendor } from '@/app/lib/types';
 import { PencilIcon } from 'lucide-react';
-import { Button } from '../button';
-import EditVendorForm from './edit-form';
+import { Button } from '@/app/ui/button';
+import EditVendorForm from '@/app/ui/vendors/edit-form';
 import {
   Dialog,
   DialogContent,
