@@ -5,18 +5,11 @@ import type { DialogState, Vendor } from '@/app/lib/types';
 import { Label } from '@/app/ui/label';
 import { Input } from '@/app/ui/input';
 import { updateVendor } from '@/app/vendors/actions';
+import FormStatusMessage from '@/app/ui/form-status-message';
 
 const initialState = {
   message: '',
 };
-
-function StatusMessage({ message }: { message: string }) {
-  return (
-    <div className="rounded-md bg-red-50 p-3">
-      <p className="text-sm font-medium text-red-600">{message}</p>
-    </div>
-  );
-}
 
 type Props = {
   vendor: Vendor;
@@ -34,7 +27,7 @@ export default function EditVendorForm({ vendor, dialogState }: Props) {
   return (
     <form id="vendor-form" action={formAction}>
       <div className="space-y-4">
-        {state?.message && <StatusMessage message={String(state.message)} />}
+        {state?.message && <FormStatusMessage message={String(state.message)} />}
         <fieldset className="space-y-2">
           <Label htmlFor="name">Name</Label>
           <Input

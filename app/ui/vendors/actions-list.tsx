@@ -7,6 +7,7 @@ import type { Vendor } from '@/app/lib/types';
 import { Button } from '@/app/ui/button';
 import EditVendorForm from '@/app/ui/vendors/edit-form';
 import DeleteVendorForm from '@/app/ui/vendors/delete-form';
+import FormStatusMessage from '@/app/ui/form-status-message';
 import {
   Dialog,
   DialogClose,
@@ -17,14 +18,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/app/ui/dialog';
-
-function StatusMessage({ message }: { message: string }) {
-  return (
-    <div className="rounded-md bg-red-50 p-3">
-      <p className="text-sm font-medium text-red-600">{message}</p>
-    </div>
-  );
-}
 
 export default function TableActionsList({ vendor }: { vendor: Vendor }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -82,7 +75,7 @@ export default function TableActionsList({ vendor }: { vendor: Vendor }) {
               <DialogTitle>Delete Vendor</DialogTitle>
               <DialogDescription>Are you sure you want to delete this vendor?</DialogDescription>
             </DialogHeader>
-            {deleteFormActionMessage && <StatusMessage message={deleteFormActionMessage} />}
+            {deleteFormActionMessage && <FormStatusMessage message={deleteFormActionMessage} />}
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="button" variant="outline" size="sm">
