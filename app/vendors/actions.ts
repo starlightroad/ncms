@@ -2,6 +2,7 @@
 
 import prisma from '@/prisma/client';
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 import { getDemoCompanyId } from '@/app/data/demo';
 import { VendorSchema } from '@/app/lib/types';
 
@@ -108,4 +109,5 @@ export const deleteVendor = async (id: string) => {
   }
 
   revalidatePath('/vendors');
+  redirect('/vendors');
 };
