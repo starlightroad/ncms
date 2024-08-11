@@ -28,7 +28,7 @@ export default function AddVendorForm() {
   }
 
   return (
-    <form id="location-form" action={formAction}>
+    <form id="vendor-form" action={formAction}>
       <div className="space-y-4">
         {state?.message && <StatusMessage message={String(state.message)} />}
         <fieldset className="space-y-2">

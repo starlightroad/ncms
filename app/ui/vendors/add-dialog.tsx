@@ -27,7 +27,7 @@ export default function AddVendorDialog() {
         </DialogHeader>
         <AddVendorForm />
         <DialogFooter>
-          <Button type="submit" form="location-form" size="sm">
+          <Button type="submit" form="vendor-form" size="sm">
             Create
           </Button>
         </DialogFooter>
