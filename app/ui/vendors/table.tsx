@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/ui/table';
 import { getVendors } from '@/app/data/vendor';
 import TableActionsList from '@/app/ui/vendors/actions-list';
+import { formatPhoneNumber } from '@/app/lib/utils';
 
 export default async function VendorsTable() {
   const data = await getVendors();
@@ -39,7 +40,7 @@ export default async function VendorsTable() {
                     {entry.website}
                   </Link>
                 </TableCell>
-                <TableCell className="text-gray-600">{entry.phone}</TableCell>
+                <TableCell className="text-gray-600">{formatPhoneNumber(entry.phone)}</TableCell>
                 <TableCell>
                   <TableActionsList vendor={entry} />
                 </TableCell>

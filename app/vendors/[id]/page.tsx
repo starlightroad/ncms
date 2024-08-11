@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
 import { getVendorById } from '@/app/data/vendor';
 import EditVendorDialog from '@/app/ui/vendors/[id]/edit-dialog';
 import DeleteVendorDialog from '@/app/ui/vendors/[id]/delete-dialog';
+import { formatPhoneNumber } from '@/app/lib/utils';
 
 type Props = {
   params: { id: string };
@@ -44,7 +45,7 @@ export default async function Vendor({ params }: { params: { id: string } }) {
     },
     {
       label: 'Support Line',
-      description: data.phone,
+      description: formatPhoneNumber(data.phone),
     },
   ];
 

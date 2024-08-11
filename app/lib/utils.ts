@@ -41,3 +41,14 @@ export const mockSlowDataFetching = async <T>(
     );
   });
 };
+
+export const formatPhoneNumber = (phoneNumber: string) => {
+  const match = phoneNumber.match(/^(\d{3})(\d{3})(\d{4})/);
+
+  if (match) {
+    const [areaCode, phonePrefix, lineNumber] = match.slice(1);
+    return `${areaCode}-${phonePrefix}-${lineNumber}`;
+  } else {
+    return phoneNumber;
+  }
+};
