@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 import { type Dispatch, type SetStateAction, useEffect } from 'react';
 import type { DialogState } from '@/app/lib/types';
 import { Button } from '@/app/ui/button';
@@ -13,28 +13,45 @@ const initialState = {
 type Props = {
   vendorId: string;
   dialogState: DialogState;
-  setFormMessage: Dispatch<SetStateAction<string>>;
+  formState: {
+    setFormMessage: Dispatch<SetStateAction<string>>;
+  };
 };
 
-export default function DeleteVendorForm({ vendorId, dialogState, setFormMessage }: Props) {
+export default function DeleteVendorForm({ vendorId, dialogState, formState }: Props) {
   const deleteVendorWithId = deleteVendor.bind(null, vendorId);
   const [state, formAction] = useFormState(deleteVendorWithId, initialState);
 
-  useEffect(() => {
-    if (dialogState.isOpen && !state) {
-      dialogState.setIsOpen(false);
-    }
+  return (
+    <form id="vendor-form" action={formAction}>
+      <FormButton
+        dialogState={dialogState}
+        formState={{ message: state?.message, setFormMessage: formState.setFormMessage }}
+      />
+    </form>
+  );
+}
 
-    if (state?.message) {
-      setFormMessage(state.message);
+type FormButtonProps = {
+  dialogState: DialogState;
+  formState: {
+    message?: string;
+    setFormMessage: Dispatch<SetStateAction<string>>;
+  };
+};
+
+function FormButton({ dialogState, formState }: FormButtonProps) {
+  const { pending } = useFormStatus();
+
+  useEffect(() => {
+    if (formState.message === undefined) {
+      dialogState.setIsOpen(false);
     }
   });
 
   return (
-    <form id="vendor-form" action={formAction}>
-      <Button type="submit" form="vendor-form" size="sm">
-        Yes
-      </Button>
-    </form>
+    <Button type="submit" form="vendor-form" size="sm" disabled={pending}>
+      Yes
+    </Button>
   );
 }
