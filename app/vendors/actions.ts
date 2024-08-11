@@ -97,3 +97,15 @@ export const updateVendor = async (id: string, _: any, formData: FormData) => {
 
   revalidatePath('/vendors');
 };
+
+export const deleteVendor = async (id: string) => {
+  try {
+    await prisma.vendor.delete({ where: { id } });
+  } catch (error) {
+    return {
+      message: 'Failed to Delete Vendor.',
+    };
+  }
+
+  revalidatePath('/vendors');
+};

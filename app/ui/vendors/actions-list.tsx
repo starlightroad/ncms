@@ -18,8 +18,18 @@ import {
   DialogTrigger,
 } from '@/app/ui/dialog';
 
+function StatusMessage({ message }: { message: string }) {
+  return (
+    <div className="rounded-md bg-red-50 p-3">
+      <p className="text-sm font-medium text-red-600">{message}</p>
+    </div>
+  );
+}
+
 export default function TableActionsList({ vendor }: { vendor: Vendor }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [deleteFormActionMessage, setDeleteFormActionMessage] = useState('');
 
   return (
     <ul className="flex space-x-3">
@@ -58,7 +68,7 @@ export default function TableActionsList({ vendor }: { vendor: Vendor }) {
         </Dialog>
       </li>
       <li>
-        <Dialog>
+        <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
           <DialogTrigger asChild>
             <Button
               variant="ghost"
@@ -72,13 +82,18 @@ export default function TableActionsList({ vendor }: { vendor: Vendor }) {
               <DialogTitle>Delete Vendor</DialogTitle>
               <DialogDescription>Are you sure you want to delete this vendor?</DialogDescription>
             </DialogHeader>
+            {deleteFormActionMessage && <StatusMessage message={deleteFormActionMessage} />}
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="button" variant="outline" size="sm">
                   Cancel
                 </Button>
               </DialogClose>
-              <DeleteVendorForm vendorId={vendor.id} />
+              <DeleteVendorForm
+                vendorId={vendor.id}
+                dialogState={{ isOpen: isDeleteOpen, setIsOpen: setIsDeleteOpen }}
+                setFormMessage={setDeleteFormActionMessage}
+              />
             </DialogFooter>
           </DialogContent>
         </Dialog>
