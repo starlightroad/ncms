@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Location({ params }: { params: { id: string } }) {
+export default async function Vendor({ params }: { params: { id: string } }) {
   const data = await getVendorById(params.id);
 
   if (!data) {
