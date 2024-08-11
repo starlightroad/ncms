@@ -36,7 +36,7 @@ export default function EditVendorForm({ vendor }: { vendor: Vendor }) {
             name="phone"
             placeholder="8881239876"
             className="h-9"
-            defaultValue={vendor.supportLine}
+            defaultValue={vendor.phone}
           />
         </fieldset>
       </div>
