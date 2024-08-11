@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
 import { EyeIcon, PencilIcon, Trash2Icon } from 'lucide-react';
 import type { Vendor } from '@/app/lib/types';
 import { Button } from '@/app/ui/button';
@@ -16,6 +19,8 @@ import {
 } from '@/app/ui/dialog';
 
 export default function TableActionsList({ vendor }: { vendor: Vendor }) {
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
   return (
     <ul className="flex space-x-3">
       <li>
@@ -27,7 +32,7 @@ export default function TableActionsList({ vendor }: { vendor: Vendor }) {
         </Link>
       </li>
       <li>
-        <Dialog>
+        <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
           <DialogTrigger asChild>
             <Button variant="ghost" className="h-7 px-1 text-gray-600">
               <PencilIcon className="h-5 w-5" />
@@ -36,10 +41,16 @@ export default function TableActionsList({ vendor }: { vendor: Vendor }) {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Edit Vendor</DialogTitle>
+              <DialogDescription className="sr-only">
+                Edit the details below to make any changes.
+              </DialogDescription>
             </DialogHeader>
-            <EditVendorForm vendor={vendor} />
+            <EditVendorForm
+              vendor={vendor}
+              dialogState={{ isOpen: isEditOpen, setIsOpen: setIsEditOpen }}
+            />
             <DialogFooter>
-              <Button type="submit" form="vendor-form">
+              <Button type="submit" size="sm" form="vendor-form">
                 Update
               </Button>
             </DialogFooter>

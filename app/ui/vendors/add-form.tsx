@@ -1,11 +1,10 @@
 'use client';
 
-import { useContext } from 'react';
 import { useFormState } from 'react-dom';
+import type { DialogState } from '@/app/lib/types';
 import { Label } from '@/app/ui/label';
 import { Input } from '@/app/ui/input';
 import { createVendor } from '@/app/vendors/actions';
-import { DialogContext } from '@/app/ui/dialog-provider';
 
 const initialState = {
   message: '',
@@ -19,12 +18,11 @@ function StatusMessage({ message }: { message: string }) {
   );
 }
 
-export default function AddVendorForm() {
+export default function AddVendorForm({ dialogState }: { dialogState: DialogState }) {
   const [state, formAction] = useFormState(createVendor, initialState);
-  const { isOpen, setIsOpen } = useContext(DialogContext);
 
-  if (isOpen && state?.message === undefined) {
-    setIsOpen(false);
+  if (dialogState.isOpen && state?.message === undefined) {
+    dialogState.setIsOpen(false);
   }
 
   return (

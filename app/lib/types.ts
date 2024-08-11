@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { Vendor } from '@prisma/client';
+import type { Dispatch, SetStateAction } from 'react';
 import { US_PHONE_NUMBER_REGEX } from '@/app/lib/constants';
 
 export type Address = {
@@ -29,3 +30,5 @@ export const VendorSchema = z.object({
   website: z.string().trim().url({ message: 'Invalid URL.' }),
   phone: z.string().trim().regex(US_PHONE_NUMBER_REGEX, { message: 'Invalid Phone Number.' }),
 });
+
+export type DialogState = { isOpen: boolean; setIsOpen: Dispatch<SetStateAction<boolean>> };

@@ -1,11 +1,40 @@
-import type { Vendor } from '@/app/lib/types';
+'use client';
+
+import { useFormState } from 'react-dom';
+import type { DialogState, Vendor } from '@/app/lib/types';
 import { Label } from '@/app/ui/label';
 import { Input } from '@/app/ui/input';
+import { updateVendor } from '@/app/vendors/actions';
 
-export default function EditVendorForm({ vendor }: { vendor: Vendor }) {
+const initialState = {
+  message: '',
+};
+
+function StatusMessage({ message }: { message: string }) {
   return (
-    <form id="location-form" action="">
+    <div className="rounded-md bg-red-50 p-3">
+      <p className="text-sm font-medium text-red-600">{message}</p>
+    </div>
+  );
+}
+
+type Props = {
+  vendor: Vendor;
+  dialogState: DialogState;
+};
+
+export default function EditVendorForm({ vendor, dialogState }: Props) {
+  const updateVendorWithId = updateVendor.bind(null, vendor.id);
+  const [state, formAction] = useFormState(updateVendorWithId, initialState);
+
+  if (dialogState.isOpen && state?.message === undefined) {
+    dialogState.setIsOpen(false);
+  }
+
+  return (
+    <form id="vendor-form" action={formAction}>
       <div className="space-y-4">
+        {state?.message && <StatusMessage message={String(state.message)} />}
         <fieldset className="space-y-2">
           <Label htmlFor="name">Name</Label>
           <Input
