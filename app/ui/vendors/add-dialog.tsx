@@ -7,6 +7,7 @@ import AddVendorForm from '@/app/ui/vendors/add-form';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -24,6 +25,9 @@ export default function AddVendorDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New Vendor</DialogTitle>
+          <DialogDescription className="sr-only">
+            Fill in the details below to create a new entry.
+          </DialogDescription>
         </DialogHeader>
         <AddVendorForm />
         <DialogFooter>
