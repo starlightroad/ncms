@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Building2Icon, MapIcon } from 'lucide-react';
+import { Building2Icon } from 'lucide-react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
@@ -7,6 +7,7 @@ import { getVendorById } from '@/app/data/vendor';
 import EditVendorDialog from '@/app/ui/vendors/[id]/edit-dialog';
 import DeleteVendorDialog from '@/app/ui/vendors/[id]/delete-dialog';
 import { formatPhoneNumber } from '@/app/lib/utils';
+import Link from 'next/link';
 
 type Props = {
   params: { id: string };
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const vendor = await getVendorById(id);
 
   return {
-    title: vendor?.name,
+    title: vendor?.name ?? 'Vendor Not Found',
   };
 }
 
@@ -28,8 +29,13 @@ export default async function Vendor({ params }: { params: { id: string } }) {
     return (
       <main>
         <PageHeader>
-          <PageHeading>Vendor With ID {params.id} Was Not Found</PageHeading>
+          <PageHeading>Vendor Not Found</PageHeading>
         </PageHeader>
+        <div className="rounded-xl border bg-white p-5">
+          <p className="text-center text-sm text-gray-600">
+            The Vendor with the ID <span className="font-medium">{params.id}</span> was not found.
+          </p>
+        </div>
       </main>
     );
   }
@@ -41,7 +47,11 @@ export default async function Vendor({ params }: { params: { id: string } }) {
     },
     {
       label: 'Website',
-      description: data.website,
+      description: (
+        <Link href={data.website} target="_blank" className="text-blue-600 hover:text-opacity-85">
+          {data.website}
+        </Link>
+      ),
     },
     {
       label: 'Support Line',
@@ -60,7 +70,7 @@ export default async function Vendor({ params }: { params: { id: string } }) {
           </div>
         </div>
       </PageHeader>
-      <div className="grid grid-cols-2 gap-6">
+      <div>
         <Card>
           <CardHeader className="pb-0">
             <header className="mb-8 flex items-center space-x-2">
@@ -82,14 +92,6 @@ export default async function Vendor({ params }: { params: { id: string } }) {
               );
             })}
           </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-0">
-            <header className="mb-8 flex items-center space-x-2">
-              <MapIcon className="h-5 w-5 text-gray-900" />
-              <CardTitle className="text-sm font-medium uppercase text-gray-900">Map</CardTitle>
-            </header>
-          </CardHeader>
         </Card>
       </div>
     </main>
