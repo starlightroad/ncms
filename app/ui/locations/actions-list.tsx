@@ -1,19 +1,10 @@
+'use client';
+
 import Link from 'next/link';
-import { EyeIcon, PencilIcon, Trash2Icon } from 'lucide-react';
+import { EyeIcon } from 'lucide-react';
 import type { Location } from '@/app/lib/types';
-import { Button } from '@/app/ui/button';
-import EditLocationForm from '@/app/ui/locations/edit-form';
-import DeleteLocationForm from '@/app/ui/locations/delete-form';
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/app/ui/dialog';
+import EditLocationDialog from '@/app/ui/locations/edit-dialog';
+import DeleteLocationDialog from '@/app/ui/locations/delete-dialog';
 
 export default function TableActionsList({ location }: { location: Location }) {
   return (
@@ -27,50 +18,10 @@ export default function TableActionsList({ location }: { location: Location }) {
         </Link>
       </li>
       <li>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="ghost" className="h-7 px-1 text-gray-600">
-              <PencilIcon className="h-5 w-5" />
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Edit Location</DialogTitle>
-            </DialogHeader>
-            <EditLocationForm location={location} />
-            <DialogFooter>
-              <Button type="submit" form="location-form">
-                Update
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <EditLocationDialog location={location} />
       </li>
       <li>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              variant="ghost"
-              className="h-7 px-1 text-gray-600 hover:bg-red-100 hover:text-red-600"
-            >
-              <Trash2Icon className="h-5 w-5" />
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Delete Location</DialogTitle>
-              <DialogDescription>Are you sure you want to delete this location?</DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button type="button" variant="outline" size="sm">
-                  Cancel
-                </Button>
-              </DialogClose>
-              <DeleteLocationForm locationId={location.id} />
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <DeleteLocationDialog locationId={location.id} />
       </li>
     </ul>
   );

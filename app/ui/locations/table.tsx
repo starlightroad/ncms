@@ -2,8 +2,16 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import TableActionsList from '@/app/ui/locations/actions-list';
 import { getLocations } from '@/app/data/location';
 
-export default function LocationsTable() {
-  const data = getLocations();
+export default async function LocationsTable() {
+  const data = await getLocations();
+
+  if (!data.length) {
+    return (
+      <div className="rounded-xl border bg-white p-5">
+        <p className="text-center text-sm text-gray-600">No entries were found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-hidden rounded-xl border">
