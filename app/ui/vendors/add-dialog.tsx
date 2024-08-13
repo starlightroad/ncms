@@ -7,7 +7,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -28,12 +27,7 @@ export default function AddVendorDialog() {
             Fill in the details below to create a new entry.
           </DialogDescription>
         </DialogHeader>
-        <AddVendorForm dialogState={{ isOpen, setIsOpen }} />
-        <DialogFooter>
-          <Button type="submit" form="vendor-form" size="sm">
-            Create
-          </Button>
-        </DialogFooter>
+        <AddVendorForm dialogState={{ setIsOpen }} />
       </DialogContent>
     </Dialog>
   );

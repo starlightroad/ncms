@@ -1,11 +1,14 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useEffect } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
 import type { DialogState } from '@/app/lib/types';
 import { Label } from '@/app/ui/label';
 import { Input } from '@/app/ui/input';
 import { createVendor } from '@/app/vendors/actions';
 import FormStatusMessage from '@/app/ui/form-status-message';
+import { DialogFooter } from '@/app/ui/dialog';
+import { Button } from '@/app/ui/button';
 
 const initialState = {
   message: '',
@@ -13,10 +16,6 @@ const initialState = {
 
 export default function AddVendorForm({ dialogState }: { dialogState: DialogState }) {
   const [state, formAction] = useFormState(createVendor, initialState);
-
-  if (dialogState.isOpen && state?.message === undefined) {
-    dialogState.setIsOpen(false);
-  }
 
   return (
     <form id="vendor-form" action={formAction}>
@@ -40,7 +39,31 @@ export default function AddVendorForm({ dialogState }: { dialogState: DialogStat
           <Label htmlFor="phone">Support Line</Label>
           <Input type="text" id="phone" name="phone" placeholder="888-123-9876" className="h-9" />
         </fieldset>
+        <FormButton formMessage={state?.message} dialogState={dialogState} />
       </div>
     </form>
+  );
+}
+
+type FormButtonProps = {
+  formMessage?: string | string[];
+  dialogState: DialogState;
+};
+
+function FormButton({ formMessage, dialogState }: FormButtonProps) {
+  const { pending } = useFormStatus();
+
+  useEffect(() => {
+    if (formMessage === undefined) {
+      dialogState.setIsOpen(false);
+    }
+  });
+
+  return (
+    <DialogFooter>
+      <Button type="submit" size="sm" form="vendor-form" disabled={pending}>
+        Create
+      </Button>
+    </DialogFooter>
   );
 }
