@@ -1,26 +1,20 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
-import type { DialogState, Location } from '@/app/lib/types';
+import type { Location } from '@/app/lib/types';
+import { updateLocation } from '@/app/locations/actions';
+import FormStatusMessage from '@/app/ui/form-status-message';
 import { Label } from '@/app/ui/label';
 import { Input } from '@/app/ui/input';
-import { updateLocation } from '@/app/locations/actions';
-import { DialogFooter } from '../dialog';
-import { Button } from '../button';
-import FormStatusMessage from '../form-status-message';
+import { Button } from '@/app/ui/button';
+import Link from 'next/link';
 
 const initialState = {
   message: '',
 };
 
-type Props = {
-  location: Location;
-  dialogState: DialogState;
-};
-
-export default function EditLocationForm({ location, dialogState }: Props) {
-  const updateLocationWithId = updateLocation.bind(null, location.id);
+export default function EditLocationForm({ data }: { data: Location }) {
+  const updateLocationWithId = updateLocation.bind(null, data.id);
   const [state, formAction] = useFormState(updateLocationWithId, initialState);
 
   return (
@@ -35,7 +29,7 @@ export default function EditLocationForm({ location, dialogState }: Props) {
             name="name"
             placeholder="Acme Palace"
             className="h-9"
-            defaultValue={location.name}
+            defaultValue={data.name}
           />
         </fieldset>
         <fieldset className="space-y-2">
@@ -46,7 +40,7 @@ export default function EditLocationForm({ location, dialogState }: Props) {
             name="street"
             placeholder="123 Main St"
             className="h-9"
-            defaultValue={location.street}
+            defaultValue={data.street}
           />
         </fieldset>
         <fieldset className="space-y-2">
@@ -57,7 +51,7 @@ export default function EditLocationForm({ location, dialogState }: Props) {
             name="city"
             placeholder="Miami"
             className="h-9"
-            defaultValue={location.city}
+            defaultValue={data.city}
           />
         </fieldset>
         <fieldset className="space-y-2">
@@ -68,7 +62,7 @@ export default function EditLocationForm({ location, dialogState }: Props) {
             name="state"
             placeholder="FL"
             className="h-9"
-            defaultValue={location.state}
+            defaultValue={data.state}
           />
         </fieldset>
         <fieldset className="space-y-2">
@@ -79,34 +73,26 @@ export default function EditLocationForm({ location, dialogState }: Props) {
             name="zip"
             placeholder="33111"
             className="h-9"
-            defaultValue={location.zip}
+            defaultValue={data.zip}
           />
         </fieldset>
-        <FormButton formMessage={state?.message} dialogState={dialogState} />
+        <div className="flex justify-end space-x-3">
+          <Button size="sm" variant="secondary" asChild>
+            <Link href={`/locations/${data.id}`}>Cancel</Link>
+          </Button>
+          <FormButton />
+        </div>
       </div>
     </form>
   );
 }
 
-type FormButtonProps = {
-  formMessage?: string | string[];
-  dialogState: DialogState;
-};
-
-function FormButton({ formMessage, dialogState }: FormButtonProps) {
+function FormButton() {
   const { pending } = useFormStatus();
 
-  useEffect(() => {
-    if (formMessage === undefined) {
-      dialogState.setIsOpen(false);
-    }
-  });
-
   return (
-    <DialogFooter>
-      <Button type="submit" size="sm" form="location-form" disabled={pending}>
-        Update
-      </Button>
-    </DialogFooter>
+    <Button type="submit" size="sm" form="location-form" disabled={pending}>
+      Update
+    </Button>
   );
 }

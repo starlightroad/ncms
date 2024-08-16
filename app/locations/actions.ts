@@ -105,6 +105,7 @@ export const updateLocation = async (id: string, _: any, formData: FormData) => 
   }
 
   revalidatePath('/locations');
+  redirect(`/locations/${id}`);
 };
 
 export const deleteLocation = async (id: string) => {
