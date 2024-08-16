@@ -9,7 +9,7 @@ export type Address = {
   street: string;
   city: string;
   state: string;
-  zip: number;
+  zip: string;
 };
 
 export type Circuit = {
