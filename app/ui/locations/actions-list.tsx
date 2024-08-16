@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { EyeIcon } from 'lucide-react';
+import { EyeIcon, PencilIcon } from 'lucide-react';
 import type { Location } from '@/app/lib/types';
-import EditLocationDialog from '@/app/ui/locations/edit-dialog';
+import { Button } from '@/app/ui/button';
 import DeleteLocationDialog from '@/app/ui/locations/delete-dialog';
 
 export default function TableActionsList({ location }: { location: Location }) {
@@ -18,7 +18,11 @@ export default function TableActionsList({ location }: { location: Location }) {
         </Link>
       </li>
       <li>
-        <EditLocationDialog location={location} />
+        <Button variant="ghost" className="h-7 px-1 text-gray-600" asChild>
+          <Link href={`/locations/${location.id}/edit`}>
+            <PencilIcon className="h-5 w-5" />
+          </Link>
+        </Button>
       </li>
       <li>
         <DeleteLocationDialog locationId={location.id} />
