@@ -97,6 +97,7 @@ export const updateVendor = async (id: string, _: any, formData: FormData) => {
   }
 
   revalidatePath('/vendors');
+  redirect('/vendors');
 };
 
 export const deleteVendor = async (id: string) => {
