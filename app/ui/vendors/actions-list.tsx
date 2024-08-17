@@ -1,10 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { EyeIcon, PencilIcon } from 'lucide-react';
+import { EyeIcon, PencilIcon, Trash2Icon } from 'lucide-react';
 import type { Vendor } from '@/app/lib/types';
-import DeleteVendorDialog from '@/app/ui/vendors/delete-dialog';
+import DeleteVendorModal from '@/app/ui/vendors/delete-modal';
 import { Button } from '@/app/ui/button';
+
+const DeleteButton = (
+  <Button variant="ghost" className="h-7 px-1 text-gray-600 hover:bg-red-100 hover:text-red-600">
+    <Trash2Icon className="h-5 w-5" />
+  </Button>
+);
 
 export default function TableActionsList({ vendor }: { vendor: Vendor }) {
   return (
@@ -25,7 +31,7 @@ export default function TableActionsList({ vendor }: { vendor: Vendor }) {
         </Button>
       </li>
       <li>
-        <DeleteVendorDialog vendorId={vendor.id} />
+        <DeleteVendorModal vendorId={vendor.id} trigger={DeleteButton} />
       </li>
     </ul>
   );

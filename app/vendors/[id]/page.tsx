@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
-import { Building2Icon } from 'lucide-react';
+import { Building2Icon, Trash2Icon } from 'lucide-react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
 import { getVendorById } from '@/app/data/vendor';
 import EditVendorDialog from '@/app/ui/vendors/[id]/edit-dialog';
-import DeleteVendorDialog from '@/app/ui/vendors/[id]/delete-dialog';
+import DeleteVendorModal from '@/app/ui/vendors/delete-modal';
 import { formatPhoneNumber } from '@/app/lib/utils';
 import Link from 'next/link';
+import { Button } from '@/app/ui/button';
 
 type Props = {
   params: { id: string };
@@ -21,6 +22,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: vendor?.name ?? 'Vendor Not Found',
   };
 }
+
+const DeleteButton = (
+  <Button type="button" size="sm" variant="outline" className="gap-1">
+    <Trash2Icon className="h-4 w-4" />
+    Delete
+  </Button>
+);
 
 export default async function Vendor({ params }: { params: { id: string } }) {
   const data = await getVendorById(params.id);
@@ -66,7 +74,7 @@ export default async function Vendor({ params }: { params: { id: string } }) {
           <PageHeading>{data.name}</PageHeading>
           <div className="space-x-2">
             <EditVendorDialog vendor={data} />
-            <DeleteVendorDialog vendor={data} />
+            <DeleteVendorModal vendorId={data.id} trigger={DeleteButton} />
           </div>
         </div>
       </PageHeader>
