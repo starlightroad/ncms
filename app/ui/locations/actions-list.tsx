@@ -1,10 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { EyeIcon, PencilIcon } from 'lucide-react';
+import { EyeIcon, PencilIcon, Trash2Icon } from 'lucide-react';
 import type { Location } from '@/app/lib/types';
 import { Button } from '@/app/ui/button';
-import DeleteLocationDialog from '@/app/ui/locations/delete-dialog';
+import DeleteLocationModal from '@/app/ui/locations/delete-modal';
+
+const DeleteButton = (
+  <Button variant="ghost" className="h-7 px-1 text-gray-600 hover:bg-red-100 hover:text-red-600">
+    <Trash2Icon className="h-5 w-5" />
+  </Button>
+);
 
 export default function TableActionsList({ location }: { location: Location }) {
   return (
@@ -25,7 +31,7 @@ export default function TableActionsList({ location }: { location: Location }) {
         </Button>
       </li>
       <li>
-        <DeleteLocationDialog locationId={location.id} />
+        <DeleteLocationModal locationId={location.id} trigger={DeleteButton} />
       </li>
     </ul>
   );

@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Edit2Icon, MapIcon, MapPinIcon } from 'lucide-react';
+import { Edit2Icon, MapIcon, MapPinIcon, Trash2Icon } from 'lucide-react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import { Button } from '@/app/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
 import { formatAddress } from '@/app/lib/utils';
 import { getLocation } from '@/app/data/location';
+import DeleteLocationModal from '@/app/ui/locations/delete-modal';
 
 type Props = {
   params: { id: string };
@@ -34,6 +35,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return metadata;
 }
+
+const DeleteButton = (
+  <Button type="button" size="sm" variant="outline" className="gap-1">
+    <Trash2Icon className="h-4 w-4" />
+    Delete
+  </Button>
+);
 
 export default async function Location({ params }: { params: { id: string } }) {
   const data = await getLocation(params.id);
@@ -77,6 +85,7 @@ export default async function Location({ params }: { params: { id: string } }) {
                 Edit
               </Link>
             </Button>
+            <DeleteLocationModal locationId={data.id} trigger={DeleteButton} />
           </div>
         </div>
       </PageHeader>
