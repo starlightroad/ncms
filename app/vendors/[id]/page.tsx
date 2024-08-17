@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
-import { Building2Icon, Trash2Icon } from 'lucide-react';
+import { Building2Icon, Edit2Icon, Trash2Icon } from 'lucide-react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
 import { getVendorById } from '@/app/data/vendor';
-import EditVendorDialog from '@/app/ui/vendors/[id]/edit-dialog';
 import DeleteVendorModal from '@/app/ui/vendors/delete-modal';
 import { formatPhoneNumber } from '@/app/lib/utils';
 import Link from 'next/link';
@@ -73,7 +72,12 @@ export default async function Vendor({ params }: { params: { id: string } }) {
         <div className="flex items-center justify-between">
           <PageHeading>{data.name}</PageHeading>
           <div className="space-x-2">
-            <EditVendorDialog vendor={data} />
+            <Button type="button" size="sm" variant="outline" className="gap-1" asChild>
+              <Link href={`/vendors/${data.id}/edit`}>
+                <Edit2Icon className="h-4 w-4" />
+                Edit
+              </Link>
+            </Button>
             <DeleteVendorModal vendorId={data.id} trigger={DeleteButton} />
           </div>
         </div>
