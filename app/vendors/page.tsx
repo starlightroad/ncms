@@ -1,9 +1,10 @@
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import VendorsTable from '@/app/ui/vendors/table';
-import AddVendorDialog from '@/app/ui/vendors/add-dialog';
+import { Button } from '@/app/ui/button';
 
 export const metadata: Metadata = {
   title: 'Vendors',
@@ -23,9 +24,9 @@ export default function Vendors() {
       <PageHeader>
         <div className="flex items-center justify-between">
           <PageHeading>Vendors</PageHeading>
-          <div className="space-x-2">
-            <AddVendorDialog />
-          </div>
+          <Button type="button" size="sm" asChild>
+            <Link href="/vendors/new">New Vendor</Link>
+          </Button>
         </div>
       </PageHeader>
       <Suspense fallback={<TableSkeleton />}>
