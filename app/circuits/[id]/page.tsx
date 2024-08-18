@@ -6,7 +6,6 @@ import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import { Button } from '@/app/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
-import { formatAddress } from '@/app/lib/utils';
 import { getCircuit } from '@/app/data/circuit';
 import DeleteCircuitModal from '@/app/ui/circuits/delete-modal';
 
@@ -37,15 +36,45 @@ export default async function Circuit({ params }: { params: { id: string } }) {
     return notFound();
   }
 
-  const locationA = formatAddress(data.location1);
-  const locationZ = formatAddress(data.location2);
-
   const items = [
-    { label: 'vendor', description: data.vendor.name },
-    { label: 'type', description: data.type },
-    { label: 'capacity', description: data.capacity },
-    { label: 'a location', description: locationA },
-    { label: 'z location', description: locationZ },
+    {
+      label: 'vendor',
+      description: (
+        <Link href={`/vendors/${data.vendorId}`} className="text-blue-600 hover:text-opacity-85">
+          {data.vendor.name}
+        </Link>
+      ),
+    },
+    {
+      label: 'type',
+      description: data.type,
+    },
+    {
+      label: 'capacity',
+      description: data.capacity,
+    },
+    {
+      label: 'a location',
+      description: (
+        <Link
+          href={`/locations/${data.location1Id}`}
+          className="text-blue-600 hover:text-opacity-85"
+        >
+          {data.location1.name}
+        </Link>
+      ),
+    },
+    {
+      label: 'z location',
+      description: (
+        <Link
+          href={`/locations/${data.location2Id}`}
+          className="text-blue-600 hover:text-opacity-85"
+        >
+          {data.location2.name}
+        </Link>
+      ),
+    },
   ];
 
   return (
