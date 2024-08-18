@@ -64,6 +64,67 @@ export const createCircuit = async (_: any, formData: FormData) => {
   redirect('/circuits');
 };
 
+export const updateCircuit = async (id: string, _: any, formData: FormData) => {
+  const validatedFields = CircuitSchema.safeParse({
+    circuitId: formData.get('circuitId'),
+    vendorId: formData.get('vendorId'),
+    type: formData.get('type'),
+    capacity: formData.get('capacity'),
+    location1Id: formData.get('location1Id'),
+    location2Id: formData.get('location2Id'),
+  });
+
+  if (!validatedFields.success) {
+    const errors = validatedFields.error.flatten().fieldErrors;
+
+    return {
+      message: Object.values(errors)[0],
+    };
+  }
+
+  if (validatedFields.data.location1Id === validatedFields.data.location2Id) {
+    return {
+      message: 'Locations Must Be Unique.',
+    };
+  }
+
+  const { circuitId, vendorId, type, capacity, location1Id, location2Id } = validatedFields.data;
+
+  try {
+    const circuitExists = await prisma.circuit.findFirst({ where: { cid: circuitId } });
+
+    if (circuitExists && circuitExists.id !== id) {
+      return {
+        message: 'Circuit Already Exists.',
+      };
+    }
+
+    const demoCompanyId = await getDemoCompanyId();
+
+    await prisma.circuit.update({
+      where: {
+        id,
+      },
+      data: {
+        cid: circuitId,
+        vendorId,
+        type,
+        capacity,
+        location1Id,
+        location2Id,
+        companyId: String(demoCompanyId),
+      },
+    });
+  } catch (error) {
+    return {
+      message: 'Failed to Update Circuit.',
+    };
+  }
+
+  revalidatePath('/circuits');
+  redirect('/circuits');
+};
+
 export const deleteCircuit = async (id: string) => {
   try {
     await prisma.circuit.delete({ where: { id } });

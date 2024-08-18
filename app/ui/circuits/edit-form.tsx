@@ -1,22 +1,61 @@
-import type { Circuit } from '@/app/lib/types';
-import { formatAddress } from '@/app/lib/utils';
+'use client';
+
+import Link from 'next/link';
+import { useFormState, useFormStatus } from 'react-dom';
+import type { Circuit, Location, Vendor } from '@/app/lib/types';
 import { Label } from '@/app/ui/label';
 import { Input } from '@/app/ui/input';
+import { Button } from '@/app/ui/button';
+import FormStatusMessage from '@/app/ui/form-status-message';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../select';
+import { formatAddress } from '@/app/lib/utils';
+import { updateCircuit } from '@/app/circuits/actions';
 
-export default function EditCircuitForm({ circuit }: { circuit: Circuit }) {
+type Props = {
+  data: Circuit;
+  locations: Location[];
+  vendors: Vendor[];
+};
+
+const initialState = {
+  message: '',
+};
+
+export default function EditCircuitForm({ data, locations, vendors }: Props) {
+  const updateCircuitWithId = updateCircuit.bind(null, data.id);
+  const [state, formAction] = useFormState(updateCircuitWithId, initialState);
+
   return (
-    <form id="edit-form" action="">
+    <form action={formAction}>
       <div className="space-y-4">
+        {state?.message && <FormStatusMessage message={String(state.message)} />}
         <fieldset className="space-y-2">
-          <Label htmlFor="vendor">Vendor</Label>
+          <Label htmlFor="circuitId">Circuit ID</Label>
           <Input
             type="text"
-            id="vendor"
-            name="vendor"
-            placeholder="Acme Networks"
+            id="circuitId"
+            name="circuitId"
+            placeholder="778622-WAVE-AN"
             className="h-9"
-            defaultValue={circuit.name}
+            defaultValue={data.cid}
           />
+        </fieldset>
+        <fieldset className="space-y-2">
+          <Label htmlFor="vendorId">Vendor</Label>
+          <Select name="vendorId" defaultValue={data.vendorId}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select Vendor" />
+            </SelectTrigger>
+            <SelectContent>
+              {vendors.map((vendor) => {
+                return (
+                  <SelectItem key={vendor.id} id={vendor.id} value={vendor.id}>
+                    {vendor.name}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
         </fieldset>
         <fieldset className="space-y-2">
           <Label htmlFor="type">Type</Label>
@@ -26,7 +65,7 @@ export default function EditCircuitForm({ circuit }: { circuit: Circuit }) {
             name="type"
             placeholder="DWDM"
             className="h-9"
-            defaultValue={circuit.type}
+            defaultValue={data.type}
           />
         </fieldset>
         <fieldset className="space-y-2">
@@ -37,32 +76,66 @@ export default function EditCircuitForm({ circuit }: { circuit: Circuit }) {
             name="capacity"
             placeholder="100G"
             className="h-9"
-            defaultValue={circuit.capacity}
+            defaultValue={data.capacity}
           />
         </fieldset>
         <fieldset className="space-y-2">
-          <Label htmlFor="alocation">A Location</Label>
-          <Input
-            type="text"
-            id="alocation"
-            name="alocation"
-            placeholder="123 Main St, New York, NY 10044"
-            className="h-9"
-            defaultValue={formatAddress(circuit.location.a)}
-          />
+          <Label htmlFor="location1Id">A Location</Label>
+          <Select name="location1Id" defaultValue={data.location1Id}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select Location" />
+            </SelectTrigger>
+            <SelectContent>
+              {locations.map((location) => {
+                const { street, city, state, zip } = location;
+                const address = formatAddress({ street, city, state, zip });
+
+                return (
+                  <SelectItem key={location.id} id={location.id} value={location.id}>
+                    {address}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
         </fieldset>
         <fieldset className="space-y-2">
-          <Label htmlFor="zlocation">Z Location</Label>
-          <Input
-            type="text"
-            id="zlocation"
-            name="zlocation"
-            placeholder="456 Main St, Los Angeles, CA 90031"
-            className="h-9"
-            defaultValue={formatAddress(circuit.location.z)}
-          />
+          <Label htmlFor="location2Id">Z Location</Label>
+          <Select name="location2Id" defaultValue={data.location2Id}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select Location" />
+            </SelectTrigger>
+            <SelectContent>
+              {locations.map((location) => {
+                const { street, city, state, zip } = location;
+                const address = formatAddress({ street, city, state, zip });
+
+                return (
+                  <SelectItem key={location.id} id={location.id} value={location.id}>
+                    {address}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
         </fieldset>
+        <div className="flex justify-end space-x-3">
+          <Button type="button" size="sm" variant="secondary" asChild>
+            <Link href="/circuits">Cancel</Link>
+          </Button>
+          <FormButton />
+        </div>
       </div>
     </form>
+  );
+}
+
+function FormButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" size="sm" disabled={pending}>
+      Update
+    </Button>
   );
 }
