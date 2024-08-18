@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/ui/table';
-import { formatAddress } from '@/app/lib/utils';
 import TableActionsList from '@/app/ui/circuits/actions-list';
 import { getCircuits } from '@/app/data/circuit';
 
@@ -23,9 +22,10 @@ export default async function CircuitsTable() {
         </TableHeader>
         <TableBody>
           {data.map((entry) => {
-            const locationA = formatAddress(entry.location1, { format: 'short' });
-            const locationZ = formatAddress(entry.location2, { format: 'short' });
             const circuitLink = `/circuits/${entry.id}`;
+            const vendorLink = `/vendors/${entry.vendorId}`;
+            const locationALink = `/locations/${entry.location1Id}`;
+            const locationZLink = `/locations/${entry.location2Id}`;
 
             return (
               <TableRow key={entry.id}>
@@ -34,11 +34,23 @@ export default async function CircuitsTable() {
                     {entry.cid}
                   </Link>
                 </TableCell>
-                <TableCell className="text-gray-600">{entry.vendor.name}</TableCell>
+                <TableCell className="text-gray-600">
+                  <Link href={vendorLink} className="text-blue-600 hover:text-opacity-85">
+                    {entry.vendor.name}
+                  </Link>
+                </TableCell>
                 <TableCell className="text-gray-600">{entry.type}</TableCell>
                 <TableCell className="text-gray-600">{entry.capacity}</TableCell>
-                <TableCell className="text-gray-600">{locationA}</TableCell>
-                <TableCell className="text-gray-600">{locationZ}</TableCell>
+                <TableCell className="text-gray-600">
+                  <Link href={locationALink} className="text-blue-600 hover:text-opacity-85">
+                    {entry.location1.name}
+                  </Link>
+                </TableCell>
+                <TableCell className="text-gray-600">
+                  <Link href={locationZLink} className="text-blue-600 hover:text-opacity-85">
+                    {entry.location2.name}
+                  </Link>
+                </TableCell>
                 <TableCell>
                   <TableActionsList circuit={entry} />
                 </TableCell>
