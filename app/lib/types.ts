@@ -38,3 +38,12 @@ export const LocationSchema = z.object({
   state: z.string().trim().min(2, { message: 'State is Required.' }),
   zip: z.string().trim().regex(US_ZIP_CODE_REGEX, { message: 'Invalid ZIP Code.' }),
 });
+
+export const CircuitSchema = z.object({
+  circuitId: z.string().trim().min(1, { message: 'Circuit ID is Required.' }),
+  vendorId: z.string().trim().min(1, { message: 'Vendor ID is Required.' }),
+  type: z.string().trim().min(1, { message: 'Circuit Type is Required.' }),
+  capacity: z.string().trim().min(1, { message: 'Capacity is Required.' }),
+  location1Id: z.string().trim().min(1, { message: 'A Location is Required.' }),
+  location2Id: z.string().trim().min(1, { message: 'Z Location is Required.' }),
+});
