@@ -6,7 +6,6 @@ import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import { Button } from '@/app/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
-import { formatAddress } from '@/app/lib/utils';
 import { getLocation } from '@/app/data/location';
 import DeleteLocationModal from '@/app/ui/locations/delete-modal';
 
@@ -18,22 +17,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = params;
   const location = await getLocation(id);
 
-  const metadata = {
-    title: '',
+  return {
+    title: location?.name ?? 'Not Found',
   };
-
-  if (!location) {
-    metadata.title = 'Not Found';
-  } else {
-    metadata.title = formatAddress({
-      street: location.street,
-      city: location.city,
-      state: location.state,
-      zip: location.zip,
-    });
-  }
-
-  return metadata;
 }
 
 const DeleteButton = (
@@ -77,7 +63,7 @@ export default async function Location({ params }: { params: { id: string } }) {
     <main>
       <PageHeader>
         <div className="flex items-center justify-between">
-          <PageHeading>{formatAddress(data)}</PageHeading>
+          <PageHeading>{data.name}</PageHeading>
           <div className="space-x-2">
             <Button type="button" size="sm" variant="outline" className="gap-1" asChild>
               <Link href={`/locations/${data.id}/edit`}>
