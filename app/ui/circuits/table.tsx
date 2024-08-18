@@ -11,6 +11,7 @@ export default async function CircuitsTable() {
       <Table className="bg-white">
         <TableHeader className="bg-gray-50">
           <TableRow>
+            <TableHead className="text-xs uppercase">Circuit ID</TableHead>
             <TableHead className="text-xs uppercase">Vendor</TableHead>
             <TableHead className="text-xs uppercase">Type</TableHead>
             <TableHead className="text-xs uppercase">Capacity</TableHead>
@@ -26,6 +27,7 @@ export default async function CircuitsTable() {
 
             return (
               <TableRow key={entry.id}>
+                <TableCell className="text-gray-600">{entry.cid}</TableCell>
                 <TableCell className="text-gray-600">{entry.vendor.name}</TableCell>
                 <TableCell className="text-gray-600">{entry.type}</TableCell>
                 <TableCell className="text-gray-600">{entry.capacity}</TableCell>
