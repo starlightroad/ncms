@@ -1,9 +1,11 @@
+import { Suspense } from 'react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import CircuitsCard from '@/app/ui/dashboard/circuits-card';
 import LocationsCard from '@/app/ui/dashboard/locations-card';
 import VendorsCard from '@/app/ui/dashboard/vendors-card';
 import MapCard from '@/app/ui/dashboard/map-card';
+import { DashboardMapSkeleton } from '@/app/ui/skeletons';
 
 export default function Dashboard() {
   return (
@@ -15,7 +17,9 @@ export default function Dashboard() {
         <CircuitsCard />
         <LocationsCard />
         <VendorsCard />
-        <MapCard />
+        <Suspense fallback={<DashboardMapSkeleton />}>
+          <MapCard />
+        </Suspense>
       </div>
     </main>
   );

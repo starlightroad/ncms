@@ -5,3 +5,7 @@ export function TableSkeleton() {
     </div>
   );
 }
+
+export function DashboardMapSkeleton() {
+  return <div className="col-span-6 row-span-2 animate-pulse rounded-xl bg-gray-100"></div>;
+}
