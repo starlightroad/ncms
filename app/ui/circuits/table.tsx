@@ -17,7 +17,7 @@ export default async function CircuitsTable() {
             <TableHead className="text-xs uppercase">Capacity</TableHead>
             <TableHead className="text-xs uppercase">A Location</TableHead>
             <TableHead className="text-xs uppercase">Z Location</TableHead>
-            <TableHead className="text-xs uppercase">Actions</TableHead>
+            <TableHead className="text-xs uppercase"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

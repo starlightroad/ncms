@@ -23,7 +23,7 @@ export default async function LocationsTable() {
             <TableHead className="text-xs uppercase">City</TableHead>
             <TableHead className="text-xs uppercase">State</TableHead>
             <TableHead className="text-xs uppercase">ZIP Code</TableHead>
-            <TableHead className="text-xs uppercase">Actions</TableHead>
+            <TableHead className="text-xs uppercase"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

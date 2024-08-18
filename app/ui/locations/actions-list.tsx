@@ -1,38 +1,51 @@
 'use client';
 
 import Link from 'next/link';
-import { EyeIcon, PencilIcon, Trash2Icon } from 'lucide-react';
+import { forwardRef } from 'react';
+import { EllipsisIcon } from 'lucide-react';
 import type { Location } from '@/app/lib/types';
 import { Button } from '@/app/ui/button';
 import DeleteLocationModal from '@/app/ui/locations/delete-modal';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/app/ui/dropdown-menu';
 
 const DeleteButton = (
-  <Button variant="ghost" className="h-7 px-1 text-gray-600 hover:bg-red-100 hover:text-red-600">
-    <Trash2Icon className="h-5 w-5" />
+  <Button
+    variant="ghost"
+    className="h-8 w-full cursor-default justify-start px-2 py-1.5 font-normal"
+  >
+    Delete
   </Button>
 );
 
 export default function TableActionsList({ location }: { location: Location }) {
+  const DeleteLocationElement = forwardRef(function () {
+    return <DeleteLocationModal locationId={location.id} trigger={DeleteButton} />;
+  });
+  DeleteLocationElement.displayName = 'DeleteLocationElement';
+
   return (
-    <ul className="flex space-x-3">
-      <li>
-        <Link
-          href={`/locations/${location.id}`}
-          className="block rounded-lg p-1 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-        >
-          <EyeIcon className="h-5 w-5" />
-        </Link>
-      </li>
-      <li>
-        <Button variant="ghost" className="h-7 px-1 text-gray-600" asChild>
-          <Link href={`/locations/${location.id}/edit`}>
-            <PencilIcon className="h-5 w-5" />
-          </Link>
-        </Button>
-      </li>
-      <li>
-        <DeleteLocationModal locationId={location.id} trigger={DeleteButton} />
-      </li>
-    </ul>
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <EllipsisIcon size={16} className="m-0.5" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem asChild>
+          <Link href={`/locations/${location.id}`}>View</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={`/locations/${location.id}/edit`}>Edit</Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <DeleteLocationElement />
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

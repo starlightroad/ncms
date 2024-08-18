@@ -23,7 +23,7 @@ export default async function VendorsTable() {
             <TableHead className="text-xs uppercase">Name</TableHead>
             <TableHead className="text-xs uppercase">Website</TableHead>
             <TableHead className="text-xs uppercase">Support Line</TableHead>
-            <TableHead className="text-xs uppercase">Actions</TableHead>
+            <TableHead className="text-xs uppercase"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
