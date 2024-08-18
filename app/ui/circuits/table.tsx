@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/ui/table';
 import { formatAddress } from '@/app/lib/utils';
 import TableActionsList from '@/app/ui/circuits/actions-list';
@@ -24,10 +25,15 @@ export default async function CircuitsTable() {
           {data.map((entry) => {
             const locationA = formatAddress(entry.location1, { format: 'short' });
             const locationZ = formatAddress(entry.location2, { format: 'short' });
+            const circuitLink = `/circuits/${entry.id}`;
 
             return (
               <TableRow key={entry.id}>
-                <TableCell className="text-gray-600">{entry.cid}</TableCell>
+                <TableCell className="text-gray-600">
+                  <Link href={circuitLink} className="text-blue-600 hover:text-opacity-85">
+                    {entry.cid}
+                  </Link>
+                </TableCell>
                 <TableCell className="text-gray-600">{entry.vendor.name}</TableCell>
                 <TableCell className="text-gray-600">{entry.type}</TableCell>
                 <TableCell className="text-gray-600">{entry.capacity}</TableCell>
