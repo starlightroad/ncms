@@ -28,9 +28,15 @@ export default async function VendorsTable() {
         </TableHeader>
         <TableBody>
           {data.map((entry) => {
+            const vendorLink = `/vendors/${entry.id}`;
+
             return (
               <TableRow key={entry.id}>
-                <TableCell className="text-gray-600">{entry.name}</TableCell>
+                <TableCell className="text-gray-600">
+                  <Link href={vendorLink} className="text-blue-600 hover:text-opacity-85">
+                    {entry.name}
+                  </Link>
+                </TableCell>
                 <TableCell>
                   <Link
                     href={entry.website}
