@@ -63,3 +63,16 @@ export const createCircuit = async (_: any, formData: FormData) => {
   revalidatePath('/circuits');
   redirect('/circuits');
 };
+
+export const deleteCircuit = async (id: string) => {
+  try {
+    await prisma.circuit.delete({ where: { id } });
+  } catch (error) {
+    return {
+      message: 'Failed to Delete Circuit.',
+    };
+  }
+
+  revalidatePath('/circuits');
+  redirect('/circuits');
+};

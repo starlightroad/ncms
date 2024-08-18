@@ -26,5 +26,3 @@ export const getCircuit = async (id: string) => {
     throw new Error('Failewd to Fetch Circuit.');
   }
 };
-
-export const deleteCircuit = (id: number) => {};
