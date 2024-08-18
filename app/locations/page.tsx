@@ -5,18 +5,11 @@ import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import LocationsTable from '@/app/ui/locations/table';
 import { Button } from '@/app/ui/button';
+import { TableSkeleton } from '@/app/ui/skeletons';
 
 export const metadata: Metadata = {
   title: 'Locations',
 };
-
-function TableSkeleton() {
-  return (
-    <div className="bg-white">
-      <div className="h-72 animate-pulse rounded-xl bg-gray-100"></div>
-    </div>
-  );
-}
 
 export default function Locations() {
   return (
