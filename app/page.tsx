@@ -1,11 +1,9 @@
 import { Suspense } from 'react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
-import CircuitsCard from '@/app/ui/dashboard/circuits-card';
-import LocationsCard from '@/app/ui/dashboard/locations-card';
-import VendorsCard from '@/app/ui/dashboard/vendors-card';
 import MapCard from '@/app/ui/dashboard/map-card';
-import { DashboardMapSkeleton } from '@/app/ui/skeletons';
+import { DashboardCardsSkeleton, DashboardMapSkeleton } from '@/app/ui/skeletons';
+import CardsWrapper from '@/app/ui/dashboard/cards';
 
 export default function Dashboard() {
   return (
@@ -14,9 +12,9 @@ export default function Dashboard() {
         <PageHeading>Dashboard</PageHeading>
       </PageHeader>
       <div className="grid grid-cols-6 grid-rows-3 gap-6">
-        <CircuitsCard />
-        <LocationsCard />
-        <VendorsCard />
+        <Suspense fallback={<DashboardCardsSkeleton />}>
+          <CardsWrapper />
+        </Suspense>
         <Suspense fallback={<DashboardMapSkeleton />}>
           <MapCard />
         </Suspense>
