@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/ui/table';
 import TableActionsList from '@/app/ui/locations/actions-list';
 import { getLocations } from '@/app/data/location';
@@ -28,9 +29,15 @@ export default async function LocationsTable() {
         </TableHeader>
         <TableBody>
           {data.map((entry) => {
+            const locationLink = `/locations/${entry.id}`;
+
             return (
               <TableRow key={entry.id}>
-                <TableCell className="text-gray-600">{entry.name}</TableCell>
+                <TableCell className="text-gray-600">
+                  <Link href={locationLink} className="text-blue-600 hover:text-opacity-85">
+                    {entry.name}
+                  </Link>
+                </TableCell>
                 <TableCell className="text-gray-600">{entry.street}</TableCell>
                 <TableCell className="text-gray-600">{entry.city}</TableCell>
                 <TableCell className="text-gray-600">{entry.state}</TableCell>
