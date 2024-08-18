@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import CircuitsTable from '@/app/ui/circuits/table';
@@ -8,6 +9,14 @@ import { Button } from '@/app/ui/button';
 export const metadata: Metadata = {
   title: 'Circuits',
 };
+
+function TableSkeleton() {
+  return (
+    <div className="bg-white">
+      <div className="h-72 animate-pulse rounded-xl bg-gray-100"></div>
+    </div>
+  );
+}
 
 export default function Circuits() {
   return (
@@ -20,7 +29,9 @@ export default function Circuits() {
           </Button>
         </div>
       </PageHeader>
-      <CircuitsTable />
+      <Suspense fallback={<TableSkeleton />}>
+        <CircuitsTable />
+      </Suspense>
     </main>
   );
 }
