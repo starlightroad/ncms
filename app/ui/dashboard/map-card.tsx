@@ -3,7 +3,6 @@
 import { useContext, useEffect, useRef } from 'react';
 import mapboxgl, { FullscreenControl, type Map } from 'mapbox-gl';
 import { MapContext } from '@/app/ui/dashboard/provider';
-import MapFilters from '@/app/ui/dashboard/filters';
 
 mapboxgl.accessToken = String(process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN);
 
@@ -44,8 +43,6 @@ export default function MapCard() {
     <div
       ref={mapContainer}
       className="map-container relative col-span-6 row-span-2 rounded-xl border bg-white"
-    >
-      <MapFilters />
-    </div>
+    ></div>
   );
 }
