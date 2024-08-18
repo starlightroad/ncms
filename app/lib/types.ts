@@ -1,26 +1,15 @@
 import { z } from 'zod';
-import { Vendor, Location } from '@prisma/client';
+import { Vendor, Location, Circuit } from '@prisma/client';
 import type { Dispatch, SetStateAction } from 'react';
 import { US_PHONE_NUMBER_REGEX, US_STREET_REGEX, US_ZIP_CODE_REGEX } from '@/app/lib/constants';
 
-export type { Vendor, Location };
+export type { Vendor, Location, Circuit };
 
 export type Address = {
   street: string;
   city: string;
   state: string;
   zip: string;
-};
-
-export type Circuit = {
-  id: number;
-  name: string;
-  capacity: string;
-  type: string;
-  location: {
-    a: Address;
-    z: Address;
-  };
 };
 
 export type DialogState = { setIsOpen: Dispatch<SetStateAction<boolean>> };

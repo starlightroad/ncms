@@ -3,8 +3,8 @@ import { formatAddress } from '@/app/lib/utils';
 import TableActionsList from '@/app/ui/circuits/actions-list';
 import { getCircuits } from '@/app/data/circuit';
 
-export default function CircuitsTable() {
-  const data = getCircuits();
+export default async function CircuitsTable() {
+  const data = await getCircuits();
 
   return (
     <div className="overflow-hidden rounded-xl border">
@@ -21,12 +21,12 @@ export default function CircuitsTable() {
         </TableHeader>
         <TableBody>
           {data.map((entry) => {
-            const locationA = formatAddress(entry.location.a, { format: 'short' });
-            const locationZ = formatAddress(entry.location.z, { format: 'short' });
+            const locationA = formatAddress(entry.location1, { format: 'short' });
+            const locationZ = formatAddress(entry.location2, { format: 'short' });
 
             return (
               <TableRow key={entry.id}>
-                <TableCell className="text-gray-600">{entry.name}</TableCell>
+                <TableCell className="text-gray-600">{entry.vendor.name}</TableCell>
                 <TableCell className="text-gray-600">{entry.type}</TableCell>
                 <TableCell className="text-gray-600">{entry.capacity}</TableCell>
                 <TableCell className="text-gray-600">{locationA}</TableCell>
