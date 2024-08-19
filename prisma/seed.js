@@ -57,18 +57,25 @@ const seedLocations = async () => {
   try {
     const insertedLocations = await Promise.all(
       locations.map(async (location) => {
-        const company = await client.company.findUnique({
-          where: { name: location.company_name },
+        const { company_name, name, street, city, state, zip } = location;
+
+        const companyPro = client.company.findUnique({
+          where: { name: company_name },
         });
+        const coordsPro = getXYCoordinates({ street, city, state, zip });
+
+        const [company, coords] = await Promise.all([companyPro, coordsPro]);
 
         return client.location.create({
           data: {
             companyId: company.id,
-            name: location.name,
-            street: location.street,
-            city: location.city,
-            state: location.state,
-            zip: location.zip,
+            name,
+            street,
+            city,
+            state,
+            zip,
+            longitude: coords.x,
+            latitude: coords.y,
           },
         });
       }),
@@ -168,3 +175,23 @@ main()
     await client.$disconnect();
     process.exit(1);
   });
+
+async function getXYCoordinates(address) {
+  const apiUrl = 'https://geocoding.geo.census.gov';
+  const street = address.street.replaceAll(' ', '+');
+  const { city, state, zip } = address;
+  const benchmark = 'Public_AR_Current';
+  const url = `${apiUrl}/geocoder/locations/address?street=${street}&city=${city}&state=${state}&zip=${zip}&benchmark=${benchmark}&format=json`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const coords = { x: null, y: null };
+
+  if (data.result.addressMatches.length) {
+    coords.x = data.result.addressMatches[0].coordinates.x.toFixed(6);
+    coords.y = data.result.addressMatches[0].coordinates.y.toFixed(6);
+  }
+
+  return coords;
+}

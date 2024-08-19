@@ -54,13 +54,15 @@ model Vendor {
 }
 
 model Location {
-  id        String @id @default(cuid())
-  companyId String @map("company_id")
-  name      String @db.VarChar(100)
-  street    String @db.VarChar(100)
-  city      String @db.VarChar(50)
-  state     String @db.Char(2)
-  zip       String @db.VarChar(10)
+  id        String   @id @default(cuid())
+  companyId String   @map("company_id")
+  name      String   @db.VarChar(100)
+  street    String   @db.VarChar(100)
+  city      String   @db.VarChar(50)
+  state     String   @db.Char(2)
+  zip       String   @db.VarChar(10)
+  longitude Decimal? @db.Decimal(9, 6)
+  latitude  Decimal? @db.Decimal(9, 6)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
