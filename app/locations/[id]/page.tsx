@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Edit2Icon, MapIcon, MapPinIcon, Trash2Icon } from 'lucide-react';
+import { Edit2Icon, MapPinIcon, Trash2Icon } from 'lucide-react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import { Button } from '@/app/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
 import { getLocation } from '@/app/data/location';
 import DeleteLocationModal from '@/app/ui/locations/delete-modal';
+import MapCard from '@/app/ui/map-card';
 
 type Props = {
   params: { id: string };
@@ -59,6 +60,8 @@ export default async function Location({ params }: { params: { id: string } }) {
     },
   ];
 
+  const pin = { lng: Number(data.longitude), lat: Number(data.latitude) };
+
   return (
     <main>
       <PageHeader>
@@ -98,13 +101,10 @@ export default async function Location({ params }: { params: { id: string } }) {
             })}
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="pb-0">
-            <header className="mb-8 flex items-center space-x-2">
-              <MapIcon className="h-5 w-5 text-gray-900" />
-              <CardTitle className="text-sm font-medium uppercase text-gray-900">Map</CardTitle>
-            </header>
-          </CardHeader>
+        <Card className="overflow-hidden">
+          <CardContent className="relative h-full p-0">
+            <MapCard pins={[pin]} />
+          </CardContent>
         </Card>
       </div>
     </main>
