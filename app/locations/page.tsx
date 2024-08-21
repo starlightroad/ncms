@@ -6,12 +6,23 @@ import PageHeading from '@/app/ui/page-heading';
 import LocationsTable from '@/app/ui/locations/table';
 import { Button } from '@/app/ui/button';
 import { TableSkeleton } from '@/app/ui/skeletons';
+import Pagination from '@/app/ui/pagination';
+import { getLocationPages } from '@/app/data/location';
 
 export const metadata: Metadata = {
   title: 'Locations',
 };
 
-export default function Locations() {
+type Props = {
+  searchParams?: {
+    page?: string;
+  };
+};
+
+export default async function Locations({ searchParams }: Props) {
+  const currentPage = Number(searchParams?.page) || 1;
+  const pages = await getLocationPages();
+
   return (
     <main>
       <PageHeader>
@@ -25,8 +36,11 @@ export default function Locations() {
         </div>
       </PageHeader>
       <Suspense fallback={<TableSkeleton />}>
-        <LocationsTable />
+        <LocationsTable currentPage={currentPage} />
       </Suspense>
+      <div className="flex justify-end px-4 py-2">
+        <Pagination pages={pages} />
+      </div>
     </main>
   );
 }

@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/ui/table';
 import TableActionsList from '@/app/ui/locations/actions-list';
-import { getLocations } from '@/app/data/location';
+import { getFilteredLocations } from '@/app/data/location';
 
-export default async function LocationsTable() {
-  const data = await getLocations();
+export default async function LocationsTable({ currentPage }: { currentPage: number }) {
+  const data = await getFilteredLocations(currentPage);
 
   if (!data.length) {
     return (
