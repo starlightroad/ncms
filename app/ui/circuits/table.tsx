@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/ui/table';
 import TableActionsList from '@/app/ui/circuits/actions-list';
-import { getCircuits } from '@/app/data/circuit';
+import { getFilteredCircuits } from '@/app/data/circuit';
 
-export default async function CircuitsTable() {
-  const data = await getCircuits();
+export default async function CircuitsTable({ currentPage }: { currentPage: number }) {
+  const data = await getFilteredCircuits(currentPage);
 
   return (
     <div className="overflow-hidden rounded-xl border">

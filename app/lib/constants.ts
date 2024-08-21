@@ -18,3 +18,7 @@ export const MONTHS = [
   'November',
   'December',
 ];
+
+export const ITEMS_PER_PAGE = 5;
+
+export const ELLIPSIS = '...';

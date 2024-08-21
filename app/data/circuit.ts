@@ -1,4 +1,6 @@
 import prisma from '@/prisma/client';
+import { ITEMS_PER_PAGE } from '@/app/lib/constants';
+import { getDemoCompanyId } from '@/app/data/demo';
 
 export const getCircuits = async () => {
   try {
@@ -24,5 +26,40 @@ export const getCircuit = async (id: string) => {
     return circuit;
   } catch (error) {
     throw new Error('Failewd to Fetch Circuit.');
+  }
+};
+
+export const getCircuitPages = async () => {
+  try {
+    const count = await prisma.circuit.count();
+    const pages = Math.ceil(count / ITEMS_PER_PAGE);
+
+    return pages;
+  } catch (error) {
+    throw new Error('Failed to Fetch Number of Circuits.');
+  }
+};
+
+export const getFilteredCircuits = async (currentPage: number) => {
+  const demoCompanyId = await getDemoCompanyId();
+  const skip = (currentPage - 1) * ITEMS_PER_PAGE;
+  const take = currentPage * ITEMS_PER_PAGE;
+
+  try {
+    const circuits = await prisma.circuit.findMany({
+      where: {
+        companyId: demoCompanyId,
+      },
+      include: {
+        vendor: true,
+        location1: true,
+        location2: true,
+      },
+      skip,
+      take,
+    });
+    return circuits;
+  } catch (error) {
+    throw new Error('Failed to Get Filtered Circuits.');
   }
 };
