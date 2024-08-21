@@ -6,12 +6,23 @@ import PageHeading from '@/app/ui/page-heading';
 import VendorsTable from '@/app/ui/vendors/table';
 import { Button } from '@/app/ui/button';
 import { TableSkeleton } from '@/app/ui/skeletons';
+import { getVendorPages } from '@/app/data/vendor';
+import Pagination from '@/app/ui/pagination';
 
 export const metadata: Metadata = {
   title: 'Vendors',
 };
 
-export default function Vendors() {
+type Props = {
+  searchParams?: {
+    page?: string;
+  };
+};
+
+export default async function Vendors({ searchParams }: Props) {
+  const currentPage = Number(searchParams?.page) || 1;
+  const pages = await getVendorPages();
+
   return (
     <main>
       <PageHeader>
@@ -23,8 +34,11 @@ export default function Vendors() {
         </div>
       </PageHeader>
       <Suspense fallback={<TableSkeleton />}>
-        <VendorsTable />
+        <VendorsTable currentPage={currentPage} />
       </Suspense>
+      <div className="flex justify-end px-4 py-2">
+        <Pagination pages={pages} />
+      </div>
     </main>
   );
 }

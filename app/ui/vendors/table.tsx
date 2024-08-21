@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/ui/table';
-import { getVendors } from '@/app/data/vendor';
+import { getFilteredVendors } from '@/app/data/vendor';
 import TableActionsList from '@/app/ui/vendors/actions-list';
 import { formatPhoneNumber } from '@/app/lib/utils';
 
-export default async function VendorsTable() {
-  const data = await getVendors();
+export default async function VendorsTable({ currentPage }: { currentPage: number }) {
+  const data = await getFilteredVendors(currentPage);
 
   if (!data.length) {
     return (
