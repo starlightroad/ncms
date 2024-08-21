@@ -206,10 +206,84 @@ const circuits = [
   },
 ];
 
+const mapLoads = [
+  {
+    company_name: companies[0].name,
+    month_id: 1,
+    day: 12,
+    year: 2024,
+    count: 12,
+  },
+  {
+    company_name: companies[0].name,
+    month_id: 2,
+    day: 1,
+    year: 2024,
+    count: 28,
+  },
+  {
+    company_name: companies[0].name,
+    month_id: 6,
+    day: 25,
+    year: 2024,
+    count: 40,
+  },
+  {
+    company_name: companies[0].name,
+    month_id: 3,
+    day: 14,
+    year: 2024,
+    count: 20,
+  },
+  {
+    company_name: companies[0].name,
+    month_id: 6,
+    day: 30,
+    year: 2024,
+    count: 7,
+  },
+  {
+    company_name: companies[0].name,
+    month_id: 8,
+    day: 21,
+    year: 2023,
+    count: 33,
+  },
+  {
+    company_name: companies[0].name,
+    month_id: 2,
+    day: 8,
+    year: 2023,
+    count: 72,
+  },
+  {
+    company_name: companies[0].name,
+    month_id: 7,
+    day: 27,
+    year: 2024,
+    count: 64,
+  },
+  {
+    company_name: companies[0].name,
+    month_id: 11,
+    day: 19,
+    year: 2022,
+    count: 23,
+  },
+  {
+    company_name: companies[0].name,
+    month_id: 0,
+    day: 27,
+    year: 2021,
+    count: 39,
+  },
+];
+
 module.exports = {
   companies,
   users,
   circuits,
   locations,
   vendors,
+  mapLoads,
 };

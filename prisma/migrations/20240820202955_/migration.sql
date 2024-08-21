@@ -14,6 +14,7 @@ CREATE TABLE "user" (
     "company_id" TEXT NOT NULL,
     "name" VARCHAR(100) NOT NULL,
     "email" VARCHAR(80) NOT NULL,
+    "password" VARCHAR(72) NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -42,6 +43,8 @@ CREATE TABLE "location" (
     "city" VARCHAR(50) NOT NULL,
     "state" CHAR(2) NOT NULL,
     "zip" VARCHAR(10) NOT NULL,
+    "longitude" VARCHAR(13),
+    "latitude" VARCHAR(12),
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -62,6 +65,18 @@ CREATE TABLE "circuit" (
     "updated_at" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "circuit_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "map_load" (
+    "id" TEXT NOT NULL,
+    "company_id" TEXT NOT NULL,
+    "month_id" INTEGER NOT NULL,
+    "day" SMALLINT NOT NULL,
+    "year" SMALLINT NOT NULL,
+    "count" INTEGER NOT NULL,
+
+    CONSTRAINT "map_load_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -90,3 +105,6 @@ ALTER TABLE "circuit" ADD CONSTRAINT "circuit_location1_id_fkey" FOREIGN KEY ("l
 
 -- AddForeignKey
 ALTER TABLE "circuit" ADD CONSTRAINT "circuit_location2_id_fkey" FOREIGN KEY ("location2_id") REFERENCES "location"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "map_load" ADD CONSTRAINT "map_load_company_id_fkey" FOREIGN KEY ("company_id") REFERENCES "company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

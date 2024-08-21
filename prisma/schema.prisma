@@ -18,6 +18,7 @@ model Company {
   vendor   Vendor[]
   location Location[]
   circuit  Circuit[]
+  mapLoad  MapLoad[]
 
   @@map("company")
 }
@@ -93,4 +94,17 @@ model Circuit {
   location2 Location @relation("location2", fields: [location2Id], references: [id])
 
   @@map("circuit")
+}
+
+model MapLoad {
+  id        String @id @default(cuid())
+  companyId String @map("company_id")
+  monthId   Int    @map("month_id")
+  day       Int    @db.SmallInt
+  year      Int    @db.SmallInt
+  count     Int    @db.Integer
+
+  company Company @relation(fields: [companyId], references: [id])
+
+  @@map("map_load")
 }

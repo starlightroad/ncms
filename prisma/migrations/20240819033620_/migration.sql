@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "location" ALTER COLUMN "latitude" SET DATA TYPE VARCHAR(12),
-ALTER COLUMN "longitude" SET DATA TYPE VARCHAR(13);

@@ -158,12 +158,40 @@ const seedCircuits = async () => {
   }
 };
 
+const seedStats = async () => {
+  const { mapLoads } = placeholderData;
+
+  try {
+    const insertedStats = await Promise.all(
+      mapLoads.map(async (stat) => {
+        const company = await client.company.findUnique({ where: { name: stat.company_name } });
+
+        return client.mapLoad.create({
+          data: {
+            companyId: company.id,
+            monthId: stat.month_id,
+            day: stat.day,
+            year: stat.year,
+            count: stat.count,
+          },
+        });
+      }),
+    );
+
+    console.log(`Seeded ${insertedStats.length} stats.`);
+  } catch (error) {
+    console.error('Failed to seed stats:', error);
+    throw error;
+  }
+};
+
 const main = async () => {
   await seedCompanies();
   await seedUsers();
   await seedLocations();
   await seedVendors();
   await seedCircuits();
+  await seedStats();
 };
 
 main()

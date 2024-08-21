@@ -6,10 +6,6 @@ export function TableSkeleton() {
   );
 }
 
-export function DashboardMapSkeleton() {
-  return <div className="col-span-6 row-span-2 animate-pulse rounded-xl bg-gray-100"></div>;
-}
-
 export function DashboardCardsSkeleton() {
   return (
     <>
@@ -18,4 +14,8 @@ export function DashboardCardsSkeleton() {
       <div className="col-span-2 row-span-1 h-36 animate-pulse rounded-lg bg-gray-100"></div>
     </>
   );
+}
+
+export function DashboardSingleCardSkeleton() {
+  return <div className="col-span-3 row-span-2 animate-pulse rounded-lg bg-gray-100"></div>;
 }
