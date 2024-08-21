@@ -29,7 +29,7 @@ export default async function MapLoadsCard() {
     <div className="col-span-3 row-span-2">
       <Card>
         <CardHeader className="pb-0">
-          <header className="space-y-2">
+          <header className="mb-8 space-y-2">
             <CardTitle className="font-medium uppercase text-gray-900">{formattedCount}</CardTitle>
             <CardDescription className="capitalize">{cardData.label}</CardDescription>
           </header>
