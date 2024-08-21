@@ -6,6 +6,14 @@ import { getFilteredCircuits } from '@/app/data/circuit';
 export default async function CircuitsTable({ currentPage }: { currentPage: number }) {
   const data = await getFilteredCircuits(currentPage);
 
+  if (!data.length) {
+    return (
+      <div className="rounded-xl border bg-white p-5">
+        <p className="text-center text-sm text-gray-600">No entries were found.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="overflow-hidden rounded-xl border">
       <Table className="bg-white">
