@@ -4,6 +4,7 @@ import PageHeading from '@/app/ui/page-heading';
 import { DashboardCardsSkeleton, DashboardSingleCardSkeleton } from '@/app/ui/skeletons';
 import CardsWrapper from '@/app/ui/dashboard/cards';
 import MapLoadsCard from '@/app/ui/dashboard/map-loads-card';
+import CircuitsByCapacityCard from '@/app/ui/dashboard/circuit-capacities-card';
 
 export default function Dashboard() {
   return (
@@ -17,6 +18,9 @@ export default function Dashboard() {
         </Suspense>
         <Suspense fallback={<DashboardSingleCardSkeleton />}>
           <MapLoadsCard />
+        </Suspense>
+        <Suspense fallback={<DashboardSingleCardSkeleton />}>
+          <CircuitsByCapacityCard />
         </Suspense>
       </div>
     </main>
