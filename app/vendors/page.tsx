@@ -16,10 +16,12 @@ export const metadata: Metadata = {
 type Props = {
   searchParams?: {
     page?: string;
+    q?: string;
   };
 };
 
 export default async function Vendors({ searchParams }: Props) {
+  const query = searchParams?.q || '';
   const currentPage = Number(searchParams?.page) || 1;
   const pages = await getVendorPages();
 
@@ -34,7 +36,7 @@ export default async function Vendors({ searchParams }: Props) {
         </div>
       </PageHeader>
       <Suspense fallback={<TableSkeleton />}>
-        <VendorsTable currentPage={currentPage} />
+        <VendorsTable currentPage={currentPage} query={query} />
       </Suspense>
       <div className="flex justify-end px-4 py-2">
         <Pagination pages={pages} />

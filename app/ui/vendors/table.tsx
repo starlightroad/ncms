@@ -4,8 +4,13 @@ import { getFilteredVendors } from '@/app/data/vendor';
 import TableActionsList from '@/app/ui/vendors/actions-list';
 import { formatPhoneNumber } from '@/app/lib/utils';
 
-export default async function VendorsTable({ currentPage }: { currentPage: number }) {
-  const data = await getFilteredVendors(currentPage);
+type Props = {
+  currentPage: number;
+  query: string;
+};
+
+export default async function VendorsTable({ currentPage, query }: Props) {
+  const data = await getFilteredVendors(currentPage, query);
 
   if (!data.length) {
     return (

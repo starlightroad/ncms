@@ -31,7 +31,7 @@ export const getVendorPages = async () => {
   }
 };
 
-export const getFilteredVendors = async (currentPage: number) => {
+export const getFilteredVendors = async (currentPage: number, query: string) => {
   const demoCompanyId = await getDemoCompanyId();
   const skip = (currentPage - 1) * ITEMS_PER_PAGE;
   const take = currentPage * ITEMS_PER_PAGE;
@@ -40,6 +40,19 @@ export const getFilteredVendors = async (currentPage: number) => {
     const vendors = await prisma.vendor.findMany({
       where: {
         companyId: demoCompanyId,
+        OR: [
+          {
+            name: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            phone: {
+              startsWith: query,
+            },
+          },
+        ],
       },
       skip,
       take,
