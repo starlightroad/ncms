@@ -16,10 +16,12 @@ export const metadata: Metadata = {
 type Props = {
   searchParams?: {
     page?: string;
+    q?: string;
   };
 };
 
 export default async function Locations({ searchParams }: Props) {
+  const query = searchParams?.q || '';
   const currentPage = Number(searchParams?.page) || 1;
   const pages = await getLocationPages();
 
@@ -36,7 +38,7 @@ export default async function Locations({ searchParams }: Props) {
         </div>
       </PageHeader>
       <Suspense fallback={<TableSkeleton />}>
-        <LocationsTable currentPage={currentPage} />
+        <LocationsTable currentPage={currentPage} query={query} />
       </Suspense>
       <div className="flex justify-end px-4 py-2">
         <Pagination pages={pages} />

@@ -31,7 +31,7 @@ export const getLocationPages = async () => {
   }
 };
 
-export const getFilteredLocations = async (currentPage: number) => {
+export const getFilteredLocations = async (currentPage: number, query: string) => {
   const demoCompanyId = await getDemoCompanyId();
   const skip = (currentPage - 1) * ITEMS_PER_PAGE;
   const take = currentPage * ITEMS_PER_PAGE;
@@ -40,6 +40,37 @@ export const getFilteredLocations = async (currentPage: number) => {
     const locations = await prisma.location.findMany({
       where: {
         companyId: demoCompanyId,
+        OR: [
+          {
+            name: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            street: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            city: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            state: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            zip: {
+              startsWith: query,
+            },
+          },
+        ],
       },
       skip,
       take,

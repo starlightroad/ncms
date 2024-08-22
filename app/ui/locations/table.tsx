@@ -3,8 +3,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import TableActionsList from '@/app/ui/locations/actions-list';
 import { getFilteredLocations } from '@/app/data/location';
 
-export default async function LocationsTable({ currentPage }: { currentPage: number }) {
-  const data = await getFilteredLocations(currentPage);
+type Props = {
+  currentPage: number;
+  query: string;
+};
+
+export default async function LocationsTable({ currentPage, query }: Props) {
+  const data = await getFilteredLocations(currentPage, query);
 
   if (!data.length) {
     return (
