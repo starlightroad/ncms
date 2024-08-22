@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Logo from '@/app/ui/logo';
 import NavbarMenu from '@/app/ui/navbar-menu';
+import Search from '@/app/ui/search';
 
 export default function Navbar() {
   const appName = 'ncms';
@@ -29,8 +30,11 @@ export default function Navbar() {
         </ul>
       </nav>
 
-      <div className="flex h-full items-center border-l px-5">
-        <NavbarMenu />
+      <div className="flex h-full grow items-center justify-end gap-3">
+        <Search placeholder="Search" />
+        <div className="flex h-full items-center border-l px-5">
+          <NavbarMenu />
+        </div>
       </div>
     </header>
   );

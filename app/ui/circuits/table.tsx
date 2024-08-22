@@ -3,8 +3,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import TableActionsList from '@/app/ui/circuits/actions-list';
 import { getFilteredCircuits } from '@/app/data/circuit';
 
-export default async function CircuitsTable({ currentPage }: { currentPage: number }) {
-  const data = await getFilteredCircuits(currentPage);
+type Props = {
+  currentPage: number;
+  query: string;
+};
+
+export default async function CircuitsTable({ currentPage, query }: Props) {
+  const data = await getFilteredCircuits(currentPage, query);
 
   if (!data.length) {
     return (

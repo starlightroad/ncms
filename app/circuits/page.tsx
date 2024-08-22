@@ -16,10 +16,12 @@ export const metadata: Metadata = {
 type Props = {
   searchParams?: {
     page?: string;
+    q?: string;
   };
 };
 
 export default async function Circuits({ searchParams }: Props) {
+  const query = searchParams?.q || '';
   const currentPage = Number(searchParams?.page) || 1;
   const pages = await getCircuitPages();
 
@@ -34,7 +36,7 @@ export default async function Circuits({ searchParams }: Props) {
         </div>
       </PageHeader>
       <Suspense fallback={<TableSkeleton />}>
-        <CircuitsTable currentPage={currentPage} />
+        <CircuitsTable currentPage={currentPage} query={query} />
       </Suspense>
       <div className="flex justify-end px-4 py-2">
         <Pagination pages={pages} />

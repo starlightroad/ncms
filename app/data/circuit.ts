@@ -40,7 +40,7 @@ export const getCircuitPages = async () => {
   }
 };
 
-export const getFilteredCircuits = async (currentPage: number) => {
+export const getFilteredCircuits = async (currentPage: number, query: string) => {
   const demoCompanyId = await getDemoCompanyId();
   const skip = (currentPage - 1) * ITEMS_PER_PAGE;
   const take = currentPage * ITEMS_PER_PAGE;
@@ -49,6 +49,38 @@ export const getFilteredCircuits = async (currentPage: number) => {
     const circuits = await prisma.circuit.findMany({
       where: {
         companyId: demoCompanyId,
+        OR: [
+          {
+            cid: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            vendor: {
+              name: {
+                startsWith: query,
+                mode: 'insensitive',
+              },
+            },
+          },
+          {
+            location1: {
+              name: {
+                startsWith: query,
+                mode: 'insensitive',
+              },
+            },
+          },
+          {
+            location2: {
+              name: {
+                startsWith: query,
+                mode: 'insensitive',
+              },
+            },
+          },
+        ],
       },
       include: {
         vendor: true,
