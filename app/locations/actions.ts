@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { LocationSchema } from '@/app/lib/types';
 import { getDemoCompanyId } from '@/app/data/demo';
+import { getStates } from '@/app/data/state';
 
 export const createLocation = async (_: any, formData: FormData) => {
   const validatedFields = LocationSchema.safeParse({
@@ -26,6 +27,17 @@ export const createLocation = async (_: any, formData: FormData) => {
   const { name, street, city, state, zip } = validatedFields.data;
 
   try {
+    const states = await getStates();
+    const isValidState = states.find(
+      ({ abbreviation }) => abbreviation.toLowerCase() === state.toLowerCase(),
+    );
+
+    if (!isValidState) {
+      return {
+        message: 'Invalid State.',
+      };
+    }
+
     const locationExists = await prisma.location.findFirst({ where: { name: String(name) } });
 
     if (locationExists) {
@@ -53,6 +65,7 @@ export const createLocation = async (_: any, formData: FormData) => {
   }
 
   revalidatePath('/locations');
+  redirect('/locations');
 };
 
 export const updateLocation = async (id: string, _: any, formData: FormData) => {

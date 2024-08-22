@@ -14,6 +14,11 @@ export type Address = {
 
 export type DialogState = { setIsOpen: Dispatch<SetStateAction<boolean>> };
 
+export type State = {
+  name: string;
+  abbreviation: string;
+};
+
 export const VendorSchema = z.object({
   name: z.string().trim().min(1, { message: 'Name is Required.' }),
   website: z.string().trim().url({ message: 'Invalid URL.' }),

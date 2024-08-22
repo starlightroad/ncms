@@ -2,19 +2,25 @@ import type { Metadata } from 'next';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import AddLocationForm from '@/app/ui/locations/add-form';
+import { getStates } from '@/app/data/state';
 
 export const metadata: Metadata = {
   title: 'New Location',
 };
 
-export default function New() {
+export default async function New() {
+  const statesJson = await getStates();
+  const data = {
+    states: statesJson,
+  };
+
   return (
     <main>
       <PageHeader>
         <PageHeading>New Location</PageHeading>
       </PageHeader>
       <div className="rounded-xl border bg-white p-5">
-        <AddLocationForm />
+        <AddLocationForm data={data} />
       </div>
     </main>
   );
