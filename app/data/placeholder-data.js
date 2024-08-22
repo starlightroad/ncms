@@ -1,6 +1,6 @@
 const companies = [
   {
-    name: 'Acme Fiber',
+    name: 'Acme Networks',
   },
 ];
 
@@ -136,8 +136,8 @@ const circuits = [
     company_name: companies[0].name,
     circuit_id: 'C98765-NYC01-L2T-0456',
     vendor_name: vendors[1].name,
-    type: '100G',
-    capacity: 'Wavelength',
+    type: 'Wavelength',
+    capacity: '100G',
     location1_name: locations[0].name,
     location2_name: locations[2].name,
   },
