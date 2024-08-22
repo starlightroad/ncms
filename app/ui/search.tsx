@@ -34,7 +34,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
       type="search"
       placeholder={placeholder}
       autoComplete="off"
-      onChange={(e) => handleSearch(e.target.value)}
+      onChange={(e) => handleSearch(e.target.value.trim())}
       defaultValue={searchParams.get('q')?.toString()}
       className="max-w-60"
     />
