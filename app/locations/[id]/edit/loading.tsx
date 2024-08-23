@@ -16,7 +16,7 @@ function Card() {
 
 export default function Loading() {
   return (
-    <div className="py-16">
+    <div className="py-8 lg:py-16">
       <Header />
       <Card />
     </div>
