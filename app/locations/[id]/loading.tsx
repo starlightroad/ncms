@@ -18,11 +18,11 @@ function Header() {
 
 function Cards() {
   return (
-    <div className="grid grid-cols-1 grid-rows-4 gap-6 lg:grid-cols-2">
-      <div className="rounded-lg bg-card">
+    <div className="grid grid-cols-1 grid-rows-4 gap-6 lg:grid-cols-2 lg:grid-rows-2">
+      <div className="col-span-1 row-span-2 rounded-lg bg-card">
         <div className="col-span-1 h-80 animate-pulse rounded-lg bg-card-foreground/10"></div>
       </div>
-      <div className="rounded-lg bg-card">
+      <div className="col-span-1 row-span-2 rounded-lg bg-card">
         <div className="col-span-1 h-80 animate-pulse rounded-lg bg-card-foreground/10"></div>
       </div>
     </div>
