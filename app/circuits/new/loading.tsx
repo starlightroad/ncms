@@ -12,7 +12,7 @@ function Card() {
 
 export default function Loading() {
   return (
-    <div className="bg-white">
+    <div className="bg-white py-8 lg:py-16">
       <div className="animate-pulse">
         <Header />
         <Card />

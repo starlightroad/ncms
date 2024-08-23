@@ -17,7 +17,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
   }
 
   return (
-    <main>
+    <main className="py-8 lg:py-16">
       <PageHeader>
         <PageHeading>Edit Vendor</PageHeading>
       </PageHeader>

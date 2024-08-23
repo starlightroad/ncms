@@ -39,7 +39,7 @@ export default function DeleteCircuitModal({ circuitId, trigger }: Props) {
           <DialogDescription>Are you sure you want to delete this circuit?</DialogDescription>
         </DialogHeader>
         {state.message && <FormStatusMessage message={state.message} />}
-        <DialogFooter>
+        <DialogFooter className="gap-3 sm:gap-0">
           <DialogClose asChild>
             <Button type="button" variant="outline" size="sm">
               Cancel
@@ -58,7 +58,7 @@ function FormButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" size="sm" disabled={pending}>
+    <Button type="submit" size="sm" disabled={pending} className="w-full lg:w-auto">
       Yes
     </Button>
   );

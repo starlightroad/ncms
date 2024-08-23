@@ -15,7 +15,7 @@ export default async function New() {
   };
 
   return (
-    <main>
+    <main className="py-8 lg:py-16">
       <PageHeader>
         <PageHeading>New Location</PageHeading>
       </PageHeader>

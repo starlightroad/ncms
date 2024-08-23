@@ -21,7 +21,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
   const [locations, vendors] = await Promise.all([getLocations(), getVendors()]);
 
   return (
-    <main>
+    <main className="py-8 lg:py-16">
       <PageHeader>
         <PageHeading>Edit Circuit</PageHeading>
       </PageHeader>

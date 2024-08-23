@@ -21,7 +21,7 @@ type Props = {
 
 export default function CircuitCapacitiesChart({ chartData }: Props) {
   return (
-    <ChartContainer config={chartConfig} className="mx-auto max-h-56 w-full">
+    <ChartContainer config={chartConfig} className="mx-auto h-[186px] w-full">
       <PieChart>
         <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
         <Pie dataKey="count" nameKey="capacity" data={chartData} />

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function New() {
   return (
-    <main>
+    <main className="py-8 lg:py-16">
       <PageHeader>
         <PageHeading>New Vendor</PageHeading>
       </PageHeader>

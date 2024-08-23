@@ -26,7 +26,7 @@ export default async function MapLoadsCard() {
   const formattedCount = formatNumberToShorterNotation(cardData.totalCount);
 
   return (
-    <div className="col-span-3 row-span-2">
+    <div className="col-span-4 row-span-2 max-h-80 w-full lg:col-span-3">
       <Card>
         <CardHeader className="pb-0">
           <header className="mb-8 space-y-2">

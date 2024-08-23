@@ -8,11 +8,11 @@ import CircuitsByCapacityCard from '@/app/ui/dashboard/circuit-capacities-card';
 
 export default function Dashboard() {
   return (
-    <main className="w-full">
+    <main className="w-full pb-8 pt-8 lg:pt-16">
       <PageHeader>
         <PageHeading>Dashboard</PageHeading>
       </PageHeader>
-      <div className="grid grid-cols-6 grid-rows-3 gap-6">
+      <div className="grid auto-rows-auto grid-cols-4 gap-6 lg:grid-cols-6">
         <Suspense fallback={<DashboardCardsSkeleton />}>
           <CardsWrapper />
         </Suspense>

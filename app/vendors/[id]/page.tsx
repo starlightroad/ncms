@@ -34,7 +34,7 @@ export default async function Vendor({ params }: { params: { id: string } }) {
 
   if (!data) {
     return (
-      <main>
+      <main className="py-8 lg:py-16">
         <PageHeader>
           <PageHeading>Vendor Not Found</PageHeading>
         </PageHeader>
@@ -67,10 +67,12 @@ export default async function Vendor({ params }: { params: { id: string } }) {
   ];
 
   return (
-    <main>
+    <main className="py-8 lg:py-16">
       <PageHeader>
-        <div className="flex items-center justify-between">
-          <PageHeading>{data.name}</PageHeading>
+        <div className="flex items-center justify-end lg:justify-between">
+          <div className="hidden lg:block">
+            <PageHeading>{data.name}</PageHeading>
+          </div>
           <div className="space-x-2">
             <Button type="button" size="sm" variant="outline" className="gap-1" asChild>
               <Link href={`/vendors/${data.id}/edit`}>

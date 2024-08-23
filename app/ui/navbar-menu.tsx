@@ -1,3 +1,5 @@
+import { MenuIcon } from 'lucide-react';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,6 +30,34 @@ export default function NavbarMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Menu</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>Sign Out</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+export function MobileNavbarMenu() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger>
+        <MenuIcon size={20} />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-40">
+        <DropdownMenuLabel>Menu</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href="/">Dashboard</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/circuits">Circuits</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/locations">Locations</Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/vendors">Vendors</Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Sign Out</DropdownMenuItem>
       </DropdownMenuContent>

@@ -22,7 +22,7 @@ export default async function VendorsTable({ currentPage, query }: Props) {
 
   return (
     <div className="overflow-hidden rounded-xl border">
-      <Table className="bg-white">
+      <Table className="whitespace-nowrap bg-white">
         <TableHeader className="bg-gray-50">
           <TableRow>
             <TableHead className="text-xs uppercase">Name</TableHead>

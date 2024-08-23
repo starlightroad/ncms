@@ -5,7 +5,7 @@ import { Button } from '@/app/ui/button';
 
 export default function NotFound() {
   return (
-    <main>
+    <main className="py-8 lg:py-16">
       <PageHeader>
         <PageHeading>404 Not Found</PageHeading>
       </PageHeader>

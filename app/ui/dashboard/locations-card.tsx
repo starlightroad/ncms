@@ -12,7 +12,7 @@ export default function LocationsCard({ count }: { count: number }) {
   const label = count < 2 ? data.label.slice(0, -1) : data.label;
 
   return (
-    <div className="col-span-2 row-span-1">
+    <div className="col-span-4 row-span-1 lg:col-span-2">
       <Card>
         <CardHeader className="pb-0">
           <header className="mb-8 flex items-center space-x-2">

@@ -16,7 +16,7 @@ type Props = {
 
 export default function MapLoadsChart({ chartsData }: Props) {
   return (
-    <ChartContainer config={chartConfig} className="max-h-56 w-full">
+    <ChartContainer config={chartConfig} className="h-[186px] w-full">
       <BarChart accessibilityLayer data={chartsData.reverse()}>
         <CartesianGrid vertical={false} />
         <XAxis

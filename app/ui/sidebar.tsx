@@ -36,7 +36,7 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="h-full w-full max-w-56 border-r">
+    <div className="fixed top-14 z-10 hidden h-full w-full max-w-56 border-r bg-white md:block">
       <nav className="py-6">
         <ul className="space-y-1 px-3">
           {navItems.map((navItem) => {

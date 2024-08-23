@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 function Banner() {
   return (
-    <div className="absolute left-0 top-0 -z-10 h-40 w-full border-b bg-gray-50 bg-opacity-30"></div>
+    <div className="absolute left-0 top-0 -z-10 h-32 w-full border-b bg-gray-50 bg-opacity-30 lg:h-40"></div>
   );
 }
 
@@ -30,11 +30,11 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <body className={`${fonts.inter.className} h-full antialiased`}>
         <Providers>
-          <div className="h-full w-full overflow-clip">
+          <div className="h-full w-full">
             <Navbar />
             <div className="flex h-full">
               <Sidebar />
-              <div className="relative w-full pt-16">
+              <div className="relative mt-14 w-full md:ml-56 md:max-w-[calc(100%-224px)]">
                 <Banner />
                 <Container>{children}</Container>
               </div>

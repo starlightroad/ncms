@@ -26,7 +26,7 @@ export default async function Circuits({ searchParams }: Props) {
   const pages = await getCircuitPages();
 
   return (
-    <main>
+    <main className="py-8 lg:py-16">
       <PageHeader>
         <div className="flex items-center justify-between">
           <PageHeading>Circuits</PageHeading>

@@ -63,10 +63,12 @@ export default async function Location({ params }: { params: { id: string } }) {
   const pin = { lng: Number(data.longitude), lat: Number(data.latitude) };
 
   return (
-    <main>
+    <main className="py-8 lg:py-16">
       <PageHeader>
-        <div className="flex items-center justify-between">
-          <PageHeading>{data.name}</PageHeading>
+        <div className="flex items-center justify-end lg:justify-between">
+          <div className="hidden lg:block">
+            <PageHeading>{data.name}</PageHeading>
+          </div>
           <div className="space-x-2">
             <Button type="button" size="sm" variant="outline" className="gap-1" asChild>
               <Link href={`/locations/${data.id}/edit`}>
@@ -78,8 +80,8 @@ export default async function Location({ params }: { params: { id: string } }) {
           </div>
         </div>
       </PageHeader>
-      <div className="grid grid-cols-2 gap-6">
-        <Card>
+      <div className="grid grid-cols-1 grid-rows-4 gap-6 lg:grid-cols-2 lg:grid-rows-2">
+        <Card className="col-span-1 row-span-2">
           <CardHeader className="pb-0">
             <header className="mb-8 flex items-center space-x-2">
               <MapPinIcon className="h-5 w-5 text-gray-900" />
@@ -101,7 +103,7 @@ export default async function Location({ params }: { params: { id: string } }) {
             })}
           </CardContent>
         </Card>
-        <Card className="overflow-hidden">
+        <Card className="col-span-1 row-span-2 overflow-hidden">
           <CardContent className="relative h-full p-0">
             <MapCard pins={[pin]} />
           </CardContent>
