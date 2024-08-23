@@ -8,6 +8,7 @@ import Search from '@/app/ui/search';
 export default function Navbar() {
   const appName = 'ncms';
   const companyName = 'Acme Networks';
+  const dashboardLink = `/${companyName.toLowerCase().split(' ').join('-')}`;
 
   return (
     <header className="fixed z-10 flex h-14 w-full items-center justify-between border-b bg-background">
@@ -17,7 +18,7 @@ export default function Navbar() {
             <MobileNavbarMenu />
           </li>
           <li>
-            <Link href="/">
+            <Link href={dashboardLink}>
               <Logo />
             </Link>
           </li>
