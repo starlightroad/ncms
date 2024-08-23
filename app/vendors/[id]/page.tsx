@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { Building2Icon, Edit2Icon, Trash2Icon } from 'lucide-react';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
@@ -6,7 +8,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
 import { getVendorById } from '@/app/data/vendor';
 import DeleteVendorModal from '@/app/ui/vendors/delete-modal';
 import { formatPhoneNumber } from '@/app/lib/utils';
-import Link from 'next/link';
 import { Button } from '@/app/ui/button';
 
 type Props = {
@@ -33,18 +34,7 @@ export default async function Vendor({ params }: { params: { id: string } }) {
   const data = await getVendorById(params.id);
 
   if (!data) {
-    return (
-      <main className="py-8 lg:py-16">
-        <PageHeader>
-          <PageHeading>Vendor Not Found</PageHeading>
-        </PageHeader>
-        <div className="rounded-xl border bg-card p-5">
-          <p className="text-center text-sm text-muted-foreground">
-            The Vendor with the ID <span className="font-medium">{params.id}</span> was not found.
-          </p>
-        </div>
-      </main>
-    );
+    notFound();
   }
 
   const items = [
