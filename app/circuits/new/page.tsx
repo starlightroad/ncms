@@ -17,7 +17,7 @@ export default async function New() {
       <PageHeader>
         <PageHeading>New Circuit</PageHeading>
       </PageHeader>
-      <div className="rounded-xl border bg-white p-5">
+      <div className="rounded-xl border bg-card p-5">
         <AddCircuitForm locations={locations} vendors={vendors} />
       </div>
     </main>

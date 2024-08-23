@@ -9,8 +9,8 @@ export default function NotFound() {
       <PageHeader>
         <PageHeading>404 Not Found</PageHeading>
       </PageHeader>
-      <div className="space-y-3 rounded-xl border bg-white p-5">
-        <p className="text-sm text-gray-600">Could not find the requested circuit.</p>
+      <div className="space-y-3 rounded-xl border bg-card p-5">
+        <p className="text-sm text-muted-foreground">Could not find the requested circuit.</p>
         <Button size="sm" asChild>
           <Link href="/circuits">Go to Circuits</Link>
         </Button>

@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   title: 'New Vendor',
 };
 
-export default function New() {
+export default async function New() {
   return (
     <main className="py-8 lg:py-16">
       <PageHeader>
         <PageHeading>New Vendor</PageHeading>
       </PageHeader>
-      <div className="rounded-xl border bg-white p-5">
+      <div className="rounded-xl border bg-card p-5">
         <AddVendorForm />
       </div>
     </main>

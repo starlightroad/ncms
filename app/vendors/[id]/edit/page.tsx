@@ -21,7 +21,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
       <PageHeader>
         <PageHeading>Edit Vendor</PageHeading>
       </PageHeader>
-      <div className="rounded-xl border bg-white p-5">
+      <div className="rounded-xl border bg-card p-5">
         <EditVendorForm data={data} />
       </div>
     </main>

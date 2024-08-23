@@ -36,7 +36,7 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <div className="fixed top-14 z-10 hidden h-full w-full max-w-56 border-r bg-white md:block">
+    <div className="fixed top-14 z-10 hidden h-full w-full max-w-56 border-r bg-background md:block">
       <nav className="py-6">
         <ul className="space-y-1 px-3">
           {navItems.map((navItem) => {
@@ -49,12 +49,15 @@ export default function Sidebar() {
                 <Link
                   href={navItem.href}
                   className={clsx(
-                    'flex w-full items-center rounded-full px-4 py-3 text-gray-600 transition-colors hover:text-blue-600',
-                    { 'bg-blue-50 font-medium': activeLink, 'hover:bg-gray-50': !activeLink },
+                    'flex w-full items-center rounded-full px-4 py-3 text-foreground/60 transition-colors hover:text-primary',
+                    {
+                      'bg-blue-50_ bg-foreground/5 font-medium': activeLink,
+                      'hover:bg-foreground/5': !activeLink,
+                    },
                   )}
                 >
-                  <Icon className={clsx('h-4 w-4', { 'text-blue-600': activeLink })} />
-                  <p className={clsx('pl-2 text-sm', { 'text-blue-600': activeLink })}>
+                  <Icon className={clsx('h-4 w-4', { 'text-primary': activeLink })} />
+                  <p className={clsx('pl-2 text-sm', { 'text-primary': activeLink })}>
                     {navItem.label}
                   </p>
                 </Link>

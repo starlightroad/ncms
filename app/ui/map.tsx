@@ -42,7 +42,7 @@ export default function MapboxMap() {
   return (
     <div
       ref={mapContainer}
-      className="map-container relative col-span-6 row-span-2 h-full bg-white"
+      className="map-container relative col-span-6 row-span-2 h-full bg-card"
     ></div>
   );
 }

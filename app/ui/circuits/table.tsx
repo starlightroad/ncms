@@ -13,16 +13,16 @@ export default async function CircuitsTable({ currentPage, query }: Props) {
 
   if (!data.length) {
     return (
-      <div className="rounded-xl border bg-white p-5">
-        <p className="text-center text-sm text-gray-600">No entries were found.</p>
+      <div className="rounded-xl border bg-background p-5">
+        <p className="text-center text-sm">No entries were found.</p>
       </div>
     );
   }
 
   return (
     <div className="overflow-hidden rounded-xl border">
-      <Table className="whitespace-nowrap bg-white">
-        <TableHeader className="bg-gray-50">
+      <Table className="whitespace-nowrap">
+        <TableHeader className="bg-background">
           <TableRow>
             <TableHead className="text-xs uppercase">Circuit ID</TableHead>
             <TableHead className="text-xs uppercase">Vendor</TableHead>
@@ -42,25 +42,25 @@ export default async function CircuitsTable({ currentPage, query }: Props) {
 
             return (
               <TableRow key={entry.id}>
-                <TableCell className="text-gray-600">
-                  <Link href={circuitLink} className="text-blue-600 hover:text-opacity-85">
+                <TableCell>
+                  <Link href={circuitLink} className="text-primary hover:text-opacity-85">
                     {entry.cid}
                   </Link>
                 </TableCell>
-                <TableCell className="text-gray-600">
-                  <Link href={vendorLink} className="text-blue-600 hover:text-opacity-85">
+                <TableCell>
+                  <Link href={vendorLink} className="text-primary hover:text-opacity-85">
                     {entry.vendor.name}
                   </Link>
                 </TableCell>
-                <TableCell className="text-gray-600">{entry.type}</TableCell>
-                <TableCell className="text-gray-600">{entry.capacity}</TableCell>
-                <TableCell className="text-gray-600">
-                  <Link href={locationALink} className="text-blue-600 hover:text-opacity-85">
+                <TableCell>{entry.type}</TableCell>
+                <TableCell>{entry.capacity}</TableCell>
+                <TableCell>
+                  <Link href={locationALink} className="text-primary hover:text-opacity-85">
                     {entry.location1.name}
                   </Link>
                 </TableCell>
-                <TableCell className="text-gray-600">
-                  <Link href={locationZLink} className="text-blue-600 hover:text-opacity-85">
+                <TableCell>
+                  <Link href={locationZLink} className="text-primary hover:text-opacity-85">
                     {entry.location2.name}
                   </Link>
                 </TableCell>

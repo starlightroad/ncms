@@ -25,7 +25,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
       <PageHeader>
         <PageHeading>Edit Circuit</PageHeading>
       </PageHeader>
-      <div className="rounded-xl border bg-white p-5">
+      <div className="rounded-xl border bg-card p-5">
         <EditCircuitForm data={data} locations={locations} vendors={vendors} />
       </div>
     </main>

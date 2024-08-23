@@ -16,15 +16,15 @@ export default function CircuitsCard({ count }: { count: number }) {
       <Card>
         <CardHeader className="pb-0">
           <header className="mb-8 flex items-center space-x-2">
-            <ArrowDownUpIcon className="h-5 w-5 text-gray-900" />
-            <CardTitle className="text-sm font-medium uppercase text-gray-900">
+            <ArrowDownUpIcon className="h-5 w-5 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium uppercase text-muted-foreground">
               {data.label}
             </CardTitle>
           </header>
         </CardHeader>
         <CardContent>
-          <p className="text-2xl font-medium text-gray-900">{formattedCount}</p>
-          <h4 className="text-sm capitalize text-gray-600">{label}</h4>
+          <p className="text-2xl font-medium">{formattedCount}</p>
+          <h4 className="text-sm capitalize text-muted-foreground">{label}</h4>
         </CardContent>
       </Card>
     </div>

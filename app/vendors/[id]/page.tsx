@@ -38,8 +38,8 @@ export default async function Vendor({ params }: { params: { id: string } }) {
         <PageHeader>
           <PageHeading>Vendor Not Found</PageHeading>
         </PageHeader>
-        <div className="rounded-xl border bg-white p-5">
-          <p className="text-center text-sm text-gray-600">
+        <div className="rounded-xl border bg-card p-5">
+          <p className="text-center text-sm text-muted-foreground">
             The Vendor with the ID <span className="font-medium">{params.id}</span> was not found.
           </p>
         </div>
@@ -88,8 +88,8 @@ export default async function Vendor({ params }: { params: { id: string } }) {
         <Card>
           <CardHeader className="pb-0">
             <header className="mb-8 flex items-center space-x-2">
-              <Building2Icon className="h-5 w-5 text-gray-900" />
-              <CardTitle className="text-sm font-medium uppercase text-gray-900">
+              <Building2Icon className="h-5 w-5 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium uppercase text-muted-foreground">
                 Vendor Details
               </CardTitle>
             </header>
@@ -100,8 +100,8 @@ export default async function Vendor({ params }: { params: { id: string } }) {
 
               return (
                 <article key={key}>
-                  <h3 className="font-medium capitalize text-gray-900">{item.label}</h3>
-                  <p className="text-sm text-gray-600">{item.description}</p>
+                  <h3 className="font-medium capitalize">{item.label}</h3>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
                 </article>
               );
             })}

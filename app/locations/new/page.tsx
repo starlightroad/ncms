@@ -19,7 +19,7 @@ export default async function New() {
       <PageHeader>
         <PageHeading>New Location</PageHeading>
       </PageHeader>
-      <div className="rounded-xl border bg-white p-5">
+      <div className="rounded-xl border bg-card p-5">
         <AddLocationForm data={data} />
       </div>
     </main>

@@ -13,16 +13,16 @@ export default async function LocationsTable({ currentPage, query }: Props) {
 
   if (!data.length) {
     return (
-      <div className="rounded-xl border bg-white p-5">
-        <p className="text-center text-sm text-gray-600">No entries were found.</p>
+      <div className="rounded-xl border bg-background p-5">
+        <p className="text-center text-sm">No entries were found.</p>
       </div>
     );
   }
 
   return (
     <div className="overflow-hidden rounded-xl border">
-      <Table className="whitespace-nowrap bg-white">
-        <TableHeader className="bg-gray-50">
+      <Table className="whitespace-nowrap">
+        <TableHeader className="bg-background">
           <TableRow>
             <TableHead className="text-xs uppercase">Name</TableHead>
             <TableHead className="text-xs uppercase">Street</TableHead>
@@ -38,15 +38,15 @@ export default async function LocationsTable({ currentPage, query }: Props) {
 
             return (
               <TableRow key={entry.id}>
-                <TableCell className="text-gray-600">
-                  <Link href={locationLink} className="text-blue-600 hover:text-opacity-85">
+                <TableCell>
+                  <Link href={locationLink} className="text-primary hover:text-opacity-85">
                     {entry.name}
                   </Link>
                 </TableCell>
-                <TableCell className="text-gray-600">{entry.street}</TableCell>
-                <TableCell className="text-gray-600">{entry.city}</TableCell>
-                <TableCell className="text-gray-600">{entry.state}</TableCell>
-                <TableCell className="text-gray-600">{entry.zip}</TableCell>
+                <TableCell>{entry.street}</TableCell>
+                <TableCell>{entry.city}</TableCell>
+                <TableCell>{entry.state}</TableCell>
+                <TableCell>{entry.zip}</TableCell>
                 <TableCell>
                   <TableActionsList location={entry} />
                 </TableCell>

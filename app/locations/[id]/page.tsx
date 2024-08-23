@@ -84,8 +84,8 @@ export default async function Location({ params }: { params: { id: string } }) {
         <Card className="col-span-1 row-span-2">
           <CardHeader className="pb-0">
             <header className="mb-8 flex items-center space-x-2">
-              <MapPinIcon className="h-5 w-5 text-gray-900" />
-              <CardTitle className="text-sm font-medium uppercase text-gray-900">
+              <MapPinIcon className="h-5 w-5 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium uppercase text-muted-foreground">
                 Location Details
               </CardTitle>
             </header>
@@ -96,8 +96,8 @@ export default async function Location({ params }: { params: { id: string } }) {
 
               return (
                 <article key={key}>
-                  <h3 className="font-medium capitalize text-gray-900">{item.label}</h3>
-                  <p className="text-sm text-gray-600">{item.description}</p>
+                  <h3 className="font-medium capitalize">{item.label}</h3>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
                 </article>
               );
             })}

@@ -18,7 +18,7 @@ function PaginationArrow({ direction, href, isDisabled }: PaginationArrowProps) 
 
   if (isDisabled) {
     return (
-      <span className="flex h-8 min-w-8 cursor-not-allowed items-center justify-center rounded-full text-gray-400">
+      <span className="flex h-8 min-w-8 cursor-not-allowed items-center justify-center rounded-full bg-background opacity-50">
         {Arrow}
       </span>
     );
@@ -26,7 +26,7 @@ function PaginationArrow({ direction, href, isDisabled }: PaginationArrowProps) 
 
   return (
     <Link
-      className="flex h-8 min-w-8 items-center justify-center rounded-full hover:bg-gray-100"
+      className="flex h-8 min-w-8 items-center justify-center rounded-full hover:bg-accent hover:text-accent-foreground"
       href={href}
     >
       {Arrow}
@@ -68,7 +68,7 @@ export default function Pagination({ pages }: { pages: number }) {
 
           const styles = clsx('flex items-center justify-center rounded-full min-w-8 h-8 text-sm', {
             'bg-primary text-secondary hover:bg-primary/90': isCurrentPage,
-            'hover:bg-gray-100': !isCurrentPage,
+            'hover:bg-accent': !isCurrentPage,
           });
 
           return (

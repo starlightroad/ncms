@@ -39,7 +39,7 @@ export default async function CircuitsByCapacityCard() {
       <Card>
         <CardHeader className="pb-0">
           <header className="mb-8 space-y-2">
-            <CardTitle className="font-medium uppercase text-gray-900">{formattedCount}</CardTitle>
+            <CardTitle className="font-medium uppercase">{formattedCount}</CardTitle>
             <CardDescription className="capitalize">{data.label}</CardDescription>
           </header>
         </CardHeader>
