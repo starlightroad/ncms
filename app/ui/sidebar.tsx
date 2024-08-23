@@ -34,20 +34,23 @@ const navItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const companyName = pathname.split('/')[1];
 
   return (
     <div className="fixed top-14 z-10 hidden h-full w-full max-w-56 border-r bg-background md:block">
       <nav className="py-6">
         <ul className="space-y-1 px-3">
           {navItems.map((navItem) => {
-            const href = `/${pathname.split('/').slice(1)[0]}` || '/';
-            const activeLink = href === navItem.href;
+            const destination = pathname.split('/').slice(1)[1] || '/';
+            const modifiedDestination = destination === '/' ? '/' : `/${destination}`;
+            const activeLink = modifiedDestination === navItem.href;
+            const href = `/${companyName}${navItem.href}`;
             const Icon = navItem.icon;
 
             return (
               <li key={navItem.id}>
                 <Link
-                  href={navItem.href}
+                  href={href}
                   className={clsx(
                     'flex w-full items-center rounded-full px-4 py-3 text-foreground/60 transition-colors hover:text-primary',
                     {
