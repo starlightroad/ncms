@@ -3,7 +3,7 @@ import prisma from '@/prisma/client';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import Credentials from 'next-auth/providers/credentials';
 import authConfig from '@/auth.config';
-import { getUser } from '@/app/data/user';
+import { getFullUser } from '@/app/data/user';
 import { comparePasswords } from '@/app/lib/bcrypt';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -23,7 +23,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         let user = null;
 
         try {
-          user = await getUser(String(credentials.email));
+          user = await getFullUser(String(credentials.email));
 
           const passwordsMatch = await comparePasswords(
             String(credentials.password),
