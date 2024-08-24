@@ -18,11 +18,11 @@ function Buttons() {
   );
 }
 
-function SignedInButtons({ companyName }: { companyName: string }) {
+function SignedInButtons() {
   return (
     <>
       <Button size="sm" asChild>
-        <Link href={`/${companyName}`}>Go to Dashboard</Link>
+        <Link href={`/dashboard`}>Go to Dashboard</Link>
       </Button>
       <Button variant="secondary" size="sm">
         Sign Out
@@ -34,7 +34,6 @@ function SignedInButtons({ companyName }: { companyName: string }) {
 export default async function Home() {
   const session = await auth();
   const isSignedIn = !!session?.user;
-  const companyName = 'acme-networks';
 
   return (
     <Container>
@@ -46,7 +45,7 @@ export default async function Home() {
           </p>
         </PageHeader>
         <div className="flex flex-col justify-center gap-3 md:flex-row">
-          {isSignedIn ? <SignedInButtons companyName={companyName} /> : <Buttons />}
+          {isSignedIn ? <SignedInButtons /> : <Buttons />}
         </div>
       </main>
     </Container>
