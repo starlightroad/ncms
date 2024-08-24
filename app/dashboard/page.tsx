@@ -1,4 +1,6 @@
+import { auth } from '@/auth';
 import { Suspense } from 'react';
+import { redirect } from 'next/navigation';
 import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import { DashboardCardsSkeleton, DashboardSingleCardSkeleton } from '@/app/ui/skeletons';
@@ -6,7 +8,13 @@ import CardsWrapper from '@/app/ui/dashboard/cards';
 import MapLoadsCard from '@/app/ui/dashboard/map-loads-card';
 import CircuitsByCapacityCard from '@/app/ui/dashboard/circuit-capacities-card';
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const session = await auth();
+
+  if (!session?.user) {
+    redirect('/signin');
+  }
+
   return (
     <main className="w-full pb-8 pt-8 lg:pt-16">
       <PageHeader>

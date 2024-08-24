@@ -7,15 +7,22 @@ export const getUser = async (email?: string) => {
         email,
       },
     });
-    return user;
+
+    return {
+      id: user?.id,
+      name: user?.name,
+      email: user?.email,
+      image: user?.image,
+      companyId: user?.companyId,
+    };
   } catch (error) {
     throw new Error('Failed to Get User.');
   }
 };
 
-export const getUserAndCompany = async (email?: string) => {
+export const getFullUser = async (email?: string) => {
   try {
-    const user = await prisma.user.findUnique({
+    const fullUser = await prisma.user.findUnique({
       where: {
         email,
       },
@@ -23,9 +30,9 @@ export const getUserAndCompany = async (email?: string) => {
         company: true,
       },
     });
-    return user;
+    return fullUser;
   } catch (error) {
-    throw new Error('Failed to Get User.');
+    throw new Error('Failed to Get Full User.');
   }
 };
 

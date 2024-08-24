@@ -3,14 +3,7 @@ import Sidebar from '@/app/ui/sidebar';
 import Container from '@/app/ui/container';
 import Banner from '@/app/ui/banner';
 
-type Props = {
-  children: React.ReactNode;
-  params: {
-    company: string;
-  };
-};
-
-export default function DashboardLayout({ children, params }: Props) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-full w-full">
       <Navbar />

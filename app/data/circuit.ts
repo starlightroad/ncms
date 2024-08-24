@@ -1,10 +1,16 @@
 import prisma from '@/prisma/client';
 import { ITEMS_PER_PAGE } from '@/app/lib/constants';
 import { getDemoCompanyId } from '@/app/data/demo';
+import { getUserBySession } from '@/app/data/session';
 
 export const getCircuits = async () => {
   try {
+    const user = await getUserBySession();
+
     const circuits = await prisma.circuit.findMany({
+      where: {
+        companyId: String(user.companyId),
+      },
       include: {
         vendor: true,
         location1: true,

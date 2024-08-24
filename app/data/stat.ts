@@ -1,5 +1,5 @@
 import prisma from '@/prisma/client';
-import { getDemoCompanyId } from '@/app/data/demo';
+import { getUserBySession } from '@/app/data/session';
 
 export const getMapLoadsLast6Months = async () => {
   const date = new Date();
@@ -20,10 +20,11 @@ export const getMapLoadsLast6Months = async () => {
   }
 
   try {
-    const demoCompanyId = await getDemoCompanyId();
+    const user = await getUserBySession();
+
     const stats = await prisma.mapLoad.findMany({
       where: {
-        companyId: demoCompanyId,
+        companyId: String(user?.companyId),
         OR: [
           {
             monthId: { gte },
