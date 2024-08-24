@@ -1,6 +1,7 @@
 'use server';
 
 import { signIn } from '@/auth';
+import { redirect } from 'next/navigation';
 import { SignInSchema } from '@/app/lib/types';
 import { createUser, getUser } from '@/app/data/user';
 import { saltAndHashPassword } from '@/app/lib/bcrypt';
@@ -44,6 +45,8 @@ export const signInUser = async (_: any, formData: FormData) => {
       message: message ?? 'Something Went Wrong.',
     };
   }
+
+  redirect('/dashboard');
 };
 
 export const signUpUser = async (_: any, formData: FormData) => {
