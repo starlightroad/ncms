@@ -38,3 +38,11 @@ export const CircuitSchema = z.object({
   location1Id: z.string().trim().min(1, { message: 'A Location is Required.' }),
   location2Id: z.string().trim().min(1, { message: 'Z Location is Required.' }),
 });
+
+export const SignInSchema = z.object({
+  email: z.string().email({ message: 'Invalid Email.' }),
+  password: z
+    .string()
+    .min(8, 'Password must be at least 8 characters.')
+    .max(32, 'Password must be less than 32 characters.'),
+});

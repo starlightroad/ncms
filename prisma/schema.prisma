@@ -25,8 +25,8 @@ model Company {
 
 model User {
   id            String    @id @default(cuid())
-  companyId     String    @map("company_id")
-  name          String    @db.VarChar(100)
+  companyId     String?   @map("company_id")
+  name          String?   @db.VarChar(100)
   email         String    @unique @db.VarChar(80)
   password      String    @db.VarChar(72)
   emailVerified DateTime? @map("email_verified")
@@ -37,7 +37,7 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  company Company @relation(fields: [companyId], references: [id])
+  company Company? @relation(fields: [companyId], references: [id])
 
   @@map("user")
 }
