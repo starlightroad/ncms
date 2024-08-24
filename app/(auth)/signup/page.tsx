@@ -1,6 +1,4 @@
-import { auth } from '@/auth';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import SignUpForm from '@/app/ui/auth/signup-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/ui/card';
 
@@ -19,12 +17,6 @@ function AccountText() {
 }
 
 export default async function SignUp() {
-  const session = await auth();
-
-  if (session?.user) {
-    redirect('/dashboard');
-  }
-
   return (
     <main>
       <Card className="w-96">

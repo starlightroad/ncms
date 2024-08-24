@@ -1,6 +1,4 @@
-import { auth } from '@/auth';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
 import SignInForm from '@/app/ui/auth/signin-form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/ui/card';
 
@@ -19,12 +17,6 @@ function NoAccountText() {
 }
 
 export default async function SignIn() {
-  const session = await auth();
-
-  if (session?.user) {
-    redirect('/dashboard');
-  }
-
   return (
     <main>
       <Card className="w-96">
