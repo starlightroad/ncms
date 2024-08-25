@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/app/ui/table';
 import TableActionsList from '@/app/ui/locations/actions-list';
-import { getFilteredLocations } from '@/app/data/location';
+import { getFilteredLocations, getLocationPages } from '@/app/data/location';
+import Pagination from '@/app/ui/pagination';
 
 type Props = {
   currentPage: number;
@@ -9,7 +10,9 @@ type Props = {
 };
 
 export default async function LocationsTable({ currentPage, query }: Props) {
-  const data = await getFilteredLocations(currentPage, query);
+  const dataPromise = getFilteredLocations(currentPage, query);
+  const pagesPromise = getLocationPages();
+  const [data, pages] = await Promise.all([dataPromise, pagesPromise]);
 
   if (!data.length) {
     return (
@@ -20,41 +23,46 @@ export default async function LocationsTable({ currentPage, query }: Props) {
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border">
-      <Table className="whitespace-nowrap">
-        <TableHeader className="bg-background">
-          <TableRow>
-            <TableHead className="text-xs uppercase">Name</TableHead>
-            <TableHead className="text-xs uppercase">Street</TableHead>
-            <TableHead className="text-xs uppercase">City</TableHead>
-            <TableHead className="text-xs uppercase">State</TableHead>
-            <TableHead className="text-xs uppercase">ZIP Code</TableHead>
-            <TableHead className="text-xs uppercase"></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.map((entry) => {
-            const locationLink = `/dashboard/locations/${entry.id}`;
+    <div>
+      <div className="overflow-hidden rounded-xl border">
+        <Table className="whitespace-nowrap">
+          <TableHeader className="bg-background">
+            <TableRow>
+              <TableHead className="text-xs uppercase">Name</TableHead>
+              <TableHead className="text-xs uppercase">Street</TableHead>
+              <TableHead className="text-xs uppercase">City</TableHead>
+              <TableHead className="text-xs uppercase">State</TableHead>
+              <TableHead className="text-xs uppercase">ZIP Code</TableHead>
+              <TableHead className="text-xs uppercase"></TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.map((entry) => {
+              const locationLink = `/dashboard/locations/${entry.id}`;
 
-            return (
-              <TableRow key={entry.id}>
-                <TableCell>
-                  <Link href={locationLink} className="text-primary hover:text-opacity-85">
-                    {entry.name}
-                  </Link>
-                </TableCell>
-                <TableCell>{entry.street}</TableCell>
-                <TableCell>{entry.city}</TableCell>
-                <TableCell>{entry.state}</TableCell>
-                <TableCell>{entry.zip}</TableCell>
-                <TableCell>
-                  <TableActionsList location={entry} />
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+              return (
+                <TableRow key={entry.id}>
+                  <TableCell>
+                    <Link href={locationLink} className="text-primary hover:text-opacity-85">
+                      {entry.name}
+                    </Link>
+                  </TableCell>
+                  <TableCell>{entry.street}</TableCell>
+                  <TableCell>{entry.city}</TableCell>
+                  <TableCell>{entry.state}</TableCell>
+                  <TableCell>{entry.zip}</TableCell>
+                  <TableCell>
+                    <TableActionsList location={entry} />
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="flex justify-end px-4 py-2">
+        <Pagination pages={pages} />
+      </div>
     </div>
   );
 }

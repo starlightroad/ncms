@@ -6,8 +6,6 @@ import PageHeading from '@/app/ui/page-heading';
 import LocationsTable from '@/app/ui/locations/table';
 import { Button } from '@/app/ui/button';
 import { TableSkeleton } from '@/app/ui/skeletons';
-import Pagination from '@/app/ui/pagination';
-import { getLocationPages } from '@/app/data/location';
 
 export const metadata: Metadata = {
   title: 'Locations',
@@ -23,7 +21,6 @@ type Props = {
 export default async function Locations({ searchParams }: Props) {
   const query = searchParams?.q || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const pages = await getLocationPages();
 
   return (
     <main className="py-8 lg:py-16">
@@ -40,9 +37,6 @@ export default async function Locations({ searchParams }: Props) {
       <Suspense fallback={<TableSkeleton />}>
         <LocationsTable currentPage={currentPage} query={query} />
       </Suspense>
-      <div className="flex justify-end px-4 py-2">
-        <Pagination pages={pages} />
-      </div>
     </main>
   );
 }

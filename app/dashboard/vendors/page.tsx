@@ -6,8 +6,6 @@ import PageHeading from '@/app/ui/page-heading';
 import VendorsTable from '@/app/ui/vendors/table';
 import { Button } from '@/app/ui/button';
 import { TableSkeleton } from '@/app/ui/skeletons';
-import { getVendorPages } from '@/app/data/vendor';
-import Pagination from '@/app/ui/pagination';
 
 export const metadata: Metadata = {
   title: 'Vendors',
@@ -23,7 +21,6 @@ type Props = {
 export default async function Vendors({ searchParams }: Props) {
   const query = searchParams?.q || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const pages = await getVendorPages();
 
   return (
     <main className="py-8 lg:py-16">
@@ -38,9 +35,6 @@ export default async function Vendors({ searchParams }: Props) {
       <Suspense fallback={<TableSkeleton />}>
         <VendorsTable currentPage={currentPage} query={query} />
       </Suspense>
-      <div className="flex justify-end px-4 py-2">
-        <Pagination pages={pages} />
-      </div>
     </main>
   );
 }
