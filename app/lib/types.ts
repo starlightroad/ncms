@@ -11,6 +11,12 @@ export type Address = {
   zip: string;
 };
 
+export type Avatar = {
+  name?: string;
+  email?: string;
+  image?: string;
+};
+
 export type State = {
   name: string;
   abbreviation: string;
