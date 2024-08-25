@@ -1,6 +1,6 @@
 'use server';
 
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { redirect } from 'next/navigation';
 import { SignInSchema } from '@/app/lib/types';
 import { createUser, getUser } from '@/app/data/user';
@@ -96,4 +96,16 @@ export const signUpUser = async (_: any, formData: FormData) => {
       message: message ?? 'Something Went Wrong.',
     };
   }
+};
+
+export const signOutUser = async (_: any, formData: FormData) => {
+  try {
+    await signOut({ redirect: false });
+  } catch (error) {
+    return {
+      message: 'Failed to Sign Out User.',
+    };
+  }
+
+  redirect('/signin');
 };

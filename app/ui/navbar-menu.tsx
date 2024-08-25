@@ -10,6 +10,7 @@ import {
 } from '@/app/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/ui/avatar';
 import type { Avatar as AvatarType } from '@/app/lib/types';
+import { SignOutForm } from '@/app/ui/auth/signout-form';
 
 function NavbarUser({ name, email, image }: AvatarType) {
   const avatarFallbackName = name?.slice(0, 2) ?? email?.slice(0, 2);
@@ -34,7 +35,9 @@ export default function NavbarMenu({ name, email, image }: AvatarType) {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Menu</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Sign Out</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <SignOutForm />
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -62,7 +65,9 @@ export function MobileNavbarMenu() {
           <Link href="/dashboard/vendors">Vendors</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Sign Out</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <SignOutForm />
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
