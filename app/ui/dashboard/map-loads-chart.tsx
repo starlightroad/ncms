@@ -11,7 +11,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 type Props = {
-  chartsData: { month: number; loads: number }[];
+  chartsData: { month: string; loads: number }[];
 };
 
 export default function MapLoadsChart({ chartsData }: Props) {

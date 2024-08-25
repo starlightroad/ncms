@@ -3,6 +3,7 @@
 import { useContext, useEffect, useRef } from 'react';
 import mapboxgl, { FullscreenControl, type Map } from 'mapbox-gl';
 import { MapContext } from '@/app/providers/map-provider';
+import { updateMapLoadsCountAction } from '@/app/dashboard/actions';
 
 mapboxgl.accessToken = String(process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN);
 
@@ -37,6 +38,8 @@ export default function MapboxMap() {
     });
 
     mapRef.current.addControl(new FullscreenControl());
+
+    updateMapLoadsCountAction();
   }, [lng, lat, zoom, updateCoordinates, updateZoom]);
 
   return (

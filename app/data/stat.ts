@@ -5,38 +5,33 @@ export const getMapLoadsLast6Months = async () => {
   const date = new Date();
   const currentMonth = date.getMonth();
   const currentYear = date.getFullYear();
-  let prevYear = null;
-
-  let gte = null;
-  let lte = null;
-
-  if (currentMonth - 5 < 0) {
-    prevYear = currentYear - 1;
-    gte = 12 + (currentMonth - 5);
-    lte = currentMonth;
-  } else {
-    gte = currentMonth;
-    lte = currentMonth - 5;
-  }
+  const prevYear = (currentMonth - 5 < 0 && currentYear - 1) || null;
 
   try {
     const user = await getUserBySession();
 
-    const stats = await prisma.mapLoad.findMany({
-      where: {
-        companyId: String(user?.companyId),
-        OR: [
+    const stats = await prisma.mapLoad.groupBy({
+      by: ['monthId', 'year'],
+      where: { companyId: user?.companyId?.toString() },
+      orderBy: [{ year: 'desc' }, { monthId: 'desc' }],
+      _sum: {
+        count: true,
+      },
+      having: {
+        AND: [
           {
-            monthId: { gte },
-            year: { gte: prevYear ?? currentYear },
+            year: {
+              lte: currentYear,
+              gte: prevYear ?? currentYear,
+            },
           },
           {
-            monthId: { lte },
-            year: { lte: currentYear },
+            monthId: {
+              lte: currentMonth,
+            },
           },
         ],
       },
-      orderBy: [{ year: 'desc' }, { monthId: 'desc' }, { day: 'desc' }],
       take: 6,
     });
 

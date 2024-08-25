@@ -77,3 +77,7 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
 
   return [1, ELLIPSIS, currentPage - 1, currentPage, currentPage + 1, ELLIPSIS, totalPages];
 };
+
+export const createArray = (size?: number, fill?: any) => {
+  return new Array(size).fill(fill ?? null);
+};
