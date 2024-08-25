@@ -8,7 +8,7 @@ import { updateMapLoadsCountAction } from '@/app/dashboard/actions';
 mapboxgl.accessToken = String(process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN);
 
 export default function MapboxMap() {
-  const { state, updateCoordinates, updateZoom } = useContext(MapContext);
+  const { state } = useContext(MapContext);
   const { lng, lat, zoom, markers } = state;
 
   const mapContainer = useRef<HTMLDivElement | null>(null);
@@ -40,7 +40,7 @@ export default function MapboxMap() {
     mapRef.current.addControl(new FullscreenControl());
 
     updateMapLoadsCountAction();
-  }, [lng, lat, zoom, updateCoordinates, updateZoom]);
+  }, []);
 
   return (
     <div
