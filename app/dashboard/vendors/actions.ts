@@ -3,7 +3,7 @@
 import prisma from '@/prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { getDemoCompanyId } from '@/app/data/demo';
+import { getUserBySession } from '@/app/data/session';
 import { VendorSchema } from '@/app/lib/types';
 
 export const createVendor = async (_: any, formData: FormData) => {
@@ -24,6 +24,7 @@ export const createVendor = async (_: any, formData: FormData) => {
   const { name, website, phone } = validatedFields.data;
 
   try {
+    const user = await getUserBySession();
     const vendorExists = await prisma.vendor.findFirst({ where: { name: String(name) } });
 
     if (vendorExists) {
@@ -32,14 +33,12 @@ export const createVendor = async (_: any, formData: FormData) => {
       };
     }
 
-    const demoCompanyId = await getDemoCompanyId();
-
     await prisma.vendor.create({
       data: {
         name,
         website,
         phone: phone.replaceAll('-', ''),
-        companyId: String(demoCompanyId),
+        companyId: String(user.companyId),
       },
     });
   } catch (error) {
@@ -48,7 +47,8 @@ export const createVendor = async (_: any, formData: FormData) => {
     };
   }
 
-  revalidatePath('/vendors');
+  revalidatePath('/dashboard/vendors');
+  redirect('/dashboard/vendors');
 };
 
 export const updateVendor = async (id: string, _: any, formData: FormData) => {
@@ -69,6 +69,7 @@ export const updateVendor = async (id: string, _: any, formData: FormData) => {
   const { name, website, phone } = validatedFields.data;
 
   try {
+    const user = await getUserBySession();
     const vendorExists = await prisma.vendor.findFirst({ where: { name: String(name) } });
 
     if (vendorExists && vendorExists.id !== id) {
@@ -76,8 +77,6 @@ export const updateVendor = async (id: string, _: any, formData: FormData) => {
         message: 'Vendor Already Exists.',
       };
     }
-
-    const demoCompanyId = await getDemoCompanyId();
 
     await prisma.vendor.update({
       where: {
@@ -87,7 +86,7 @@ export const updateVendor = async (id: string, _: any, formData: FormData) => {
         name,
         website,
         phone: phone.replaceAll('-', ''),
-        companyId: String(demoCompanyId),
+        companyId: String(user.companyId),
       },
     });
   } catch (error) {
@@ -96,19 +95,20 @@ export const updateVendor = async (id: string, _: any, formData: FormData) => {
     };
   }
 
-  revalidatePath('/vendors');
-  redirect('/vendors');
+  revalidatePath('/dashboard/vendors');
+  redirect('/dashboard/vendors');
 };
 
 export const deleteVendor = async (id: string) => {
   try {
-    await prisma.vendor.delete({ where: { id } });
+    const user = await getUserBySession();
+    await prisma.vendor.delete({ where: { id, companyId: String(user.companyId) } });
   } catch (error) {
     return {
       message: 'Failed to Delete Vendor.',
     };
   }
 
-  revalidatePath('/vendors');
-  redirect('/vendors');
+  revalidatePath('/dashboard/vendors');
+  redirect('/dashboard/vendors');
 };

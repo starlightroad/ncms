@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import FormStatusMessage from '@/app/ui/form-status-message';
-import { deleteVendor } from '@/app/vendors/actions';
+import { deleteVendor } from '@/app/dashboard/vendors/actions';
 import { Button } from '@/app/ui/button';
 import {
   Dialog,

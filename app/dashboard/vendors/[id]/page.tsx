@@ -45,7 +45,7 @@ export default async function Vendor({ params }: { params: { id: string } }) {
     {
       label: 'Website',
       description: (
-        <Link href={data.website} target="_blank" className="text-blue-600 hover:text-opacity-85">
+        <Link href={data.website} target="_blank" className="text-primary hover:text-opacity-85">
           {data.website}
         </Link>
       ),
@@ -65,7 +65,7 @@ export default async function Vendor({ params }: { params: { id: string } }) {
           </div>
           <div className="space-x-2">
             <Button type="button" size="sm" variant="outline" className="gap-1" asChild>
-              <Link href={`/vendors/${data.id}/edit`}>
+              <Link href={`/dashboard/vendors/${data.id}/edit`}>
                 <Edit2Icon className="h-4 w-4" />
                 Edit
               </Link>

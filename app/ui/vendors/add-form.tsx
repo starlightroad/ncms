@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useFormState, useFormStatus } from 'react-dom';
 import { Label } from '@/app/ui/label';
 import { Input } from '@/app/ui/input';
-import { createVendor } from '@/app/vendors/actions';
+import { createVendor } from '@/app/dashboard/vendors/actions';
 import FormStatusMessage from '@/app/ui/form-status-message';
 import { Button } from '@/app/ui/button';
 
@@ -39,7 +39,7 @@ export default function AddVendorForm() {
         </fieldset>
         <div className="flex justify-end space-x-3">
           <Button type="button" size="sm" variant="secondary" asChild>
-            <Link href="/vendors">Cancel</Link>
+            <Link href="/dashboard/vendors">Cancel</Link>
           </Button>
           <FormButton />
         </div>

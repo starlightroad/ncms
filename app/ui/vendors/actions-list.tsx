@@ -36,10 +36,10 @@ export default function TableActionsList({ vendor }: { vendor: Vendor }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link href={`/vendors/${vendor.id}`}>View</Link>
+          <Link href={`/dashboard/vendors/${vendor.id}`}>View</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/vendors/${vendor.id}/edit`}>Edit</Link>
+          <Link href={`/dashboard/vendors/${vendor.id}/edit`}>Edit</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>

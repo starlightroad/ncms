@@ -5,7 +5,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import type { Vendor } from '@/app/lib/types';
 import { Label } from '@/app/ui/label';
 import { Input } from '@/app/ui/input';
-import { updateVendor } from '@/app/vendors/actions';
+import { updateVendor } from '@/app/dashboard/vendors/actions';
 import FormStatusMessage from '@/app/ui/form-status-message';
 import { Button } from '@/app/ui/button';
 
@@ -56,7 +56,7 @@ export default function EditVendorForm({ data }: { data: Vendor }) {
         </fieldset>
         <div className="flex justify-end space-x-3">
           <Button size="sm" variant="secondary" asChild>
-            <Link href={`/vendors/${data.id}`}>Cancel</Link>
+            <Link href={`/dashboard/vendors/${data.id}`}>Cancel</Link>
           </Button>
           <FormButton />
         </div>

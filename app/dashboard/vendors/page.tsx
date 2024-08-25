@@ -31,7 +31,7 @@ export default async function Vendors({ searchParams }: Props) {
         <div className="flex items-center justify-between">
           <PageHeading>Vendors</PageHeading>
           <Button type="button" size="sm" asChild>
-            <Link href="/vendors/new">New Vendor</Link>
+            <Link href={`/dashboard/vendors/new`}>New Vendor</Link>
           </Button>
         </div>
       </PageHeader>

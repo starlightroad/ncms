@@ -12,7 +12,7 @@ export default function NotFound() {
       <div className="space-y-3 rounded-xl border bg-card p-5">
         <p className="text-sm text-muted-foreground">Could not find the requested vendor.</p>
         <Button size="sm" asChild>
-          <Link href="/vendors">Go to Vendors</Link>
+          <Link href="/dashboard/vendors">Go to Vendors</Link>
         </Button>
       </div>
     </main>

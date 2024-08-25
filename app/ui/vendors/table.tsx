@@ -33,7 +33,7 @@ export default async function VendorsTable({ currentPage, query }: Props) {
         </TableHeader>
         <TableBody>
           {data.map((entry) => {
-            const vendorLink = `/vendors/${entry.id}`;
+            const vendorLink = `/dashboard/vendors/${entry.id}`;
 
             return (
               <TableRow key={entry.id}>
