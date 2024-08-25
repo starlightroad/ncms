@@ -41,7 +41,10 @@ export default async function Circuit({ params }: { params: { id: string } }) {
     {
       label: 'vendor',
       description: (
-        <Link href={`/vendors/${data.vendorId}`} className="text-primary hover:text-opacity-85">
+        <Link
+          href={`/dashboard/vendors/${data.vendorId}`}
+          className="text-primary hover:text-opacity-85"
+        >
           {data.vendor.name}
         </Link>
       ),
@@ -58,7 +61,7 @@ export default async function Circuit({ params }: { params: { id: string } }) {
       label: 'a location',
       description: (
         <Link
-          href={`/locations/${data.location1Id}`}
+          href={`/dashboard/locations/${data.location1Id}`}
           className="text-primary hover:text-opacity-85"
         >
           {data.location1.name}
@@ -69,7 +72,7 @@ export default async function Circuit({ params }: { params: { id: string } }) {
       label: 'z location',
       description: (
         <Link
-          href={`/locations/${data.location2Id}`}
+          href={`/dashboard/locations/${data.location2Id}`}
           className="text-primary hover:text-opacity-85"
         >
           {data.location2.name}
@@ -99,7 +102,7 @@ export default async function Circuit({ params }: { params: { id: string } }) {
           </div>
           <div className="space-x-2">
             <Button type="button" size="sm" variant="outline" className="gap-1" asChild>
-              <Link href={`/circuits/${data.id}/edit`}>
+              <Link href={`/dashboard/circuits/${data.id}/edit`}>
                 <Edit2Icon className="h-4 w-4" />
                 Edit
               </Link>

@@ -35,10 +35,10 @@ export default async function CircuitsTable({ currentPage, query }: Props) {
         </TableHeader>
         <TableBody>
           {data.map((entry) => {
-            const circuitLink = `/circuits/${entry.id}`;
-            const vendorLink = `/vendors/${entry.vendorId}`;
-            const locationALink = `/locations/${entry.location1Id}`;
-            const locationZLink = `/locations/${entry.location2Id}`;
+            const circuitLink = `/dashboard/circuits/${entry.id}`;
+            const vendorLink = `/dashboard/vendors/${entry.vendorId}`;
+            const locationALink = `/dashboard/locations/${entry.location1Id}`;
+            const locationZLink = `/dashboard/locations/${entry.location2Id}`;
 
             return (
               <TableRow key={entry.id}>

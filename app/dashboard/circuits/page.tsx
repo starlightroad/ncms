@@ -31,7 +31,7 @@ export default async function Circuits({ searchParams }: Props) {
         <div className="flex items-center justify-between">
           <PageHeading>Circuits</PageHeading>
           <Button type="button" size="sm" asChild>
-            <Link href="/circuits/new">New Circuit</Link>
+            <Link href="/dashboard/circuits/new">New Circuit</Link>
           </Button>
         </div>
       </PageHeader>

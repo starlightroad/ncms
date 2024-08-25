@@ -4,7 +4,7 @@ import prisma from '@/prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { CircuitSchema } from '@/app/lib/types';
-import { getDemoCompanyId } from '@/app/data/demo';
+import { getUserBySession } from '@/app/data/session';
 
 export const createCircuit = async (_: any, formData: FormData) => {
   const validatedFields = CircuitSchema.safeParse({
@@ -33,15 +33,16 @@ export const createCircuit = async (_: any, formData: FormData) => {
   const { circuitId, vendorId, type, capacity, location1Id, location2Id } = validatedFields.data;
 
   try {
-    const circuitExists = await prisma.circuit.findFirst({ where: { cid: circuitId } });
+    const user = await getUserBySession();
+    const circuitExists = await prisma.circuit.findFirst({
+      where: { companyId: String(user.companyId), cid: circuitId },
+    });
 
     if (circuitExists) {
       return {
         message: 'Circuit Already Exists.',
       };
     }
-
-    const demoCompanyId = await getDemoCompanyId();
 
     await prisma.circuit.create({
       data: {
@@ -51,7 +52,7 @@ export const createCircuit = async (_: any, formData: FormData) => {
         capacity,
         location1Id,
         location2Id,
-        companyId: String(demoCompanyId),
+        companyId: String(user.companyId),
       },
     });
   } catch (error) {
@@ -60,8 +61,8 @@ export const createCircuit = async (_: any, formData: FormData) => {
     };
   }
 
-  revalidatePath('/circuits');
-  redirect('/circuits');
+  revalidatePath('/dashboard/circuits');
+  redirect('/dashboard/circuits');
 };
 
 export const updateCircuit = async (id: string, _: any, formData: FormData) => {
@@ -91,15 +92,16 @@ export const updateCircuit = async (id: string, _: any, formData: FormData) => {
   const { circuitId, vendorId, type, capacity, location1Id, location2Id } = validatedFields.data;
 
   try {
-    const circuitExists = await prisma.circuit.findFirst({ where: { cid: circuitId } });
+    const user = await getUserBySession();
+    const circuitExists = await prisma.circuit.findFirst({
+      where: { companyId: String(user.companyId), cid: circuitId },
+    });
 
     if (circuitExists && circuitExists.id !== id) {
       return {
         message: 'Circuit Already Exists.',
       };
     }
-
-    const demoCompanyId = await getDemoCompanyId();
 
     await prisma.circuit.update({
       where: {
@@ -112,7 +114,7 @@ export const updateCircuit = async (id: string, _: any, formData: FormData) => {
         capacity,
         location1Id,
         location2Id,
-        companyId: String(demoCompanyId),
+        companyId: String(user.companyId),
       },
     });
   } catch (error) {
@@ -121,19 +123,20 @@ export const updateCircuit = async (id: string, _: any, formData: FormData) => {
     };
   }
 
-  revalidatePath('/circuits');
-  redirect('/circuits');
+  revalidatePath('/dashboard/circuits');
+  redirect(`/dashboard/circuits/${id}`);
 };
 
 export const deleteCircuit = async (id: string) => {
   try {
-    await prisma.circuit.delete({ where: { id } });
+    const user = await getUserBySession();
+    await prisma.circuit.delete({ where: { companyId: String(user.companyId), id } });
   } catch (error) {
     return {
       message: 'Failed to Delete Circuit.',
     };
   }
 
-  revalidatePath('/circuits');
-  redirect('/circuits');
+  revalidatePath('/dashboard/circuits');
+  redirect('/dashboard/circuits');
 };

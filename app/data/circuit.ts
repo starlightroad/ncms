@@ -1,6 +1,5 @@
 import prisma from '@/prisma/client';
 import { ITEMS_PER_PAGE } from '@/app/lib/constants';
-import { getDemoCompanyId } from '@/app/data/demo';
 import { getUserBySession } from '@/app/data/session';
 
 export const getCircuits = async () => {
@@ -25,8 +24,9 @@ export const getCircuits = async () => {
 
 export const getCircuit = async (id: string) => {
   try {
+    const user = await getUserBySession();
     const circuit = await prisma.circuit.findUnique({
-      where: { id },
+      where: { companyId: String(user.companyId), id },
       include: { vendor: true, location1: true, location2: true },
     });
     return circuit;
@@ -37,7 +37,8 @@ export const getCircuit = async (id: string) => {
 
 export const getCircuitPages = async () => {
   try {
-    const count = await prisma.circuit.count();
+    const user = await getUserBySession();
+    const count = await prisma.circuit.count({ where: { companyId: String(user.companyId) } });
     const pages = Math.ceil(count / ITEMS_PER_PAGE);
 
     return pages;
@@ -47,14 +48,14 @@ export const getCircuitPages = async () => {
 };
 
 export const getFilteredCircuits = async (currentPage: number, query: string) => {
-  const demoCompanyId = await getDemoCompanyId();
   const skip = (currentPage - 1) * ITEMS_PER_PAGE;
   const take = currentPage * ITEMS_PER_PAGE;
 
   try {
+    const user = await getUserBySession();
     const circuits = await prisma.circuit.findMany({
       where: {
-        companyId: demoCompanyId,
+        companyId: String(user.companyId),
         OR: [
           {
             cid: {

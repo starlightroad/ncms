@@ -9,7 +9,7 @@ import { Button } from '@/app/ui/button';
 import FormStatusMessage from '@/app/ui/form-status-message';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/ui/select';
 import { formatAddress } from '@/app/lib/utils';
-import { createCircuit } from '@/app/circuits/actions';
+import { createCircuit } from '@/app/dashboard/circuits/actions';
 
 type Props = {
   locations: Location[];
@@ -104,7 +104,7 @@ export default function AddCircuitForm({ locations, vendors }: Props) {
         </fieldset>
         <div className="flex justify-end space-x-3">
           <Button type="button" size="sm" variant="secondary" asChild>
-            <Link href="/circuits">Cancel</Link>
+            <Link href="/dashboard/circuits">Cancel</Link>
           </Button>
           <FormButton />
         </div>

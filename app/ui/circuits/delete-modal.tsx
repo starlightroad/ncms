@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import FormStatusMessage from '@/app/ui/form-status-message';
-import { deleteCircuit } from '@/app/circuits/actions';
+import { deleteCircuit } from '@/app/dashboard/circuits/actions';
 import { Button } from '@/app/ui/button';
 import {
   Dialog,

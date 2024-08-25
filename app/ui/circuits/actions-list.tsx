@@ -36,10 +36,10 @@ export default function TableActionsList({ circuit }: { circuit: Circuit }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link href={`/circuits/${circuit.id}`}>View</Link>
+          <Link href={`/dashboard/circuits/${circuit.id}`}>View</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/circuits/${circuit.id}/edit`}>Edit</Link>
+          <Link href={`/dashboard/circuits/${circuit.id}/edit`}>Edit</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
