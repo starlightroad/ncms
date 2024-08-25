@@ -2,7 +2,7 @@
 
 import { useFormState, useFormStatus } from 'react-dom';
 import type { Location } from '@/app/lib/types';
-import { updateLocation } from '@/app/locations/actions';
+import { updateLocation } from '@/app/dashboard/locations/actions';
 import FormStatusMessage from '@/app/ui/form-status-message';
 import { Label } from '@/app/ui/label';
 import { Input } from '@/app/ui/input';
@@ -18,7 +18,7 @@ export default function EditLocationForm({ data }: { data: Location }) {
   const [state, formAction] = useFormState(updateLocationWithId, initialState);
 
   return (
-    <form id="location-form" action={formAction}>
+    <form action={formAction}>
       <div className="space-y-4">
         {state?.message && <FormStatusMessage message={String(state.message)} />}
         <fieldset className="space-y-2">
@@ -78,7 +78,7 @@ export default function EditLocationForm({ data }: { data: Location }) {
         </fieldset>
         <div className="flex justify-end space-x-3">
           <Button size="sm" variant="secondary" asChild>
-            <Link href={`/locations/${data.id}`}>Cancel</Link>
+            <Link href={`/dashboard/locations/${data.id}`}>Cancel</Link>
           </Button>
           <FormButton />
         </div>
@@ -91,7 +91,7 @@ function FormButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button type="submit" size="sm" form="location-form" disabled={pending}>
+    <Button type="submit" size="sm" disabled={pending}>
       Update
     </Button>
   );

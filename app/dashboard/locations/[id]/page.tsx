@@ -71,7 +71,7 @@ export default async function Location({ params }: { params: { id: string } }) {
           </div>
           <div className="space-x-2">
             <Button type="button" size="sm" variant="outline" className="gap-1" asChild>
-              <Link href={`/locations/${data.id}/edit`}>
+              <Link href={`/dashboard/locations/${data.id}/edit`}>
                 <Edit2Icon className="h-4 w-4" />
                 Edit
               </Link>

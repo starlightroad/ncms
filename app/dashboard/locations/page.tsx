@@ -32,7 +32,7 @@ export default async function Locations({ searchParams }: Props) {
           <PageHeading>Locations</PageHeading>
           <div className="space-x-2">
             <Button type="button" size="sm" asChild>
-              <Link href="/locations/new">New Location</Link>
+              <Link href="/dashboard/locations/new">New Location</Link>
             </Button>
           </div>
         </div>

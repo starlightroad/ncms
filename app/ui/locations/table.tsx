@@ -34,7 +34,7 @@ export default async function LocationsTable({ currentPage, query }: Props) {
         </TableHeader>
         <TableBody>
           {data.map((entry) => {
-            const locationLink = `/locations/${entry.id}`;
+            const locationLink = `/dashboard/locations/${entry.id}`;
 
             return (
               <TableRow key={entry.id}>

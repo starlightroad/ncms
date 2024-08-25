@@ -36,10 +36,10 @@ export default function TableActionsList({ location }: { location: Location }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem asChild>
-          <Link href={`/locations/${location.id}`}>View</Link>
+          <Link href={`/dashboard/locations/${location.id}`}>View</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href={`/locations/${location.id}/edit`}>Edit</Link>
+          <Link href={`/dashboard/locations/${location.id}/edit`}>Edit</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>

@@ -12,7 +12,7 @@ export default function NotFound() {
       <div className="space-y-3 rounded-xl border bg-card p-5">
         <p className="text-sm text-muted-foreground">Could not find the requested location.</p>
         <Button size="sm" asChild>
-          <Link href="/locations">Go to Locations</Link>
+          <Link href="/dashboard/locations">Go to Locations</Link>
         </Button>
       </div>
     </main>

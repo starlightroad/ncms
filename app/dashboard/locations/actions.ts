@@ -4,8 +4,8 @@ import prisma from '@/prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { LocationSchema } from '@/app/lib/types';
-import { getDemoCompanyId } from '@/app/data/demo';
 import { getStates } from '@/app/data/state';
+import { getUserBySession } from '@/app/data/session';
 
 export const createLocation = async (_: any, formData: FormData) => {
   const validatedFields = LocationSchema.safeParse({
@@ -46,7 +46,7 @@ export const createLocation = async (_: any, formData: FormData) => {
       };
     }
 
-    const demoCompanyId = await getDemoCompanyId();
+    const user = await getUserBySession();
 
     await prisma.location.create({
       data: {
@@ -55,7 +55,7 @@ export const createLocation = async (_: any, formData: FormData) => {
         city,
         state,
         zip,
-        companyId: String(demoCompanyId),
+        companyId: String(user.companyId),
       },
     });
   } catch (error) {
@@ -64,8 +64,8 @@ export const createLocation = async (_: any, formData: FormData) => {
     };
   }
 
-  revalidatePath('/locations');
-  redirect('/locations');
+  revalidatePath('/dashboard/locations');
+  redirect('/dashboard/locations');
 };
 
 export const updateLocation = async (id: string, _: any, formData: FormData) => {
@@ -96,7 +96,7 @@ export const updateLocation = async (id: string, _: any, formData: FormData) => 
       };
     }
 
-    const demoCompanyId = await getDemoCompanyId();
+    const user = await getUserBySession();
 
     await prisma.location.update({
       where: {
@@ -108,7 +108,7 @@ export const updateLocation = async (id: string, _: any, formData: FormData) => 
         city,
         state,
         zip,
-        companyId: String(demoCompanyId),
+        companyId: String(user.companyId),
       },
     });
   } catch (error) {
@@ -117,19 +117,20 @@ export const updateLocation = async (id: string, _: any, formData: FormData) => 
     };
   }
 
-  revalidatePath('/locations');
-  redirect(`/locations/${id}`);
+  revalidatePath('/dashboard/locations');
+  redirect(`/dashboard/locations/${id}`);
 };
 
 export const deleteLocation = async (id: string) => {
   try {
-    await prisma.location.delete({ where: { id } });
+    const user = await getUserBySession();
+    await prisma.location.delete({ where: { companyId: String(user.companyId), id } });
   } catch (error) {
     return {
       message: 'Failed to Delete Location.',
     };
   }
 
-  revalidatePath('/locations');
-  redirect('/locations');
+  revalidatePath('/dashboard/locations');
+  redirect('/dashboard/locations');
 };
