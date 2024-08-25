@@ -23,9 +23,9 @@ export default function Search({ placeholder }: { placeholder: string }) {
     replace(`${pathname}?${params.toString()}`);
   }, 300);
 
-  if (pathname.endsWith('/')) {
+  if (pathname.endsWith('/dashboard')) {
     return false;
-  } else if (pathname.split('/').length !== 2) {
+  } else if (pathname.split('/').length !== 3) {
     return false;
   }
 
