@@ -11,7 +11,7 @@ type Props = {
 
 export default async function LocationsTable({ currentPage, query }: Props) {
   const dataPromise = getFilteredLocations(currentPage, query);
-  const pagesPromise = getLocationPages();
+  const pagesPromise = getLocationPages(query);
   const [data, pages] = await Promise.all([dataPromise, pagesPromise]);
 
   if (!data.length) {

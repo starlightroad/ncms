@@ -12,7 +12,7 @@ type Props = {
 
 export default async function VendorsTable({ currentPage, query }: Props) {
   const dataPromise = getFilteredVendors(currentPage, query);
-  const pagesPromise = getVendorPages();
+  const pagesPromise = getVendorPages(query);
   const [data, pages] = await Promise.all([dataPromise, pagesPromise]);
 
   if (!data.length) {

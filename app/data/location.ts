@@ -6,7 +6,7 @@ export const getLocations = async () => {
   try {
     const user = await getUserBySession();
     const locations = await prisma.location.findMany({
-      where: { companyId: String(user.companyId) },
+      where: { companyId: user?.companyId?.toString() },
     });
     return locations;
   } catch (error) {
@@ -18,7 +18,7 @@ export const getLocation = async (locationId: string) => {
   try {
     const user = await getUserBySession();
     const location = await prisma.location.findUnique({
-      where: { companyId: String(user.companyId), id: locationId },
+      where: { companyId: user?.companyId?.toString(), id: locationId },
     });
     return location;
   } catch (error) {
@@ -26,10 +26,45 @@ export const getLocation = async (locationId: string) => {
   }
 };
 
-export const getLocationPages = async () => {
+export const getLocationPages = async (query?: string) => {
   try {
     const user = await getUserBySession();
-    const count = await prisma.location.count({ where: { companyId: String(user.companyId) } });
+    const count = await prisma.location.count({
+      where: {
+        companyId: user?.companyId?.toString(),
+        OR: [
+          {
+            name: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            street: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            city: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            state: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            zip: {
+              startsWith: query,
+            },
+          },
+        ],
+      },
+    });
     const pages = Math.ceil(count / ITEMS_PER_PAGE);
 
     return pages;
@@ -46,7 +81,7 @@ export const getFilteredLocations = async (currentPage: number, query: string) =
     const user = await getUserBySession();
     const locations = await prisma.location.findMany({
       where: {
-        companyId: String(user.companyId),
+        companyId: user?.companyId?.toString(),
         OR: [
           {
             name: {

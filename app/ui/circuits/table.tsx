@@ -10,8 +10,8 @@ type Props = {
 };
 
 export default async function CircuitsTable({ currentPage, query }: Props) {
-  const dataPromise = await getFilteredCircuits(currentPage, query);
-  const pagesPromise = await getCircuitPages();
+  const dataPromise = getFilteredCircuits(currentPage, query);
+  const pagesPromise = getCircuitPages(query);
   const [data, pages] = await Promise.all([dataPromise, pagesPromise]);
 
   if (!data.length) {

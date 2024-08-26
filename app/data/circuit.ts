@@ -8,7 +8,7 @@ export const getCircuits = async () => {
 
     const circuits = await prisma.circuit.findMany({
       where: {
-        companyId: String(user.companyId),
+        companyId: user?.companyId?.toString(),
       },
       include: {
         vendor: true,
@@ -26,7 +26,7 @@ export const getCircuit = async (id: string) => {
   try {
     const user = await getUserBySession();
     const circuit = await prisma.circuit.findUnique({
-      where: { companyId: String(user.companyId), id },
+      where: { companyId: user?.companyId?.toString(), id },
       include: { vendor: true, location1: true, location2: true },
     });
     return circuit;
@@ -35,10 +35,46 @@ export const getCircuit = async (id: string) => {
   }
 };
 
-export const getCircuitPages = async () => {
+export const getCircuitPages = async (query?: string) => {
   try {
     const user = await getUserBySession();
-    const count = await prisma.circuit.count({ where: { companyId: String(user.companyId) } });
+    const count = await prisma.circuit.count({
+      where: {
+        companyId: user?.companyId?.toString(),
+        OR: [
+          {
+            cid: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            vendor: {
+              name: {
+                startsWith: query,
+                mode: 'insensitive',
+              },
+            },
+          },
+          {
+            location1: {
+              name: {
+                startsWith: query,
+                mode: 'insensitive',
+              },
+            },
+          },
+          {
+            location2: {
+              name: {
+                startsWith: query,
+                mode: 'insensitive',
+              },
+            },
+          },
+        ],
+      },
+    });
     const pages = Math.ceil(count / ITEMS_PER_PAGE);
 
     return pages;
@@ -55,7 +91,7 @@ export const getFilteredCircuits = async (currentPage: number, query: string) =>
     const user = await getUserBySession();
     const circuits = await prisma.circuit.findMany({
       where: {
-        companyId: String(user.companyId),
+        companyId: user?.companyId?.toString(),
         OR: [
           {
             cid: {

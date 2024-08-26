@@ -5,7 +5,9 @@ import { getUserBySession } from '@/app/data/session';
 export const getVendors = async () => {
   try {
     const user = await getUserBySession();
-    const vendors = await prisma.vendor.findMany({ where: { companyId: String(user.companyId) } });
+    const vendors = await prisma.vendor.findMany({
+      where: { companyId: user?.companyId?.toString() },
+    });
     return vendors;
   } catch (error) {
     throw new Error('Failed to fetch vendors.');
@@ -16,7 +18,7 @@ export const getVendorById = async (id: string) => {
   try {
     const user = await getUserBySession();
     const vendor = await prisma.vendor.findUnique({
-      where: { companyId: String(user.companyId), id },
+      where: { companyId: user?.companyId?.toString(), id },
     });
     return vendor;
   } catch (error) {
@@ -24,10 +26,27 @@ export const getVendorById = async (id: string) => {
   }
 };
 
-export const getVendorPages = async () => {
+export const getVendorPages = async (query?: string) => {
   try {
     const user = await getUserBySession();
-    const count = await prisma.vendor.count({ where: { companyId: String(user.companyId) } });
+    const count = await prisma.vendor.count({
+      where: {
+        companyId: user?.companyId?.toString(),
+        OR: [
+          {
+            name: {
+              startsWith: query,
+              mode: 'insensitive',
+            },
+          },
+          {
+            phone: {
+              startsWith: query,
+            },
+          },
+        ],
+      },
+    });
     const pages = Math.ceil(count / ITEMS_PER_PAGE);
 
     return pages;
@@ -44,7 +63,7 @@ export const getFilteredVendors = async (currentPage: number, query: string) => 
     const user = await getUserBySession();
     const vendors = await prisma.vendor.findMany({
       where: {
-        companyId: String(user.companyId),
+        companyId: user?.companyId?.toString(),
         OR: [
           {
             name: {
