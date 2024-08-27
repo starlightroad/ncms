@@ -8,7 +8,7 @@ import { Button } from '@/app/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
 import { getLocation } from '@/app/data/location';
 import DeleteLocationModal from '@/app/ui/locations/delete-modal';
-import MapCard from '@/app/ui/map-card';
+import MapboxMap from '@/app/ui/map';
 
 type Props = {
   params: { id: string };
@@ -60,7 +60,7 @@ export default async function Location({ params }: { params: { id: string } }) {
     },
   ];
 
-  const pin = { lng: Number(data.longitude), lat: Number(data.latitude) };
+  const marker = { lng: Number(data.longitude), lat: Number(data.latitude) };
 
   return (
     <main className="py-8 lg:py-16">
@@ -105,7 +105,7 @@ export default async function Location({ params }: { params: { id: string } }) {
         </Card>
         <Card className="col-span-1 row-span-2 overflow-hidden">
           <CardContent className="relative h-full p-0">
-            <MapCard pins={[pin]} />
+            <MapboxMap markers={[marker]} />
           </CardContent>
         </Card>
       </div>

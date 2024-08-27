@@ -8,7 +8,7 @@ import { Button } from '@/app/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
 import { getCircuit } from '@/app/data/circuit';
 import DeleteCircuitModal from '@/app/ui/circuits/delete-modal';
-import MapCard from '@/app/ui/map-card';
+import MapboxMap from '@/app/ui/map';
 
 type Props = {
   params: { id: string };
@@ -91,7 +91,7 @@ export default async function Circuit({ params }: { params: { id: string } }) {
     lat: Number(data.location2.latitude),
   };
 
-  const pins = [location1Coords, location2Coords];
+  const markers = [location1Coords, location2Coords];
 
   return (
     <main className="py-8 lg:py-16">
@@ -136,7 +136,7 @@ export default async function Circuit({ params }: { params: { id: string } }) {
         </Card>
         <Card className="col-span-1 row-span-2 overflow-hidden">
           <CardContent className="h-full p-0">
-            <MapCard pins={pins} />
+            <MapboxMap markers={markers} />
           </CardContent>
         </Card>
       </div>
