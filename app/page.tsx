@@ -5,7 +5,7 @@ import PageHeading from '@/app/ui/page-heading';
 import { Button } from '@/app/ui/button';
 import Container from '@/app/ui/container';
 
-function Buttons() {
+function SignInAndSignUpButtons() {
   return (
     <>
       <Button size="sm" asChild>
@@ -18,16 +18,11 @@ function Buttons() {
   );
 }
 
-function SignedInButtons() {
+function GoToDashboardButton() {
   return (
-    <>
-      <Button size="sm" asChild>
-        <Link href={`/dashboard`}>Go to Dashboard</Link>
-      </Button>
-      <Button variant="secondary" size="sm">
-        Sign Out
-      </Button>
-    </>
+    <Button size="sm" asChild>
+      <Link href="/dashboard">Go to Dashboard</Link>
+    </Button>
   );
 }
 
@@ -45,7 +40,7 @@ export default async function Home() {
           </p>
         </PageHeader>
         <div className="flex flex-col justify-center gap-3 md:flex-row">
-          {isSignedIn ? <SignedInButtons /> : <Buttons />}
+          {isSignedIn ? <GoToDashboardButton /> : <SignInAndSignUpButtons />}
         </div>
       </main>
     </Container>
