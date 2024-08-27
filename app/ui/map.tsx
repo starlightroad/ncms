@@ -48,7 +48,7 @@ export default function MapboxMap({ markers }: { markers: { lng: number; lat: nu
 
       updateMapLoadsCountAction();
     });
-  }, [resolvedTheme]);
+  }, [resolvedTheme, markers]);
 
   useEffect(() => {
     if (resolvedTheme) {

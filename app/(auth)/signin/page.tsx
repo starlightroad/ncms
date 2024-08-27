@@ -6,7 +6,7 @@ function NoAccountText() {
   return (
     <div className="mt-3 flex items-center justify-center text-center">
       <span className="text-sm text-muted-foreground">
-        Don't have an account?&nbsp;
+        Don&apos;t have an account?&nbsp;
         <Link href="/signup" className="font-medium text-primary">
           Sign up
         </Link>

@@ -33,3 +33,5 @@ function SignOutButton() {
     </Button>
   );
 }
+
+SignOutForm.displayName = 'SignOutForm';
