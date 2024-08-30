@@ -4,6 +4,8 @@ import PageHeading from '@/app/ui/page-heading';
 import AddLocationForm from '@/app/ui/locations/add-form';
 import { getStates } from '@/app/data/state';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'New Location',
 };

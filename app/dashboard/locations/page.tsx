@@ -7,6 +7,8 @@ import LocationsTable from '@/app/ui/locations/table';
 import { Button } from '@/app/ui/button';
 import { TableSkeleton } from '@/app/ui/skeletons';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Locations',
 };

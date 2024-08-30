@@ -6,6 +6,8 @@ import CardsWrapper from '@/app/ui/dashboard/cards';
 import MapLoadsCard from '@/app/ui/dashboard/map-loads-card';
 import CircuitsByCapacityCard from '@/app/ui/dashboard/circuit-capacities-card';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Dashboard() {
   return (
     <main className="w-full pb-8 pt-8 lg:pt-16">

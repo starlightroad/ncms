@@ -5,6 +5,8 @@ import AddCircuitForm from '@/app/ui/circuits/add-form';
 import { getLocations } from '@/app/data/location';
 import { getVendors } from '@/app/data/vendor';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'New Circuit',
 };

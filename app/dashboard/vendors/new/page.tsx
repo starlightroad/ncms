@@ -3,6 +3,8 @@ import PageHeader from '@/app/ui/page-header';
 import PageHeading from '@/app/ui/page-heading';
 import AddVendorForm from '@/app/ui/vendors/add-form';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'New Vendor',
 };
