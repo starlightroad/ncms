@@ -44,7 +44,7 @@ export const getCurrentUser = cache(async () => {
   }
 });
 
-export const createUser = async (email: string, hashedPassword: string) => {
+export const createNewUser = async (email: string, hashedPassword: string) => {
   try {
     await prisma.user.create({
       data: {

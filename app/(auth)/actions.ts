@@ -3,7 +3,7 @@
 import { signIn, signOut } from '@/auth';
 import { redirect } from 'next/navigation';
 import { SignInSchema } from '@/app/lib/types';
-import { createUser, getUser } from '@/app/data/user';
+import { createNewUser, getUserByEmail } from '@/app/data/user';
 import { saltAndHashPassword } from '@/app/lib/bcrypt';
 
 const validateFormData = (formData: FormData) => {
@@ -66,7 +66,8 @@ export const signUpUser = async (_: any, formData: FormData) => {
   };
 
   try {
-    const userExists = !!(await getUser(validatedData.email));
+    const user = await getUserByEmail(validatedData.email);
+    const userExists = !!user;
 
     if (userExists) {
       return {
@@ -76,7 +77,7 @@ export const signUpUser = async (_: any, formData: FormData) => {
 
     const passwordHash = await saltAndHashPassword(validatedData.password);
 
-    await createUser(validatedData.email, passwordHash);
+    await createNewUser(validatedData.email, passwordHash);
 
     return {
       message:
