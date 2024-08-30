@@ -1,14 +1,14 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import Logo from '@/app/ui/logo';
 import NavbarMenu, { MobileNavbarMenu } from '@/app/ui/navbar-menu';
 import Search from '@/app/ui/search';
-import { getUserBySession } from '@/app/data/session';
-import { getCompanyById } from '@/app/data/company';
+import { getCurrentUser } from '@/app/data/user';
 
 export default async function Navbar() {
+  const currentUser = await getCurrentUser();
   const appName = 'ncms';
-  const user = await getUserBySession();
-  const companyName = await getCompanyById(String(user.companyId));
+  const companyName = currentUser?.company?.name;
   const dashboardLink = '/dashboard';
 
   return (
@@ -30,18 +30,20 @@ export default async function Navbar() {
             <span className="text-sm text-foreground/30">/</span>
           </li>
           <li className="hidden md:list-item">
-            <span className="text-sm text-foreground/65">{companyName?.name}</span>
+            <span className="text-sm text-foreground/65">{companyName}</span>
           </li>
         </ul>
       </nav>
 
       <div className="mr-3 flex h-full grow items-center justify-end gap-3 md:mr-0">
-        <Search placeholder="Search" />
+        <Suspense fallback={<div>LOADING...</div>}>
+          <Search placeholder="Search" />
+        </Suspense>
         <div className="hidden h-full items-center border-l px-5 md:flex">
           <NavbarMenu
-            name={user.name?.toString()}
-            email={user.email}
-            image={user.image?.toString()}
+            name={currentUser?.name?.toString()}
+            email={currentUser?.email}
+            image={currentUser?.image?.toString()}
           />
         </div>
       </div>

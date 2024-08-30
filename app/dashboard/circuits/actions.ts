@@ -4,7 +4,7 @@ import prisma from '@/prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { CircuitSchema } from '@/app/lib/types';
-import { getUserBySession } from '@/app/data/session';
+import { getCurrentUser } from '@/app/data/user';
 
 export const createCircuit = async (_: any, formData: FormData) => {
   const validatedFields = CircuitSchema.safeParse({
@@ -33,9 +33,9 @@ export const createCircuit = async (_: any, formData: FormData) => {
   const { circuitId, vendorId, type, capacity, location1Id, location2Id } = validatedFields.data;
 
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const circuitExists = await prisma.circuit.findFirst({
-      where: { companyId: String(user.companyId), cid: circuitId },
+      where: { companyId: currentUser?.company?.id, cid: circuitId },
     });
 
     if (circuitExists) {
@@ -52,7 +52,7 @@ export const createCircuit = async (_: any, formData: FormData) => {
         capacity,
         location1Id,
         location2Id,
-        companyId: String(user.companyId),
+        companyId: String(currentUser?.company?.id),
       },
     });
   } catch (error) {
@@ -92,9 +92,9 @@ export const updateCircuit = async (id: string, _: any, formData: FormData) => {
   const { circuitId, vendorId, type, capacity, location1Id, location2Id } = validatedFields.data;
 
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const circuitExists = await prisma.circuit.findFirst({
-      where: { companyId: String(user.companyId), cid: circuitId },
+      where: { companyId: currentUser?.company?.id, cid: circuitId },
     });
 
     if (circuitExists && circuitExists.id !== id) {
@@ -114,7 +114,7 @@ export const updateCircuit = async (id: string, _: any, formData: FormData) => {
         capacity,
         location1Id,
         location2Id,
-        companyId: String(user.companyId),
+        companyId: currentUser?.company?.id,
       },
     });
   } catch (error) {
@@ -129,8 +129,8 @@ export const updateCircuit = async (id: string, _: any, formData: FormData) => {
 
 export const deleteCircuit = async (id: string) => {
   try {
-    const user = await getUserBySession();
-    await prisma.circuit.delete({ where: { companyId: String(user.companyId), id } });
+    const currentUser = await getCurrentUser();
+    await prisma.circuit.delete({ where: { companyId: currentUser?.company?.id, id } });
   } catch (error) {
     return {
       message: 'Failed to Delete Circuit.',

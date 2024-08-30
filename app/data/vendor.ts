@@ -1,12 +1,12 @@
 import prisma from '@/prisma/client';
 import { ITEMS_PER_PAGE } from '@/app/lib/constants';
-import { getUserBySession } from '@/app/data/session';
+import { getCurrentUser } from '@/app/data/user';
 
 export const getVendors = async () => {
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const vendors = await prisma.vendor.findMany({
-      where: { companyId: user?.companyId?.toString() },
+      where: { companyId: currentUser?.company?.id },
     });
     return vendors;
   } catch (error) {
@@ -16,9 +16,9 @@ export const getVendors = async () => {
 
 export const getVendorById = async (id: string) => {
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const vendor = await prisma.vendor.findUnique({
-      where: { companyId: user?.companyId?.toString(), id },
+      where: { companyId: currentUser?.company?.id, id },
     });
     return vendor;
   } catch (error) {
@@ -28,10 +28,10 @@ export const getVendorById = async (id: string) => {
 
 export const getVendorPages = async (query?: string) => {
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const count = await prisma.vendor.count({
       where: {
-        companyId: user?.companyId?.toString(),
+        companyId: currentUser?.company?.id,
         OR: [
           {
             name: {
@@ -60,10 +60,10 @@ export const getFilteredVendors = async (currentPage: number, query: string) => 
   const take = currentPage * ITEMS_PER_PAGE;
 
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const vendors = await prisma.vendor.findMany({
       where: {
-        companyId: user?.companyId?.toString(),
+        companyId: currentUser?.company?.id,
         OR: [
           {
             name: {

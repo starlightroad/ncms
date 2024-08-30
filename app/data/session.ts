@@ -1,14 +1,18 @@
 import { auth } from '@/auth';
-import { getUser } from '@/app/data/user';
+import { redirect } from 'next/navigation';
 
-export const getUserBySession = async () => {
+export const verifySession = async () => {
   try {
     const session = await auth();
-    const userEmail = String(session?.user?.email);
-    const user = await getUser(userEmail);
 
-    return user;
+    if (!session?.user) {
+      redirect('/signin');
+    }
+
+    return {
+      userId: session.user.id,
+    };
   } catch (error) {
-    throw new Error('Failed to Get User from Session.');
+    throw new Error('Failed to Verify Session.');
   }
 };

@@ -3,7 +3,7 @@
 import prisma from '@/prisma/client';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { getUserBySession } from '@/app/data/session';
+import { getCurrentUser } from '@/app/data/user';
 import { VendorSchema } from '@/app/lib/types';
 
 export const createVendor = async (_: any, formData: FormData) => {
@@ -24,7 +24,7 @@ export const createVendor = async (_: any, formData: FormData) => {
   const { name, website, phone } = validatedFields.data;
 
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const vendorExists = await prisma.vendor.findFirst({ where: { name: String(name) } });
 
     if (vendorExists) {
@@ -38,7 +38,7 @@ export const createVendor = async (_: any, formData: FormData) => {
         name,
         website,
         phone: phone.replaceAll('-', ''),
-        companyId: String(user.companyId),
+        companyId: String(currentUser?.company?.id),
       },
     });
   } catch (error) {
@@ -69,7 +69,7 @@ export const updateVendor = async (id: string, _: any, formData: FormData) => {
   const { name, website, phone } = validatedFields.data;
 
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const vendorExists = await prisma.vendor.findFirst({ where: { name: String(name) } });
 
     if (vendorExists && vendorExists.id !== id) {
@@ -86,7 +86,7 @@ export const updateVendor = async (id: string, _: any, formData: FormData) => {
         name,
         website,
         phone: phone.replaceAll('-', ''),
-        companyId: String(user.companyId),
+        companyId: currentUser?.company?.id,
       },
     });
   } catch (error) {
@@ -101,8 +101,8 @@ export const updateVendor = async (id: string, _: any, formData: FormData) => {
 
 export const deleteVendor = async (id: string) => {
   try {
-    const user = await getUserBySession();
-    await prisma.vendor.delete({ where: { id, companyId: String(user.companyId) } });
+    const currentUser = await getCurrentUser();
+    await prisma.vendor.delete({ where: { id, companyId: currentUser?.company?.id } });
   } catch (error) {
     return {
       message: 'Failed to Delete Vendor.',

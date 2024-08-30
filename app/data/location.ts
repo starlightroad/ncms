@@ -1,12 +1,12 @@
 import prisma from '@/prisma/client';
 import { ITEMS_PER_PAGE } from '@/app/lib/constants';
-import { getUserBySession } from '@/app/data/session';
+import { getCurrentUser } from '@/app/data/user';
 
 export const getLocations = async () => {
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const locations = await prisma.location.findMany({
-      where: { companyId: user?.companyId?.toString() },
+      where: { companyId: currentUser?.company?.id },
     });
     return locations;
   } catch (error) {
@@ -16,9 +16,9 @@ export const getLocations = async () => {
 
 export const getLocation = async (locationId: string) => {
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const location = await prisma.location.findUnique({
-      where: { companyId: user?.companyId?.toString(), id: locationId },
+      where: { companyId: currentUser?.company?.id, id: locationId },
     });
     return location;
   } catch (error) {
@@ -28,10 +28,10 @@ export const getLocation = async (locationId: string) => {
 
 export const getLocationPages = async (query?: string) => {
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const count = await prisma.location.count({
       where: {
-        companyId: user?.companyId?.toString(),
+        companyId: currentUser?.company?.id,
         OR: [
           {
             name: {
@@ -78,10 +78,10 @@ export const getFilteredLocations = async (currentPage: number, query: string) =
   const take = currentPage * ITEMS_PER_PAGE;
 
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const locations = await prisma.location.findMany({
       where: {
-        companyId: user?.companyId?.toString(),
+        companyId: currentUser?.company?.id,
         OR: [
           {
             name: {

@@ -1,5 +1,5 @@
 import prisma from '@/prisma/client';
-import { getUserBySession } from '@/app/data/session';
+import { getCurrentUser } from '@/app/data/user';
 
 export const getMapLoadsLast6Months = async () => {
   const date = new Date();
@@ -8,11 +8,11 @@ export const getMapLoadsLast6Months = async () => {
   const prevYear = (currentMonth - 5 < 0 && currentYear - 1) || null;
 
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
 
     const stats = await prisma.mapLoad.groupBy({
       by: ['monthId', 'year'],
-      where: { companyId: user?.companyId?.toString() },
+      where: { companyId: currentUser?.company?.id },
       orderBy: [{ year: 'desc' }, { monthId: 'desc' }],
       _sum: {
         count: true,

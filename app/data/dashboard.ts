@@ -1,10 +1,10 @@
 import prisma from '@/prisma/client';
-import { getUserBySession } from '@/app/data/session';
+import { getCurrentUser } from '@/app/data/user';
 
 export const getCardData = async () => {
   try {
-    const user = await getUserBySession();
-    const companyId = String(user.companyId);
+    const currentUser = await getCurrentUser();
+    const companyId = currentUser?.company?.id;
 
     const totalCircuits = prisma.circuit.count({ where: { companyId } });
     const totalLocations = prisma.location.count({ where: { companyId } });

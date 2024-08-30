@@ -1,6 +1,8 @@
+import { cache } from 'react';
 import prisma from '@/prisma/client';
+import { verifySession } from '@/app/data/session';
 
-export const getUser = async (email?: string) => {
+export const getUserByEmail = async (email?: string) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -12,33 +14,35 @@ export const getUser = async (email?: string) => {
       return null;
     }
 
-    return {
-      id: user?.id,
-      name: user?.name,
-      email: user?.email,
-      image: user?.image,
-      companyId: user?.companyId,
-    };
+    return user;
   } catch (error) {
     throw new Error('Failed to Get User.');
   }
 };
 
-export const getFullUser = async (email?: string) => {
+export const getCurrentUser = cache(async () => {
   try {
-    const fullUser = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-      include: {
-        company: true,
+    const session = await verifySession();
+    const currentUser = await prisma.user.findUnique({
+      where: { id: session.userId },
+      select: {
+        name: true,
+        email: true,
+        image: true,
+        company: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
     });
-    return fullUser;
+
+    return currentUser;
   } catch (error) {
-    throw new Error('Failed to Get Full User.');
+    throw new Error('Failed to Get Current User.');
   }
-};
+});
 
 export const createUser = async (email: string, hashedPassword: string) => {
   try {

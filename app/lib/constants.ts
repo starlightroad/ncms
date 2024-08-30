@@ -22,3 +22,5 @@ export const MONTHS = [
 export const ITEMS_PER_PAGE = 5;
 
 export const ELLIPSIS = '...';
+
+export const PUBLIC_ROUTES = ['/', '/signin', '/signup'];

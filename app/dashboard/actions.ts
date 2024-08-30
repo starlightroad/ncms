@@ -2,17 +2,17 @@
 
 import prisma from '@/prisma/client';
 import { revalidatePath } from 'next/cache';
-import { getUserBySession } from '@/app/data/session';
+import { getCurrentUser } from '@/app/data/user';
 
 export const updateMapLoadsCountAction = async () => {
   try {
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
     const date = new Date();
     const [month, day, year] = [date.getMonth(), date.getDate(), date.getFullYear()];
 
     const existingEntry = await prisma.mapLoad.findFirst({
       where: {
-        companyId: user?.companyId?.toString(),
+        companyId: currentUser?.company?.id,
         day,
         monthId: month,
         year,
@@ -22,7 +22,7 @@ export const updateMapLoadsCountAction = async () => {
     if (!existingEntry) {
       await prisma.mapLoad.create({
         data: {
-          companyId: String(user?.companyId),
+          companyId: String(currentUser?.company?.id),
           day,
           monthId: month,
           year,

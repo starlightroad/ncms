@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { LocationSchema } from '@/app/lib/types';
 import { getStates } from '@/app/data/state';
-import { getUserBySession } from '@/app/data/session';
+import { getCurrentUser } from '@/app/data/user';
 
 export const createLocation = async (_: any, formData: FormData) => {
   const validatedFields = LocationSchema.safeParse({
@@ -46,7 +46,7 @@ export const createLocation = async (_: any, formData: FormData) => {
       };
     }
 
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
 
     await prisma.location.create({
       data: {
@@ -55,7 +55,7 @@ export const createLocation = async (_: any, formData: FormData) => {
         city,
         state,
         zip,
-        companyId: String(user.companyId),
+        companyId: String(currentUser?.company?.id),
       },
     });
   } catch (error) {
@@ -96,7 +96,7 @@ export const updateLocation = async (id: string, _: any, formData: FormData) => 
       };
     }
 
-    const user = await getUserBySession();
+    const currentUser = await getCurrentUser();
 
     await prisma.location.update({
       where: {
@@ -108,7 +108,7 @@ export const updateLocation = async (id: string, _: any, formData: FormData) => 
         city,
         state,
         zip,
-        companyId: String(user.companyId),
+        companyId: currentUser?.company?.id,
       },
     });
   } catch (error) {
@@ -123,8 +123,8 @@ export const updateLocation = async (id: string, _: any, formData: FormData) => 
 
 export const deleteLocation = async (id: string) => {
   try {
-    const user = await getUserBySession();
-    await prisma.location.delete({ where: { companyId: String(user.companyId), id } });
+    const currentUser = await getCurrentUser();
+    await prisma.location.delete({ where: { companyId: currentUser?.company?.id, id } });
   } catch (error) {
     return {
       message: 'Failed to Delete Location.',
