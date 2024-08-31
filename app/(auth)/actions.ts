@@ -14,6 +14,10 @@ const validateFormData = (formData: FormData) => {
 };
 
 export const signInUser = async (_: any, formData: FormData) => {
+  const isHoneypot = formData.get('confirm-password') !== '';
+
+  if (isHoneypot) return;
+
   const validatedFields = validateFormData(formData);
 
   if (!validatedFields.success) {
