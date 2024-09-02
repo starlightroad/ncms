@@ -186,12 +186,16 @@ const seedStats = async () => {
 };
 
 const main = async () => {
-  await seedCompanies();
-  await seedUsers();
-  await seedLocations();
-  await seedVendors();
-  await seedCircuits();
-  await seedStats();
+  const isSeedingRequired = await checkIfSeedingIsRequired();
+
+  if (isSeedingRequired) {
+    await seedCompanies();
+    await seedUsers();
+    await seedLocations();
+    await seedVendors();
+    await seedCircuits();
+    await seedStats();
+  }
 };
 
 main()
@@ -203,6 +207,11 @@ main()
     await client.$disconnect();
     process.exit(1);
   });
+
+async function checkIfSeedingIsRequired() {
+  const numberOfUsers = await client.user.count();
+  return numberOfUsers > 0 ? false : true;
+}
 
 async function getXYCoordinates(address) {
   const apiUrl = 'https://geocoding.geo.census.gov';
