@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docker:prod": "npx prisma migrate deploy && npx prisma db seed && node server.js"
   },
   "prisma": {
     "seed": "node prisma/seed.js"

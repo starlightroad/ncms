@@ -1,0 +1,31 @@
+services:
+  app:
+    container_name: ncms_app
+    image: ghcr.io/starlightroad/ncms
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - 3001:3001
+    expose:
+    - 3001
+    depends_on:
+      - db
+    volumes:
+      - app_data:/app
+
+  db:
+    container_name: ncms_db
+    image: postgres:alpine
+    environment:
+    - POSTGRES_USER=${POSTGRES_USER}
+    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    - POSTGRES_DB=${POSTGRES_DB_NAME}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
+  app_data:
