@@ -11,7 +11,7 @@ function SignInAndSignUpButtons() {
       <Button size="sm" asChild>
         <Link href="/signin">Sign In</Link>
       </Button>
-      <Button variant="secondary" size="sm">
+      <Button variant="secondary" size="sm" asChild>
         <Link href="signup">Sign Up</Link>
       </Button>
     </>
