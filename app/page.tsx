@@ -39,9 +39,9 @@ export default async function Home() {
             Network circuit management system. Built with Next.js.
           </p>
         </PageHeader>
-        <div className="flex flex-col justify-center gap-3 md:flex-row">
+        <nav className="flex flex-col justify-center gap-3 md:flex-row">
           {isSignedIn ? <GoToDashboardButton /> : <SignInAndSignUpButtons />}
-        </div>
+        </nav>
       </main>
     </Container>
   );
