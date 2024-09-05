@@ -10,6 +10,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY /prisma ./prisma/
 COPY /app/data/placeholder-data.js ./data/placeholder-data.js
+COPY /app/data/states.json ./data/states.json
 RUN npm ci
 
 # Rebuild the source code only when needed
@@ -19,6 +20,7 @@ COPY --from=deps /app/node_modules ./node_modules
 
 COPY --from=deps /app/prisma ./prisma
 COPY --from=deps /app/data/placeholder-data.js ./data/placeholder-data.js
+COPY --from=deps /app/data/states.json ./data/states.json
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -42,6 +44,7 @@ RUN adduser --system --uid 1001 nextjs
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/data/placeholder-data.js ./app/data/placeholder-data.js
+COPY --from=builder /app/data/states.json ./app/data/states.json
 
 # Set the correct permission for prerender cache
 RUN mkdir .next
