@@ -34,6 +34,17 @@ export const createCircuit = async (_: any, formData: FormData) => {
 
   try {
     const currentUser = await getCurrentUser();
+
+    const circuitRecords = await prisma.circuit.count({
+      where: { companyId: currentUser?.company?.id },
+    });
+
+    if (circuitRecords >= 10) {
+      return {
+        message: 'You are only allowed to create up to 10 circuits.',
+      };
+    }
+
     const circuitExists = await prisma.circuit.findFirst({
       where: { companyId: currentUser?.company?.id, cid: circuitId },
     });

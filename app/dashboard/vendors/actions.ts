@@ -25,6 +25,17 @@ export const createVendor = async (_: any, formData: FormData) => {
 
   try {
     const currentUser = await getCurrentUser();
+
+    const vendorRecords = await prisma.vendor.count({
+      where: { companyId: currentUser?.company?.id },
+    });
+
+    if (vendorRecords >= 10) {
+      return {
+        message: 'You are only allowed to create up to 10 vendors.',
+      };
+    }
+
     const vendorExists = await prisma.vendor.findFirst({ where: { name: String(name) } });
 
     if (vendorExists) {

@@ -48,6 +48,16 @@ export const createLocation = async (_: any, formData: FormData) => {
 
     const currentUser = await getCurrentUser();
 
+    const locationRecords = await prisma.location.count({
+      where: { companyId: currentUser?.company?.id },
+    });
+
+    if (locationRecords >= 10) {
+      return {
+        message: 'You are only allowed to create up to 10 locations.',
+      };
+    }
+
     await prisma.location.create({
       data: {
         name,
