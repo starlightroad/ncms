@@ -1,31 +1,73 @@
 services:
-  app:
-    container_name: ncms_app
-    image: ghcr.io/starlightroad/ncms
+  ################################
+  # Development
+  ################################
+  app.development:
+    container_name: ncms_web_dev
+    image: ghcr.io/starlightroad/ncms-dev
     build:
       context: .
-      dockerfile: Dockerfile
-    env_file: .env
+      dockerfile: dev.Dockerfile
+    env_file:
+      - .env.development.local
+      - .env.db.local
+      - .env.prisma.local
+    ports:
+      - 3000:3000
+    expose:
+    - 3000
+    depends_on:
+      - db.development
+    volumes:
+      - ./app:/app/app
+      - ./public:/app/public
+    profiles:
+      - dev
+
+  db.development:
+    container_name: ncms_db_dev
+    image: postgres:alpine
+    env_file:
+      - .env.db.local
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data_dev:/var/lib/postgresql/data
+    profiles:
+      - dev
+
+  ################################
+  # Production
+  ################################
+  app.production:
+    container_name: ncms_web_prod
+    image: ghcr.io/starlightroad/ncms-prod
+    build:
+      context: .
+      dockerfile: prod.Dockerfile
+    env_file:
+      - .env.db.local
+      - .env.production.local
+      - .env.prisma.local
     ports:
       - 3001:3001
     expose:
     - 3001
     depends_on:
-      - db
-    volumes:
-      - app_data:/app
-
-  db:
-    container_name: ncms_db
+      - db.production
+    profiles:
+      - prod
+  db.production:
+    container_name: ncms_db_prod
     image: postgres:alpine
-    environment:
-    - POSTGRES_USER=${POSTGRES_USER}
-    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    - POSTGRES_DB=${POSTGRES_DB_NAME}
+    env_file:
+      - .env.db.local
     ports:
-      - ${POSTGRES_PORT}:5432
+      - 5432:5432
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data_prod:/var/lib/postgresql/data
+    profiles:
+      - prod
 volumes:
-  db_data:
-  app_data:
+  db_data_dev:
+  db_data_prod:
