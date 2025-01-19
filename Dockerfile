@@ -57,4 +57,4 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-CMD [ "npm", "run", "docker:prod" ]
+CMD [ "npm", "run", "dockerfile-cmd:dev" ]
