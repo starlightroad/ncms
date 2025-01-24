@@ -22,7 +22,8 @@ COPY tailwind.config.ts .
 
 # List any environment variables here
 ENV NODE_ENV=production
-
+ARG NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
+ENV NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # Generate the Prisma client

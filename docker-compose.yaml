@@ -45,6 +45,8 @@ services:
     build:
       context: .
       dockerfile: prod.Dockerfile
+      args:
+        - NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
     env_file:
       - .env.db.local
       - .env.production.local
