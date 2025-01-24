@@ -14,7 +14,7 @@
     "docker-compose-up:dev": "docker compose -f docker-compose.yaml --profile dev up -d",
     "docker-compose-down:dev": "docker compose -f docker-compose.yaml --profile dev down",
     "docker-compose-up:prod": "docker compose -f docker-compose.yaml --profile prod up -d",
-    "docker-compose-down:prod": "docker compose -f docker-compose.yaml --profile dev down"
+    "docker-compose-down:prod": "docker compose -f docker-compose.yaml --profile prod down"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
