@@ -26,7 +26,7 @@ services:
 
   db.development:
     container_name: ncms_db_dev
-    image: postgres:alpine
+    image: postgres:15-alpine
     env_file:
       - .env.db.local
     ports:
@@ -61,7 +61,7 @@ services:
       - prod
   db.production:
     container_name: ncms_db_prod
-    image: postgres:alpine
+    image: postgres:15-alpine
     env_file:
       - .env.db.local
     ports:
