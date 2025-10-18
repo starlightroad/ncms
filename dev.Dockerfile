@@ -20,7 +20,7 @@ COPY middleware.ts .
 COPY postcss.config.mjs .
 COPY tailwind.config.ts .
 
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Generate the Prisma client
 RUN npx prisma generate
