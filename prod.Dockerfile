@@ -57,6 +57,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # List any environment variables here
 ENV NODE_ENV=production
 
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 CMD [ "npm", "run", "dockerfile-cmd:prod" ]
