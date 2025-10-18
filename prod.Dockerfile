@@ -5,6 +5,9 @@ FROM base AS builder
 
 WORKDIR /app
 
+# Installs openssl, which is needed by Prisma
+RUN apk add --no-cache openssl
+
 COPY package.json package-lock.json* ./
 RUN npm ci
 
@@ -39,6 +42,9 @@ WORKDIR /app
 
 # This package is needed to run the dockerfile-cmd:prod script
 RUN npm i dotenv-cli -g
+
+# Installs openssk, which is needed by Prisma
+RUN apk add --no-cache openssl
 
 # Do not run production as root
 RUN addgroup --system --gid 1001 nodejs
