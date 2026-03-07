@@ -50,9 +50,9 @@ services:
       - .env.production.local
       - .env.prisma.local
     ports:
-      - 3001:3001
+      - 3002:3002
     expose:
-      - 3001
+      - 3002
     depends_on:
       - db.production
     profiles:
