@@ -4,7 +4,6 @@ services:
   ################################
   app.development:
     container_name: ncms_web_dev
-    image: ghcr.io/starlightroad/ncms-dev
     build:
       context: .
       dockerfile: dev.Dockerfile
@@ -15,7 +14,7 @@ services:
     ports:
       - 3000:3000
     expose:
-    - 3000
+      - 3000
     depends_on:
       - db.development
     volumes:
@@ -41,7 +40,6 @@ services:
   ################################
   app.production:
     container_name: ncms_web_prod
-    image: ghcr.io/starlightroad/ncms-prod
     build:
       context: .
       dockerfile: prod.Dockerfile
@@ -52,9 +50,9 @@ services:
       - .env.production.local
       - .env.prisma.local
     ports:
-      - 3001:3001
+      - 3002:3002
     expose:
-    - 3001
+      - 3002
     depends_on:
       - db.production
     profiles:
