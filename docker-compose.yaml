@@ -1,29 +1,23 @@
 services:
-  ################################
-  # Development
-  ################################
-  app.development:
+  app.dev:
     container_name: ncms_web_dev
     build:
       context: .
-      dockerfile: dev.Dockerfile
+      dockerfile: Dockerfile.dev
     env_file:
       - .env.development.local
       - .env.db.local
       - .env.prisma.local
     ports:
       - 3000:3000
-    expose:
-      - 3000
     depends_on:
-      - db.development
+      - db.dev
     volumes:
       - ./app:/app/app
       - ./public:/app/public
     profiles:
       - dev
-
-  db.development:
+  db.dev:
     container_name: ncms_db_dev
     image: postgres:15-alpine
     env_file:
@@ -34,12 +28,12 @@ services:
       - db_data_dev:/var/lib/postgresql/data
     profiles:
       - dev
-
   ################################
   # Production
   ################################
   app.production:
     container_name: ncms_web_prod
+    image: ghcr.io/starlightroad/ncms-prod
     build:
       context: .
       dockerfile: prod.Dockerfile
