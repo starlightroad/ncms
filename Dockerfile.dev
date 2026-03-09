@@ -1,0 +1,21 @@
+ARG NODE_VERSION=22-alpine
+
+FROM node:${NODE_VERSION} AS dev
+
+RUN apk add --no-cache openssl
+
+WORKDIR /app
+
+COPY package.json package-lock.json* ./
+
+RUN --mount=type=cache,target=/root/.npm npm i
+
+COPY . .
+
+ENV NEXT_TELEMETRY_DISABLED=1
+
+EXPOSE 3000
+
+RUN npx prisma generate
+
+CMD [ "npm", "run", "docker:dev" ]
