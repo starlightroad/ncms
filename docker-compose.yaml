@@ -30,6 +30,7 @@ services:
       - dev
   app.prod:
     container_name: ncms_web_prod
+    image: ghcr.io/starlightroad/ncms-prod:latest
     build:
       context: .
       dockerfile: Dockerfile
