@@ -1,60 +1,59 @@
-FROM node:22-alpine AS base
+FROM node:22-alpine3.18 AS base
 
-# Install dependencies only when needed
-FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+# Step 1 - Rebuild the source code only when needed
+FROM base AS builder
+
+RUN apk add --no-cache openssl
+
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
-COPY package*.json ./
-COPY /prisma ./prisma/
-COPY /app/data/placeholder-data.js ./data/placeholder-data.js
-COPY /app/data/states.json ./data/states.json
+COPY package.json package-lock.json* ./
+
 RUN npm ci
 
-# Rebuild the source code only when needed
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-
-COPY --from=deps /app/prisma ./prisma
-COPY --from=deps /app/data/placeholder-data.js ./data/placeholder-data.js
-COPY --from=deps /app/data/states.json ./data/states.json
 COPY . .
 
+ENV NODE_ENV=production
+
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Generate the Prisma client
 RUN npx prisma generate
 
+# Build Next.js
 RUN npm run build
 
-# Production image, copy all the files and run next
+# Step 2 - Production image
 FROM base AS runner
+
 WORKDIR /app
 
-ENV NODE_ENV=production
-# Uncomment the following line in case you want to disable telemetry during runtime.
-ENV NEXT_TELEMETRY_DISABLED=1
+RUN apk add --no-cache openssl
 
+# Install Prisma and Bcrypt using the versions listed in the package-lock.json file
+COPY package-lock.json ./
+RUN npm i "prisma@$(node -p "require('./package-lock.json').packages['node_modules/prisma'].version")"
+RUN npm i "bcrypt@$(node -p "require('./package-lock.json').packages['node_modules/bcrypt'].version")"
+RUN npm cache clean --force
+RUN rm package-lock.json
+
+# Do not run production as root
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
+USER nextjs
 
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/data/placeholder-data.js ./app/data/placeholder-data.js
-COPY --from=builder /app/data/states.json ./app/data/states.json
-
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+COPY --from=builder /app/app/data/placeholder-data.js ./app/data/placeholder-data.js
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-USER nextjs
+ENV NODE_ENV=production
 
-CMD [ "npm", "run", "dockerfile-cmd:dev" ]
+ENV NEXT_TELEMETRY_DISABLED=1
+
+EXPOSE 3002
+
+CMD [ "npm", "run", "docker:prod" ]

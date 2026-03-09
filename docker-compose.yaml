@@ -28,30 +28,22 @@ services:
       - db_data_dev:/var/lib/postgresql/data
     profiles:
       - dev
-  ################################
-  # Production
-  ################################
-  app.production:
+  app.prod:
     container_name: ncms_web_prod
-    image: ghcr.io/starlightroad/ncms-prod
     build:
       context: .
-      dockerfile: prod.Dockerfile
-      args:
-        - NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+      dockerfile: Dockerfile
     env_file:
-      - .env.db.local
       - .env.production.local
+      - .env.db.local
       - .env.prisma.local
     ports:
       - 3002:3002
-    expose:
-      - 3002
     depends_on:
-      - db.production
+      - db.prod
     profiles:
       - prod
-  db.production:
+  db.prod:
     container_name: ncms_db_prod
     image: postgres:15-alpine
     env_file:
