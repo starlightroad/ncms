@@ -1,56 +1,83 @@
 services:
   app.dev:
-    container_name: ncms_web_dev
+    container_name: ncms_web
     build:
       context: .
       dockerfile: Dockerfile.dev
-    env_file:
-      - .env.development.local
-      - .env.db.local
-      - .env.prisma.local
+    environment:
+      - PORT=${PORT}
+      - ADMIN_API_KEY=${ADMIN_API_KEY}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - AUTH_URL=${AUTH_URL}
+      - DATABASE_URL=${DATABASE_URL}
     ports:
-      - 3000:3000
+      - ${PORT}:3000
     depends_on:
-      - db.dev
+      db.dev:
+        condition: service_healthy
+        restart: true
     volumes:
       - ./app:/app/app
       - ./public:/app/public
     profiles:
       - dev
   db.dev:
-    container_name: ncms_db_dev
+    container_name: ncms_db
     image: postgres:15-alpine
-    env_file:
-      - .env.db.local
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT}:5432
     volumes:
       - db_data_dev:/var/lib/postgresql/data
     profiles:
       - dev
   app.prod:
-    container_name: ncms_web_prod
-    image: ghcr.io/starlightroad/ncms-prod:latest
+    container_name: ncms_web
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env.production.local
-      - .env.db.local
-      - .env.prisma.local
+    environment:
+      - PORT=${PORT}
+      - ADMIN_API_KEY=${ADMIN_API_KEY}
+      - AUTH_SECRET=${AUTH_SECRET}
+      - AUTH_URL=${AUTH_URL}
+      - DATABASE_URL=${DATABASE_URL}
     ports:
-      - 3002:3002
+      - ${PORT}:3000
     depends_on:
-      - db.prod
+      db.prod:
+        condition: service_healthy
+        restart: true
     profiles:
       - prod
   db.prod:
-    container_name: ncms_db_prod
+    container_name: ncms_db
     image: postgres:15-alpine
-    env_file:
-      - .env.db.local
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
-      - 5432:5432
+      - ${POSTGRES_PORT}:5432
     volumes:
       - db_data_prod:/var/lib/postgresql/data
     profiles:
