@@ -14,8 +14,6 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-EXPOSE 3000
-
 RUN npx prisma generate
 
 CMD [ "npm", "run", "docker:dev" ]

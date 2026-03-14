@@ -54,6 +54,4 @@ ENV NODE_ENV=production
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-EXPOSE 3002
-
 CMD [ "npm", "run", "docker:prod" ]
